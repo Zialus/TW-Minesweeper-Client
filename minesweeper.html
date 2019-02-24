@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html lang="pt">
+
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <link href="estilo.css" rel="stylesheet" type="text/css">
+   <script src="minesweeper.js" type="text/javascript"></script>
+   <title> Minesweeper </title>
+</head>
+
+<body>
+
+
+   <!-- <div class="container">
+     <h2>Button Styles</h2>
+     <button type="button" class="btn btn-default">Default</button>
+     <button type="button" class="btn btn-primary">Primary</button>
+     <button type="button" class="btn btn-success">Success</button>
+     <button type="button" class="btn btn-info">Info</button>
+     <button type="button" class="btn btn-warning">Warning</button>
+     <button type="button" class="btn btn-danger">Danger</button>
+     <button type="button" class="btn btn-link">Link</button>
+   </div> -->
+
+
+
+
+   <div id="titulo" class="titulo">
+      <header>
+         <h1>Minesweeper</h1>
+      </header>
+   </div>
+
+
+   <div id="authentication" class="authentication">
+      <form id="log_in">
+         <input id="username" type="text" placeholder="Nome de Utilizador" pattern="[A-Za-z_]{1,30}" title="Entre 1 e 30 letras ou underscore">
+         <br>
+         <input id="password" type="password" placeholder="Password" pattern=".{5,50}" title="Password tem de conter entre 5 e 50 caracteres">
+         <br>
+         <input id="validate" type="submit" name="do" value="Log in">
+      </form>
+
+      <!-- <div> -->
+      <!-- <input id="log_out" class="log_out" type="submit" name="do" value="Log out"> -->
+      <input id="mute_audio" class="mute_button" type="submit" name="do" value="Sound OFF">
+      <!-- </div> -->
+
+
+   </div>
+
+
+
+   <div id="menu" class="menu">
+      <select name="modo" title="modo" id="modo">
+         <option>1 Player</option>
+         <option selected="selected">2 Players</option>
+      </select>
+
+      <select name="dificuldade" id="dificuldade" title="dificuldade">
+         <option selected="selected" value="beginner">Beginner</option>
+         <option value="intermediate">Intermediate</option>
+         <option value="expert">Expert</option>
+      </select>
+
+      <input id="iniciar" type="submit" name="do" value="Iniciar">
+      <input id="mostrar_honra" type="submit" name="do" value="Mostrar Quadro de Honra">
+      <input id="esconder_honra" class="esconder_honra" type="submit" name="do" value="Esconder Quadro de Honra">
+   </div>
+
+   <p></p>
+
+   <div id="jogo">
+      <table id="tab" class="tab"></table>
+   </div>
+
+
+   <div id="errorzone">
+      <p id="error_message" class="warning_message"></p>
+   </div>
+
+   <div id="progresso" class="progresso">
+      <p id="message_to_player"></p>
+      <br>
+      <p id="whos_turn"></p>
+      <p id="player_stats"></p>
+      <p id="opponent_stats"></p>
+      <p id="tempo"></p>
+      <p id="numero_minas"></p>
+      <p id="score"></p>
+      <input id="encerrar" class="encerrar" type="submit" name="do" value="Desistir">
+      <input id="sair" class="sair" type="submit" name="do" value="Sair">
+   </div>
+
+   <div id="quadro_honra" class="quadro_honra">
+      <p>Quadro de honra</p>
+
+      <input id="honraSP" type="submit" name="do" value="Single Player">
+      <input id="honraMP" type="submit" name="do" value="Multi Player">
+
+      <br>
+
+      <select name="difHonra" class="difHonra" id="difHonra" title="difHonra">
+         <option selected="selected" value="beginner">Beginner</option>
+         <option value="intermediate">Intermediate</option>
+         <option value="expert">Expert</option>
+      </select>
+
+      <select name="difHonraMP" class="difHonraMP" id="difHonraMP" title="difHonraMP">
+         <option selected="selected" value="beginner">Beginner</option>
+         <option value="intermediate">Intermediate</option>
+         <option value="expert">Expert</option>
+      </select>
+
+
+      <ol id="honorlist"></ol>
+   </div>
+
+
+   <canvas id="teste">
+
+   </canvas>
+
+
+</body>
+
+</html>
