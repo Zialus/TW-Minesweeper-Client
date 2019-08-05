@@ -1,5 +1,7 @@
 window.onload = function() {
 
+   const apiUrl = "https://gentle-temple-76491.herokuapp.com/";
+
    //-------------------------MISC VARIABLES-----------------------------------------------------//
    var rows; // nº of rows
    var cols; // nº of columns
@@ -137,7 +139,7 @@ window.onload = function() {
          col: c
       });
 
-      xhr.open("post", "http://twserver.alunos.dcc.fc.up.pt:8000/notify", true);
+      xhr.open("post", apiUrl + "notify", true);
       xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
       xhr.send(value);
 
@@ -281,7 +283,7 @@ window.onload = function() {
 
       var xhttp = new XMLHttpRequest();
 
-      xhttp.open("post", "http://twserver.alunos.dcc.fc.up.pt:8000/leave", true);
+      xhttp.open("post", apiUrl + "leave", true);
       xhttp.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
       xhttp.send(value);
 
@@ -316,7 +318,7 @@ window.onload = function() {
 
       var xhr = new XMLHttpRequest();
 
-      xhr.open("post", "http://twserver.alunos.dcc.fc.up.pt:8000/score", true);
+      xhr.open("post", apiUrl + "score", true);
       xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
       xhr.send(value);
 
@@ -419,7 +421,7 @@ window.onload = function() {
 
          }
       };
-      xhr.open("post", "http://twserver.alunos.dcc.fc.up.pt:8000/ranking", true);
+      xhr.open("post", apiUrl + "ranking", true);
       xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
       xhr.send(value);
 
@@ -430,7 +432,7 @@ window.onload = function() {
    function initMP() {
       console.log("initMP");
 
-      sse = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8000" + '/update?name=' + username + '&game=' + gameId + '&key=' + gameKey);
+      sse = new EventSource(apiUrl + 'update?name=' + username + '&game=' + gameId + '&key=' + gameKey);
       sse.onmessage = function(event) {
          var res = JSON.parse(event.data);
 
@@ -562,7 +564,7 @@ window.onload = function() {
 
       var xhr = new XMLHttpRequest();
 
-      xhr.open("post", "http://twserver.alunos.dcc.fc.up.pt:8000/join", true);
+      xhr.open("post", apiUrl + "join", true);
       xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
       xhr.send(value);
 
@@ -660,7 +662,7 @@ window.onload = function() {
 
       var xhr = new XMLHttpRequest();
 
-      xhr.open("post", "http://twserver.alunos.dcc.fc.up.pt:8000/register", true);
+      xhr.open("post", apiUrl + "register", true);
       xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
       xhr.send(value);
 
