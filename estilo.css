@@ -3,9 +3,11 @@
   font-family: palatino, serif;
   font-size: 30px;
 }
+
 .mute_button {
   display: none;
 }
+
 .authentication {
   margin-left: auto;
   margin-right: auto;
@@ -13,17 +15,20 @@
   font-family: palatino, serif;
   font-size: 15px;
 }
+
 .log_out {
   margin-left: auto;
   margin-right: auto;
   display: none;
 }
+
 .menu {
   height: auto;
   width: auto;
   text-align: center;
   display: none;
 }
+
 .tab {
   border-collapse: collapse;
   text-align: center;
@@ -31,6 +36,7 @@
   margin-right: auto;
   width: auto;
 }
+
 .quadro_honra {
   font-family: palatino, serif;
   font-size: 15px;
@@ -38,22 +44,24 @@
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  /*background-color: green;
-   border-radius: 5px;
-   border-width: medium;
-   border-color: green;
-   border-style: dashed;*/
+  border-radius: 5px;
+  border-width: medium;
+  border-color: red;
+  border-style: dashed;
   display: none;
 }
+
 .encerrar {
   display: none;
 }
+
 .progresso {
   text-align: center;
   font-family: palatino, serif;
   font-size: 15px;
   display: none;
 }
+
 .esconder_honra {
   display: none;
 }
@@ -87,6 +95,7 @@ td {
   width: 20px;
   font-size: 1px;
 }
+
 td img {
   height: 20px;
   width: 20px;
@@ -97,6 +106,7 @@ td img {
   position: absolute;
   z-index: 0;
 }
+
 td canvas {
   position: absolute;
   z-index: 20;

@@ -63,7 +63,7 @@ window.onload = function() {
 
   document.getElementById("encerrar").onclick = endGame;
 
-  // document.getElementById("log_out").onclick = logOut;
+  document.getElementById("log_out").onclick = logOut;
 
   document.getElementById("mute_audio").onclick = changeAudio;
 
@@ -563,15 +563,15 @@ window.onload = function() {
     document.getElementById("esconder_honra").style.display = "none";
   }
 
-  // function logOut() {
-  //   document.getElementById("log_in").style.display = "block";
-  //   document.getElementById("log_out").style.display = "none";
-  //   document.getElementById("menu").style.display = "none";
-  //   document.getElementById("jogo").style.display = "none";
-  //   document.getElementById("progresso").style.display = "none";
-  //   document.getElementById("quadro_honra").style.display = "none";
-  //   return false;
-  // }
+  function logOut() {
+    document.getElementById("log_in").style.display = "block";
+    document.getElementById("log_out").style.display = "none";
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("jogo").style.display = "none";
+    document.getElementById("progresso").style.display = "none";
+    document.getElementById("quadro_honra").style.display = "none";
+    return false;
+  }
 
   function errorMessage(mensagem) {
     console.log("Sending error message to player");
@@ -642,7 +642,7 @@ window.onload = function() {
           console.log("Logged in!");
           document.getElementById("log_in").style.display = "none";
           document.getElementById("mute_audio").style.display = "inline";
-          // document.getElementById("log_out").style.display = "block";
+          document.getElementById("log_out").style.display = "block";
           document.getElementById("menu").style.display = "block";
           document.getElementById("jogo").style.display = "block";
           document.getElementById("progresso").style.display = "block";
