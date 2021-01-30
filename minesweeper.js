@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
   const apiUrl = "https://gentle-temple-76491.herokuapp.com/";
 
   //-------------------------MISC VARIABLES-----------------------------------------------------//
@@ -130,14 +130,14 @@ window.onload = function() {
       game: gameId,
       key: gameKey,
       row: r,
-      col: c
+      col: c,
     });
 
     xhr.open("post", apiUrl + "notify", true);
     xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
     xhr.send(value);
 
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       console.log(xhr.readyState + "-----" + xhr.status);
       if (xhr.readyState === 4 && xhr.status === 200) {
         var res = JSON.parse(xhr.responseText);
@@ -171,7 +171,7 @@ window.onload = function() {
       frame++;
     }
 
-    img.onload = function() {
+    img.onload = function () {
       setIntID = setInterval(animate, 150);
     };
     img.src = "explosion.png";
@@ -216,7 +216,7 @@ window.onload = function() {
   }
 
   function updateMP() {
-    sse.onmessage = function(event) {
+    sse.onmessage = function (event) {
       var msg = JSON.parse(event.data);
       if (msg.error === undefined) {
         //houve uma jogada
@@ -266,7 +266,7 @@ window.onload = function() {
     var value = JSON.stringify({
       name: username,
       game: gameId,
-      key: gameKey
+      key: gameKey,
     });
 
     var xhttp = new XMLHttpRequest();
@@ -275,7 +275,7 @@ window.onload = function() {
     xhttp.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
     xhttp.send(value);
 
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
       console.log(xhttp.readyState + "-----" + xhttp.status);
       if (xhttp.readyState === 4 && xhttp.status == 200) {
         var res = JSON.parse(xhttp.responseText);
@@ -300,7 +300,7 @@ window.onload = function() {
 
     var value = JSON.stringify({
       name: username,
-      level: difc
+      level: difc,
     });
 
     var xhr = new XMLHttpRequest();
@@ -309,7 +309,7 @@ window.onload = function() {
     xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
     xhr.send(value);
 
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       console.log(xhr.readyState + "-----" + xhr.status);
       if (xhr.readyState === 4 && xhr.status === 200) {
         var res = JSON.parse(xhr.responseText);
@@ -348,11 +348,11 @@ window.onload = function() {
     var honor_value = document.getElementById("difHonraMP").value;
 
     var value = JSON.stringify({
-      level: honor_value
+      level: honor_value,
     });
 
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       console.log(xhr.readyState + "-----" + xhr.status);
       if (xhr.readyState === 4 && xhr.status == 200) {
         var res = JSON.parse(xhr.responseText);
@@ -412,7 +412,7 @@ window.onload = function() {
     sse = new EventSource(
       apiUrl + "update?name=" + username + "&game=" + gameId + "&key=" + gameKey
     );
-    sse.onmessage = function(event) {
+    sse.onmessage = function (event) {
       var res = JSON.parse(event.data);
 
       //SUCCESS
@@ -487,7 +487,7 @@ window.onload = function() {
   }
 
   function makeCellLeftClickHandlerMP() {
-    return function() {
+    return function () {
       if (turn === username) {
         //My Turn
         var col = this.cellIndex;
@@ -521,7 +521,7 @@ window.onload = function() {
       name: username,
       pass: password,
       level: difc,
-      group: our_group
+      group: our_group,
     });
 
     var xhr = new XMLHttpRequest();
@@ -530,7 +530,7 @@ window.onload = function() {
     xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
     xhr.send(value);
 
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         var resposta = JSON.parse(xhr.responseText);
         if (resposta.error !== undefined) {
@@ -621,7 +621,7 @@ window.onload = function() {
 
     var value = JSON.stringify({
       name: username,
-      pass: password
+      pass: password,
     });
 
     var xhr = new XMLHttpRequest();
@@ -630,7 +630,7 @@ window.onload = function() {
     xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
     xhr.send(value);
 
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         var resposta = JSON.parse(xhr.responseText);
         if (resposta.error !== undefined) {
@@ -790,7 +790,7 @@ window.onload = function() {
   }
 
   function makeCellLeftClickHandler() {
-    return function() {
+    return function () {
       var col = this.cellIndex;
       var row = this.parentNode.rowIndex;
       var print = "Left Clicked on (" + row + "," + col + ")";
@@ -804,7 +804,7 @@ window.onload = function() {
   }
 
   function makeCellRightClickHandler() {
-    return function() {
+    return function () {
       var col = this.cellIndex;
       var row = this.parentNode.rowIndex;
       var print = "Right Clicked on (" + row + "," + col + ")";
@@ -819,7 +819,7 @@ window.onload = function() {
   }
 
   function makeAcordeHandler() {
-    return function() {
+    return function () {
       acorde = true;
       console.log("MOUSE_IS_DOWN_MOFO!!");
     };
@@ -954,7 +954,7 @@ window.onload = function() {
           defeat_audio.play();
           realBomb = {
             x: r,
-            y: c
+            y: c,
           };
           showBombs();
           showRealBomb(realBomb);
@@ -1058,7 +1058,7 @@ window.onload = function() {
       alert("YOU WON with the time of " + timeElapsed + " seconds");
       var player = {
         uname: username,
-        score: timeElapsed
+        score: timeElapsed,
       };
 
       addToArray(player, currentHonor);
@@ -1268,7 +1268,7 @@ window.onload = function() {
         if (matrix[i][j] !== -1 && i !== r && j !== c) {
           return {
             x: i,
-            y: j
+            y: j,
           };
         }
       }
