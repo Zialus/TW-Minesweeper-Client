@@ -1,5 +1,5 @@
 window.onload = function () {
-  const apiUrl = "https://gentle-temple-76491.herokuapp.com/";
+  const apiUrl = "https://tw-minesweeper-server.herokuapp.com/";
 
   //-------------------------MISC VARIABLES-----------------------------------------------------//
   var rows; // nº of rows
