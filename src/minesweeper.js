@@ -2,56 +2,56 @@ window.onload = function () {
   const apiUrl = "https://tw-minesweeper-server.herokuapp.com/";
 
   //-------------------------MISC VARIABLES-----------------------------------------------------//
-  var rows; // nº of rows
-  var cols; // nº of columns
-  var mines; // nº of mines
-  var table = document.getElementById("tab"); // html table where the game matrix will be displayed
-  var matrix; // Matrix with "mine information" of each cell
-  var visited; // Matrix with information about visited state of cells
-  var mines_counter; // Counts how many mines have been "found"
-  var realBomb; // Pair of coordinates of the bomb that made the player lose the game
-  var timer; // Javascript timer
-  var timeElapsed = 0; // Time elapsed since the game began
-  var firstclick = true; // Stores the state of the current click ( Whether it is the first one or not)
-  var game_over = false; // Stores the state of the current game ( Whether it is over or not)
-  var points; // Stores the score of the player in the multiplayer mode
-  var username = "Default User"; // Set a default value in case a username isn't picked
-  var password; // Stores the password
-  var difc; // Stores the game dificulty
-  var acorde = false;
+  let rows; // nº of rows
+  let cols; // nº of columns
+  let mines; // nº of mines
+  const table = document.getElementById("tab"); // html table where the game matrix will be displayed
+  let matrix; // Matrix with "mine information" of each cell
+  let visited; // Matrix with information about visited state of cells
+  let mines_counter; // Counts how many mines have been "found"
+  let realBomb; // Pair of coordinates of the bomb that made the player lose the game
+  let timer; // Javascript timer
+  let timeElapsed = 0; // Time elapsed since the game began
+  let firstclick = true; // Stores the state of the current click ( Whether it is the first one or not)
+  let game_over = false; // Stores the state of the current game ( Whether it is over or not)
+  let points; // Stores the score of the player in the multiplayer mode
+  let username = "Default User"; // Set a default value in case a username isn't picked
+  let password; // Stores the password
+  let difc; // Stores the game dificulty
+  let acorde = false;
 
   //-------------------------VARIAVEIS PARA LIDAR COM AUDIO-------------------------------------//
-  var bomb_audio = new Audio("./music/explosion.wav");
+  const bomb_audio = new Audio("./music/explosion.wav");
   bomb_audio.muted = true;
-  var victory_audio = new Audio("./music/victory.m4a");
+  const victory_audio = new Audio("./music/victory.m4a");
   victory_audio.muted = true;
-  var defeat_audio = new Audio("./music/gameover.m4a");
+  const defeat_audio = new Audio("./music/gameover.m4a");
   defeat_audio.muted = true;
-  var turn_audio = new Audio("./music/turn.mp3");
+  const turn_audio = new Audio("./music/turn.mp3");
   turn_audio.muted = true;
 
   //-------------------------VARIAVEIS PARA LIDAR COM ESTADO DO JOGO MP-------------------------//
-  var our_group = 4;
-  var gameId;
-  var gameKey;
-  var opponent; // nome do jogador adversario
-  var turn; // nome do jogador a quem pertence o turno actual
-  var p_bombs = 0; // quantidade de bombas econtradas pelo jogador
-  var op_bombs = 0; // quantidade de bombas econtradas pelo adversario
+  const our_group = 4;
+  let gameId;
+  let gameKey;
+  let opponent; // nome do jogador adversario
+  let turn; // nome do jogador a quem pertence o turno actual
+  let p_bombs = 0; // quantidade de bombas econtradas pelo jogador
+  let op_bombs = 0; // quantidade de bombas econtradas pelo adversario
 
   //------------------------ARRAYS PARA GUARDAR QUADRO DE HONRA --------------------------------//
-  var begHonor = []; // Stores Hi-Scores for the Beginner dificulty
-  var intHonor = []; // Stores Hi-Scores for the Intermediate dificulty
-  var expHonor = []; // Stores Hi-Scores for the Expert dificulty
+  const begHonor = []; // Stores Hi-Scores for the Beginner dificulty
+  const intHonor = []; // Stores Hi-Scores for the Intermediate dificulty
+  const expHonor = []; // Stores Hi-Scores for the Expert dificulty
 
-  var begHonorMP = []; // Stores Hi-Scores for the Beginner dificulty for the MultiPlayer Mode
-  var intHonorMP = []; // Stores Hi-Scores for the Intermediate dificulty for the MultiPlayer Mode
-  var expHonorMP = []; // Stores Hi-Scores for the Expert dificulty for the MultiPlayer Mode
+  let begHonorMP = []; // Stores Hi-Scores for the Beginner dificulty for the MultiPlayer Mode
+  let intHonorMP = []; // Stores Hi-Scores for the Intermediate dificulty for the MultiPlayer Mode
+  let expHonorMP = []; // Stores Hi-Scores for the Expert dificulty for the MultiPlayer Mode
 
   localStorageGetAll();
 
-  var currentHonor = begHonor; // In which Honor Table should the Hi-Score of the current game be stored
-  var showHonor = begHonor; // Which Honor Table should be shown
+  let currentHonor = begHonor; // In which Honor Table should the Hi-Score of the current game be stored
+  let showHonor = begHonor; // Which Honor Table should be shown
 
   document.getElementById("difHonra").onchange = refreshHonra;
 
@@ -123,9 +123,9 @@ window.onload = function () {
   function notify(r, c) {
     console.log("ENTROU NO NOTIFY");
 
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
 
-    var value = JSON.stringify({
+    const value = JSON.stringify({
       name: username,
       game: gameId,
       key: gameKey,
@@ -140,7 +140,7 @@ window.onload = function () {
     xhr.onreadystatechange = function () {
       console.log(xhr.readyState + "-----" + xhr.status);
       if (xhr.readyState === 4 && xhr.status === 200) {
-        var res = JSON.parse(xhr.responseText);
+        const res = JSON.parse(xhr.responseText);
         if (res.error !== undefined) {
           console.log("res.error : " + res.error);
           errorMessage("Posição já destapada, DUMMY!!");
@@ -153,13 +153,13 @@ window.onload = function () {
   }
 
   function canvas_explode(r, c) {
-    var elemento = r + "#" + c;
-    var canvas = document.getElementById(elemento);
-    var ctx = canvas.getContext("2d");
+    const elemento = r + "#" + c;
+    const canvas = document.getElementById(elemento);
+    const ctx = canvas.getContext("2d");
 
-    var frame = 0;
-    var setIntID;
-    var img = new Image();
+    let frame = 0;
+    let setIntID;
+    const img = new Image();
 
     function animate() {
       ctx.clearRect(0, 0, 25, 25);
@@ -178,9 +178,9 @@ window.onload = function () {
   }
 
   function burstMP(cell, player) {
-    var r = cell[0] - 1; // (0,0) vs (1,1)
-    var c = cell[1] - 1; // (0,0) vs (1,1)
-    var value = cell[2];
+    const r = cell[0] - 1; // (0,0) vs (1,1)
+    const c = cell[1] - 1; // (0,0) vs (1,1)
+    const value = cell[2];
 
     if (value === -1) {
       bomb_audio.play();
@@ -217,15 +217,15 @@ window.onload = function () {
 
   function updateMP() {
     sse.onmessage = function (event) {
-      var msg = JSON.parse(event.data);
+      const msg = JSON.parse(event.data);
       if (msg.error === undefined) {
         //houve uma jogada
         if (msg.move !== undefined) {
-          var cells = msg.move.cells;
+          const cells = msg.move.cells;
 
           //destapa as células
-          for (var i = 0; i < cells.length; i++) {
-            var player = msg.move.name;
+          for (let i = 0; i < cells.length; i++) {
+            const player = msg.move.name;
             burstMP(cells[i], player);
           }
 
@@ -263,13 +263,13 @@ window.onload = function () {
   function leaveMP() {
     console.log("Im LEAVING!!!");
 
-    var value = JSON.stringify({
+    const value = JSON.stringify({
       name: username,
       game: gameId,
       key: gameKey,
     });
 
-    var xhttp = new XMLHttpRequest();
+    const xhttp = new XMLHttpRequest();
 
     xhttp.open("post", apiUrl + "leave", true);
     xhttp.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
@@ -278,7 +278,7 @@ window.onload = function () {
     xhttp.onreadystatechange = function () {
       console.log(xhttp.readyState + "-----" + xhttp.status);
       if (xhttp.readyState === 4 && xhttp.status == 200) {
-        var res = JSON.parse(xhttp.responseText);
+        const res = JSON.parse(xhttp.responseText);
         if (res.error !== undefined) {
           console.log("res.error : " + res.error);
           errorMessage(res.error);
@@ -298,12 +298,12 @@ window.onload = function () {
   function getScore() {
     console.log("ENTROU NO SCORE!");
 
-    var value = JSON.stringify({
+    const value = JSON.stringify({
       name: username,
       level: difc,
     });
 
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
 
     xhr.open("post", apiUrl + "score", true);
     xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
@@ -312,7 +312,7 @@ window.onload = function () {
     xhr.onreadystatechange = function () {
       console.log(xhr.readyState + "-----" + xhr.status);
       if (xhr.readyState === 4 && xhr.status === 200) {
-        var res = JSON.parse(xhr.responseText);
+        const res = JSON.parse(xhr.responseText);
         if (res.error !== undefined) {
           console.log("res.error : " + res.error);
           errorMessage(res.error);
@@ -345,24 +345,24 @@ window.onload = function () {
 
     document.getElementById("honorlist").innerHTML = "";
 
-    var honor_value = document.getElementById("difHonraMP").value;
+    const honor_value = document.getElementById("difHonraMP").value;
 
-    var value = JSON.stringify({
+    const value = JSON.stringify({
       level: honor_value,
     });
 
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       console.log(xhr.readyState + "-----" + xhr.status);
       if (xhr.readyState === 4 && xhr.status == 200) {
-        var res = JSON.parse(xhr.responseText);
+        const res = JSON.parse(xhr.responseText);
         if (res.error !== undefined) {
           console.log("res.error : " + res.error);
           errorMessage(res.error);
           setTimeout(cleanError, 2000);
         } else {
           console.log("Getting all the rankings!");
-          var ranking = res.ranking;
+          const ranking = res.ranking;
 
           switch (honor_value) {
             case "beginner":
@@ -390,9 +390,9 @@ window.onload = function () {
             default:
           }
 
-          for (var i = 0; i < showHonor.length; i++) {
-            var node = document.createElement("li");
-            var textnode = document.createTextNode(
+          for (let i = 0; i < showHonor.length; i++) {
+            const node = document.createElement("li");
+            const textnode = document.createTextNode(
               " " + showHonor[i].name + " " + showHonor[i].score
             );
             node.appendChild(textnode);
@@ -413,7 +413,7 @@ window.onload = function () {
       apiUrl + "update?name=" + username + "&game=" + gameId + "&key=" + gameKey
     );
     sse.onmessage = function (event) {
-      var res = JSON.parse(event.data);
+      const res = JSON.parse(event.data);
 
       //SUCCESS
       if (res.error === undefined) {
@@ -455,9 +455,9 @@ window.onload = function () {
 
   function setTabuleiroMP() {
     for (i = 0; i < rows; i++) {
-      var row = table.insertRow();
+      const row = table.insertRow();
       for (j = 0; j < cols; j++) {
-        var cell = row.insertCell();
+        const cell = row.insertCell();
         cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
         cell.onclick = makeCellLeftClickHandlerMP();
         //cell.oncontextmenu = makeCellRightClickHandlerMP();
@@ -466,17 +466,17 @@ window.onload = function () {
   }
 
   function setTabuleiroMP_CanvasMode() {
-    for (var i = 0; i < rows; i++) {
-      var row = table.insertRow();
-      for (var j = 0; j < cols; j++) {
-        var cell = row.insertCell();
+    for (let i = 0; i < rows; i++) {
+      const row = table.insertRow();
+      for (let j = 0; j < cols; j++) {
+        const cell = row.insertCell();
 
         cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
 
-        var canvas = document.createElement("canvas");
+        const canvas = document.createElement("canvas");
         canvas.width = 20;
         canvas.height = 20;
-        var name_dat_canvas = i + "#" + j;
+        const name_dat_canvas = i + "#" + j;
         canvas.setAttribute("id", name_dat_canvas);
         cell.appendChild(canvas);
 
@@ -490,9 +490,9 @@ window.onload = function () {
     return function () {
       if (turn === username) {
         //My Turn
-        var col = this.cellIndex;
-        var row = this.parentNode.rowIndex;
-        var print = "Left Clicked on (" + row + "," + col + ")";
+        const col = this.cellIndex;
+        const row = this.parentNode.rowIndex;
+        const print = "Left Clicked on (" + row + "," + col + ")";
         console.log(print);
         if (!game_over) {
           //positions start at (1,1) instead of (0,0) on Rui's server
@@ -517,14 +517,14 @@ window.onload = function () {
     console.log("Lets join a game!");
     playerIsWaiting();
 
-    var value = JSON.stringify({
+    const value = JSON.stringify({
       name: username,
       pass: password,
       level: difc,
       group: our_group,
     });
 
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
 
     xhr.open("post", apiUrl + "join", true);
     xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
@@ -532,7 +532,7 @@ window.onload = function () {
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        var resposta = JSON.parse(xhr.responseText);
+        const resposta = JSON.parse(xhr.responseText);
         if (resposta.error !== undefined) {
           console.log("res.error : " + resposta.error);
           errorMessage(resposta.error);
@@ -613,18 +613,18 @@ window.onload = function () {
   }
 
   function serverLogin() {
-    var username_html = document.getElementById("username").value;
+    const username_html = document.getElementById("username").value;
     if (username_html !== "") {
       username = username_html;
     }
     password = document.getElementById("password").value;
 
-    var value = JSON.stringify({
+    const value = JSON.stringify({
       name: username,
       pass: password,
     });
 
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
 
     xhr.open("post", apiUrl + "register", true);
     xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
@@ -632,7 +632,7 @@ window.onload = function () {
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        var resposta = JSON.parse(xhr.responseText);
+        const resposta = JSON.parse(xhr.responseText);
         if (resposta.error !== undefined) {
           console.log(resposta.error);
           errorMessage(resposta.error);
@@ -791,9 +791,9 @@ window.onload = function () {
 
   function makeCellLeftClickHandler() {
     return function () {
-      var col = this.cellIndex;
-      var row = this.parentNode.rowIndex;
-      var print = "Left Clicked on (" + row + "," + col + ")";
+      const col = this.cellIndex;
+      const row = this.parentNode.rowIndex;
+      const print = "Left Clicked on (" + row + "," + col + ")";
       console.log(print);
       if (!game_over) {
         leftClick(row, col);
@@ -805,9 +805,9 @@ window.onload = function () {
 
   function makeCellRightClickHandler() {
     return function () {
-      var col = this.cellIndex;
-      var row = this.parentNode.rowIndex;
-      var print = "Right Clicked on (" + row + "," + col + ")";
+      const col = this.cellIndex;
+      const row = this.parentNode.rowIndex;
+      const print = "Right Clicked on (" + row + "," + col + ")";
       console.log(print);
       if (!game_over) {
         rightClick(row, col);
@@ -826,17 +826,17 @@ window.onload = function () {
   }
 
   function setTabuleiroCanvas() {
-    for (var i = 0; i < rows; i++) {
-      var row = table.insertRow();
-      for (var j = 0; j < cols; j++) {
-        var cell = row.insertCell();
+    for (let i = 0; i < rows; i++) {
+      const row = table.insertRow();
+      for (let j = 0; j < cols; j++) {
+        const cell = row.insertCell();
 
         cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
 
-        var canvas = document.createElement("canvas");
+        const canvas = document.createElement("canvas");
         canvas.width = 20;
         canvas.height = 20;
-        var name_dat_canvas = i + "#" + j;
+        const name_dat_canvas = i + "#" + j;
         canvas.setAttribute("id", name_dat_canvas);
         cell.appendChild(canvas);
 
@@ -849,9 +849,9 @@ window.onload = function () {
 
   function setTabuleiro() {
     for (i = 0; i < rows; i++) {
-      var row = table.insertRow();
+      const row = table.insertRow();
       for (j = 0; j < cols; j++) {
-        var cell = row.insertCell();
+        const cell = row.insertCell();
         cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
         cell.onclick = makeCellLeftClickHandler();
         //cell.onmousedown = makeAcordeHandler();
@@ -861,11 +861,11 @@ window.onload = function () {
   }
 
   function placeMines() {
-    var placedMines = 0;
+    let placedMines = 0;
 
     while (placedMines !== mines) {
-      var r = Math.floor(Math.random() * rows);
-      var c = Math.floor(Math.random() * cols);
+      const r = Math.floor(Math.random() * rows);
+      const c = Math.floor(Math.random() * cols);
 
       if (matrix[r][c] !== -1) {
         // if theres no mine, place mine
@@ -908,8 +908,8 @@ window.onload = function () {
     }
 
     console.log("----Cheats----START----");
-    for (var i = 0; i < rows; i++) {
-      for (var j = 0; j < cols; j++) {
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
         if (matrix[i][j] === -1) {
           console.log(i + " " + j);
         }
@@ -926,7 +926,7 @@ window.onload = function () {
     }
 
     for (i = 0; i < rows; i++) {
-      for (var j = 0; j < cols; j++) {
+      for (let j = 0; j < cols; j++) {
         visited[i][j] = false;
       }
     }
@@ -1048,7 +1048,7 @@ window.onload = function () {
       }
     } else {
       visited[r][c] = true;
-      var m = matrix[r][c];
+      const m = matrix[r][c];
       chooseAndSetPicture(r, c, m);
     }
 
@@ -1056,7 +1056,7 @@ window.onload = function () {
       victory_audio.play();
 
       alert("YOU WON with the time of " + timeElapsed + " seconds");
-      var player = {
+      const player = {
         uname: username,
         score: timeElapsed,
       };
@@ -1144,8 +1144,8 @@ window.onload = function () {
 
   function checkWin() {
     console.log("ola");
-    for (var i = 0; i < rows; i++) {
-      for (var j = 0; j < cols; j++) {
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
         if (matrix[i][j] !== -1 && visited[i][j] === false) {
           return false;
         }
@@ -1192,8 +1192,8 @@ window.onload = function () {
   }
 
   function showBombs() {
-    for (var r = 0; r < rows; r++) {
-      for (var c = 0; c < cols; c++) {
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
         if (matrix[r][c] === -1) {
           table.rows[r].cells[c]
             .getElementsByTagName("img")[0]
@@ -1204,8 +1204,8 @@ window.onload = function () {
   }
 
   function showRealBomb(o) {
-    var r = o.x;
-    var c = o.y;
+    const r = o.x;
+    const c = o.y;
     table.rows[r].cells[c]
       .getElementsByTagName("img")[0]
       .setAttribute("src", "./imgs/bombdeath.gif");
@@ -1243,7 +1243,7 @@ window.onload = function () {
   }
 
   function addToArray(o, a) {
-    var i = 0;
+    let i = 0;
     while (i < a.length && o.score > a[i].score) {
       i++;
     }
@@ -1255,7 +1255,7 @@ window.onload = function () {
   function dealWithFirstClick(r, c) {
     matrix[r][c] = newValue(r, c);
     decreaseSurroundingCells(r, c);
-    var t = newPos(r, c);
+    const t = newPos(r, c);
     matrix[t.x][t.y] = -1;
     increaseSurroundingCells(t.x, t.y);
     firstclick = false;
@@ -1263,8 +1263,8 @@ window.onload = function () {
   }
 
   function newPos(r, c) {
-    for (var i = 0; i < rows; i++) {
-      for (var j = 0; j < cols; j++) {
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
         if (matrix[i][j] !== -1 && i !== r && j !== c) {
           return {
             x: i,
@@ -1276,7 +1276,7 @@ window.onload = function () {
   }
 
   function newValue(x, y) {
-    var aux = 0;
+    let aux = 0;
     if (validPos(x - 1, y) && matrix[x - 1][y] === -1) {
       aux++;
     }
@@ -1371,8 +1371,8 @@ window.onload = function () {
   }
 
   function localStorageGet(difc, honorToChange) {
-    var tmp = [];
-    var pointerHonor = honorToChange;
+    let tmp = [];
+    const pointerHonor = honorToChange;
     console.log("getting some scores from storage!");
 
     if (difc === "beginner") {
@@ -1384,15 +1384,15 @@ window.onload = function () {
     }
 
     if (tmp !== null) {
-      for (var i = 0; i < tmp.length; i++) {
+      for (let i = 0; i < tmp.length; i++) {
         pointerHonor.push(tmp[i]);
       }
     }
   }
 
   function localStorageGetAll() {
-    var tmp;
-    var i;
+    let tmp;
+    let i;
     console.log("Getting all scores from storage!");
 
     tmp = JSON.parse(localStorage.getItem("beginner"));
@@ -1424,7 +1424,7 @@ window.onload = function () {
   function refreshHonra() {
     console.log("Refreshing the honor list!");
     cleanHonor();
-    var honor_value = document.getElementById("difHonra").value;
+    const honor_value = document.getElementById("difHonra").value;
 
     switch (honor_value) {
       case "beginner":
@@ -1439,9 +1439,9 @@ window.onload = function () {
       default:
     }
 
-    for (var i = 0; i < showHonor.length; i++) {
-      var node = document.createElement("li");
-      var textnode = document.createTextNode(
+    for (let i = 0; i < showHonor.length; i++) {
+      const node = document.createElement("li");
+      const textnode = document.createTextNode(
         " " + showHonor[i].uname + " " + showHonor[i].score
       );
       node.appendChild(textnode);
