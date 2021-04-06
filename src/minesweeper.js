@@ -458,7 +458,7 @@ window.onload = function () {
       var row = table.insertRow();
       for (j = 0; j < cols; j++) {
         var cell = row.insertCell();
-        cell.innerHTML = "<img src='./imgs/blank.gif'/>";
+        cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
         cell.onclick = makeCellLeftClickHandlerMP();
         //cell.oncontextmenu = makeCellRightClickHandlerMP();
       }
@@ -471,7 +471,7 @@ window.onload = function () {
       for (var j = 0; j < cols; j++) {
         var cell = row.insertCell();
 
-        cell.innerHTML = "<img src='./imgs/blank.gif'/>";
+        cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
 
         var canvas = document.createElement("canvas");
         canvas.width = 20;
@@ -831,7 +831,7 @@ window.onload = function () {
       for (var j = 0; j < cols; j++) {
         var cell = row.insertCell();
 
-        cell.innerHTML = "<img src='./imgs/blank.gif'/>";
+        cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
 
         var canvas = document.createElement("canvas");
         canvas.width = 20;
@@ -852,7 +852,7 @@ window.onload = function () {
       var row = table.insertRow();
       for (j = 0; j < cols; j++) {
         var cell = row.insertCell();
-        cell.innerHTML = "<img src='./imgs/blank.gif'/>";
+        cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
         cell.onclick = makeCellLeftClickHandler();
         //cell.onmousedown = makeAcordeHandler();
         cell.oncontextmenu = makeCellRightClickHandler();
