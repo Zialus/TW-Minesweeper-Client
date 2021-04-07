@@ -278,7 +278,7 @@ window.onload = function () {
 
     xhttp.onreadystatechange = function () {
       console.log(xhttp.readyState + "-----" + xhttp.status);
-      if (xhttp.readyState === 4 && xhttp.status == 200) {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
         const res = JSON.parse(xhttp.responseText);
         if (res.error !== undefined) {
           console.log("res.error : " + res.error);
@@ -355,7 +355,7 @@ window.onload = function () {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       console.log(xhr.readyState + "-----" + xhr.status);
-      if (xhr.readyState === 4 && xhr.status == 200) {
+      if (xhr.readyState === 4 && xhr.status === 200) {
         const res = JSON.parse(xhr.responseText);
         if (res.error !== undefined) {
           console.log("res.error : " + res.error);
