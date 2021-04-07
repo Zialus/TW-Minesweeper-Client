@@ -38,6 +38,7 @@ window.onload = function () {
   let turn; // nome do jogador a quem pertence o turno actual
   let p_bombs = 0; // quantidade de bombas econtradas pelo jogador
   let op_bombs = 0; // quantidade de bombas econtradas pelo adversario
+  let sse;
 
   //------------------------ARRAYS PARA GUARDAR QUADRO DE HONRA --------------------------------//
   const begHonor = []; // Stores Hi-Scores for the Beginner dificulty
@@ -454,9 +455,9 @@ window.onload = function () {
   }
 
   function setTabuleiroMP() {
-    for (i = 0; i < rows; i++) {
+    for (let i = 0; i < rows; i++) {
       const row = table.insertRow();
-      for (j = 0; j < cols; j++) {
+      for (let j = 0; j < cols; j++) {
         const cell = row.insertCell();
         cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
         cell.onclick = makeCellLeftClickHandlerMP();
@@ -778,12 +779,12 @@ window.onload = function () {
 
   function generateGameMatrix() {
     matrix = new Array(rows);
-    for (i = 0; i < rows; i++) {
+    for (let i = 0; i < rows; i++) {
       matrix[i] = new Array(cols);
     }
     // Fills all the cells with zeros
-    for (i = 0; i < rows; i++) {
-      for (j = 0; j < cols; j++) {
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
         matrix[i][j] = 0;
       }
     }
@@ -848,9 +849,9 @@ window.onload = function () {
   }
 
   function setTabuleiro() {
-    for (i = 0; i < rows; i++) {
+    for (let i = 0; i < rows; i++) {
       const row = table.insertRow();
-      for (j = 0; j < cols; j++) {
+      for (let j = 0; j < cols; j++) {
         const cell = row.insertCell();
         cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
         cell.onclick = makeCellLeftClickHandler();
@@ -921,11 +922,11 @@ window.onload = function () {
   function visitedFalse() {
     visited = new Array(rows);
 
-    for (var i = 0; i < rows; i++) {
+    for (let i = 0; i < rows; i++) {
       visited[i] = new Array(cols);
     }
 
-    for (i = 0; i < rows; i++) {
+    for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         visited[i][j] = false;
       }
@@ -1392,26 +1393,25 @@ window.onload = function () {
 
   function localStorageGetAll() {
     let tmp;
-    let i;
     console.log("Getting all scores from storage!");
 
     tmp = JSON.parse(localStorage.getItem("beginner"));
     if (tmp !== null) {
-      for (i = 0; i < tmp.length; i++) {
+      for (let i = 0; i < tmp.length; i++) {
         begHonor.push(tmp[i]);
       }
     }
 
     tmp = JSON.parse(localStorage.getItem("intermediate"));
     if (tmp !== null) {
-      for (i = 0; i < tmp.length; i++) {
+      for (let i = 0; i < tmp.length; i++) {
         intHonor.push(tmp[i]);
       }
     }
 
     tmp = JSON.parse(localStorage.getItem("expert"));
     if (tmp !== null) {
-      for (i = 0; i < tmp.length; i++) {
+      for (let i = 0; i < tmp.length; i++) {
         expHonor.push(tmp[i]);
       }
     }
