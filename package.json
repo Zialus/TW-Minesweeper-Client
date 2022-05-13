@@ -1,0 +1,12 @@
+{
+  "name": "tw-minesweeper-client",
+  "source": "src/minesweeper.html",
+  "scripts": {
+    "serve": "parcel",
+    "build": "parcel build",
+    "test": "exit 1"
+  },
+  "devDependencies": {
+    "parcel": "^2.5.0"
+  }
+}
