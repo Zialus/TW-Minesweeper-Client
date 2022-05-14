@@ -1,6 +1,6 @@
 {
   "name": "tw-minesweeper-client",
-  "source": "src/minesweeper.html",
+  "source": "src/index.html",
   "scripts": {
     "serve": "parcel",
     "build": "parcel build",
