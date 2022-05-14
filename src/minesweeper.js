@@ -134,16 +134,16 @@ window.onload = function () {
       col: c,
     });
 
-    xhr.open("post", apiUrl + "notify", true);
+    xhr.open("post", `${apiUrl}notify`, true);
     xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
     xhr.send(value);
 
     xhr.onreadystatechange = function () {
-      console.log(xhr.readyState + "-----" + xhr.status);
+      console.log(`${xhr.readyState}-----${xhr.status}`);
       if (xhr.readyState === 4 && xhr.status === 200) {
         const res = JSON.parse(xhr.responseText);
         if (res.error !== undefined) {
-          console.log("res.error : " + res.error);
+          console.log(`res.error : ${res.error}`);
           errorMessage("Posição já destapada, DUMMY!!");
           setTimeout(cleanError, 2000);
         } else {
@@ -154,7 +154,7 @@ window.onload = function () {
   }
 
   function canvas_explode(r, c) {
-    const elemento = r + "#" + c;
+    const elemento = `${r}#${c}`;
     const canvas = document.getElementById(elemento);
     const ctx = canvas.getContext("2d");
 
@@ -254,7 +254,7 @@ window.onload = function () {
       }
       //ERRO
       else {
-        console.log("msg.error : " + msg.error);
+        console.log(`msg.error : ${msg.error}`);
         errorMessage(msg.error);
         setTimeout(cleanError, 2000);
       }
@@ -272,16 +272,16 @@ window.onload = function () {
 
     const xhttp = new XMLHttpRequest();
 
-    xhttp.open("post", apiUrl + "leave", true);
+    xhttp.open("post", `${apiUrl}leave`, true);
     xhttp.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
     xhttp.send(value);
 
     xhttp.onreadystatechange = function () {
-      console.log(xhttp.readyState + "-----" + xhttp.status);
+      console.log(`${xhttp.readyState}-----${xhttp.status}`);
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         const res = JSON.parse(xhttp.responseText);
         if (res.error !== undefined) {
-          console.log("res.error : " + res.error);
+          console.log(`res.error : ${res.error}`);
           errorMessage(res.error);
           setTimeout(cleanError, 2000);
         }
@@ -306,16 +306,16 @@ window.onload = function () {
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open("post", apiUrl + "score", true);
+    xhr.open("post", `${apiUrl}score`, true);
     xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
     xhr.send(value);
 
     xhr.onreadystatechange = function () {
-      console.log(xhr.readyState + "-----" + xhr.status);
+      console.log(`${xhr.readyState}-----${xhr.status}`);
       if (xhr.readyState === 4 && xhr.status === 200) {
         const res = JSON.parse(xhr.responseText);
         if (res.error !== undefined) {
-          console.log("res.error : " + res.error);
+          console.log(`res.error : ${res.error}`);
           errorMessage(res.error);
           setTimeout(cleanError, 2000);
         } else {
@@ -332,8 +332,9 @@ window.onload = function () {
     if (points === undefined) {
       document.getElementById("score").innerHTML = "";
     } else {
-      document.getElementById("score").innerHTML =
-        "A tua pontuação neste modo de jogo é " + points;
+      document.getElementById(
+        "score"
+      ).innerHTML = `A tua pontuação neste modo de jogo é ${points}`;
     }
   }
 
@@ -354,11 +355,11 @@ window.onload = function () {
 
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-      console.log(xhr.readyState + "-----" + xhr.status);
+      console.log(`${xhr.readyState}-----${xhr.status}`);
       if (xhr.readyState === 4 && xhr.status === 200) {
         const res = JSON.parse(xhr.responseText);
         if (res.error !== undefined) {
-          console.log("res.error : " + res.error);
+          console.log(`res.error : ${res.error}`);
           errorMessage(res.error);
           setTimeout(cleanError, 2000);
         } else {
@@ -394,7 +395,7 @@ window.onload = function () {
           for (let i = 0; i < showHonor.length; i++) {
             const node = document.createElement("li");
             const textnode = document.createTextNode(
-              " " + showHonor[i].name + " " + showHonor[i].score
+              ` ${item.name} ${item.score}`
             );
             node.appendChild(textnode);
             document.getElementById("honorlist").appendChild(node);
@@ -402,7 +403,7 @@ window.onload = function () {
         }
       }
     };
-    xhr.open("post", apiUrl + "ranking", true);
+    xhr.open("post", `${apiUrl}ranking`, true);
     xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
     xhr.send(value);
   }
@@ -411,7 +412,7 @@ window.onload = function () {
     console.log("initMP");
 
     sse = new EventSource(
-      apiUrl + "update?name=" + username + "&game=" + gameId + "&key=" + gameKey
+      `${apiUrl}update?name=${username}&game=${gameId}&key=${gameKey}`
     );
     sse.onmessage = function (event) {
       const res = JSON.parse(event.data);
@@ -424,7 +425,7 @@ window.onload = function () {
         if (turn === username) turn_audio.play();
         showWhosTurn();
 
-        console.log("Oponente: " + opponent + " | Turno: " + turn);
+        console.log(`Oponente: ${opponent} | Turno: ${turn}`);
         document.getElementById("sair").style.display = "none";
 
         // O jogo começou
@@ -437,7 +438,7 @@ window.onload = function () {
         updatePlayersStats();
         updateMP();
 
-        console.log("Oponente: " + opponent + " | Turno: " + turn);
+        console.log(`Oponente: ${opponent} | Turno: ${turn}`);
 
         // pedir próximo update
         updateMP();
@@ -445,7 +446,7 @@ window.onload = function () {
 
       //ERROR
       else {
-        console.log("res.error : " + res.error);
+        console.log(`res.error : ${res.error}`);
         errorMessage(res.error);
         setTimeout(cleanError, 2000);
 
@@ -477,7 +478,7 @@ window.onload = function () {
         const canvas = document.createElement("canvas");
         canvas.width = 20;
         canvas.height = 20;
-        const name_dat_canvas = i + "#" + j;
+        const name_dat_canvas = `${i}#${j}`;
         canvas.setAttribute("id", name_dat_canvas);
         cell.appendChild(canvas);
 
@@ -493,7 +494,7 @@ window.onload = function () {
         //My Turn
         const col = this.cellIndex;
         const row = this.parentNode.rowIndex;
-        const print = "Left Clicked on (" + row + "," + col + ")";
+        const print = `Left Clicked on (${row},${col})`;
         console.log(print);
         if (!game_over) {
           //positions start at (1,1) instead of (0,0) on Rui's server
@@ -527,7 +528,7 @@ window.onload = function () {
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open("post", apiUrl + "join", true);
+    xhr.open("post", `${apiUrl}join`, true);
     xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
     xhr.send(value);
 
@@ -535,14 +536,14 @@ window.onload = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         const resposta = JSON.parse(xhr.responseText);
         if (resposta.error !== undefined) {
-          console.log("res.error : " + resposta.error);
+          console.log(`res.error : ${resposta.error}`);
           errorMessage(resposta.error);
           setTimeout(cleanError, 2000);
         } else {
           // Create multiplayer game
           gameId = resposta.game;
           gameKey = resposta.key;
-          console.log("GameID e Key: " + gameId + " ----- " + gameKey);
+          console.log(`GameID e Key: ${gameId} ----- ${gameKey}`);
 
           initMP();
         }
@@ -586,25 +587,25 @@ window.onload = function () {
   }
 
   function playerLoggedIn() {
-    document.getElementById("message_to_player").innerHTML =
-      username + " logged in!";
+    document.getElementById(
+      "message_to_player"
+    ).innerHTML = `${username} logged in!`;
     return false;
   }
 
   function playerIsWaiting() {
     console.log("bom dia");
-    document.getElementById("message_to_player").innerHTML =
-      "<p>" +
-      username +
-      " está a espera dum adversário...</p>" +
-      "<img src='./imgs/waiting.svg' alt='waiting...' />";
+    document.getElementById(
+      "message_to_player"
+    ).innerHTML = `<p>${username} está a espera dum adversário...</p><img src='./imgs/waiting.svg' alt='waiting...' />`;
     return false;
   }
 
   function playerNotWaiting() {
     console.log("bom dia");
-    document.getElementById("message_to_player").innerHTML =
-      username + " has given up waiting...";
+    document.getElementById(
+      "message_to_player"
+    ).innerHTML = `${username} has given up waiting...`;
     return false;
   }
 
@@ -627,7 +628,7 @@ window.onload = function () {
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open("post", apiUrl + "register", true);
+    xhr.open("post", `${apiUrl}register`, true);
     xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
     xhr.send(value);
 
@@ -686,10 +687,12 @@ window.onload = function () {
       document.getElementById("iniciar").style.display = "none";
       //  document.getElementById("encerrar").style.display = "inline";
       timeElapsed = 0;
-      document.getElementById("tempo").innerHTML =
-        "Tempo decorrido: " + timeElapsed;
-      document.getElementById("numero_minas").innerHTML =
-        "Minas restantes:" + mines_counter;
+      document.getElementById(
+        "tempo"
+      ).innerHTML = `Tempo decorrido: ${timeElapsed}`;
+      document.getElementById(
+        "numero_minas"
+      ).innerHTML = `Minas restantes:${mines_counter}`;
     } else if (document.getElementsByName("modo")[0].value === "1 Player") {
       console.log("1 Player Mode");
 
@@ -703,10 +706,12 @@ window.onload = function () {
       document.getElementById("iniciar").style.display = "none";
       document.getElementById("encerrar").style.display = "inline";
       timeElapsed = 0;
-      document.getElementById("tempo").innerHTML =
-        "Tempo decorrido: " + timeElapsed;
-      document.getElementById("numero_minas").innerHTML =
-        "Minas restantes:" + mines_counter;
+      document.getElementById(
+        "tempo"
+      ).innerHTML = `Tempo decorrido: ${timeElapsed}`;
+      document.getElementById(
+        "numero_minas"
+      ).innerHTML = `Minas restantes:${mines_counter}`;
       generateGameMatrix(); // Generates Matrix with correct size
       placeMines(); // Places mines on the matrix
       setTabuleiroCanvas(); // Generates HTML Table based on the information on the matrix
@@ -735,7 +740,7 @@ window.onload = function () {
 
   function getAndSetDificulty() {
     difc = document.getElementById("dificuldade").value;
-    console.log("ola " + difc);
+    console.log(`ola ${difc}`);
     switch (difc) {
       case "beginner":
         console.log("asdfasdlfasgdf");
@@ -794,7 +799,7 @@ window.onload = function () {
     return function () {
       const col = this.cellIndex;
       const row = this.parentNode.rowIndex;
-      const print = "Left Clicked on (" + row + "," + col + ")";
+      const print = `Left Clicked on (${row},${col})`;
       console.log(print);
       if (!game_over) {
         leftClick(row, col);
@@ -808,7 +813,7 @@ window.onload = function () {
     return function () {
       const col = this.cellIndex;
       const row = this.parentNode.rowIndex;
-      const print = "Right Clicked on (" + row + "," + col + ")";
+      const print = `Right Clicked on (${row},${col})`;
       console.log(print);
       if (!game_over) {
         rightClick(row, col);
@@ -837,7 +842,7 @@ window.onload = function () {
         const canvas = document.createElement("canvas");
         canvas.width = 20;
         canvas.height = 20;
-        const name_dat_canvas = i + "#" + j;
+        const name_dat_canvas = `${i}#${j}`;
         canvas.setAttribute("id", name_dat_canvas);
         cell.appendChild(canvas);
 
@@ -912,7 +917,7 @@ window.onload = function () {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         if (matrix[i][j] === -1) {
-          console.log(i + " " + j);
+          console.log(`${i} ${j}`);
         }
       }
     }
@@ -1056,7 +1061,7 @@ window.onload = function () {
     if (checkWin()) {
       victory_audio.play();
 
-      alert("YOU WON with the time of " + timeElapsed + " seconds");
+      alert(`YOU WON with the time of ${timeElapsed} seconds`);
       const player = {
         uname: username,
         score: timeElapsed,
@@ -1123,20 +1128,23 @@ window.onload = function () {
 
   function updateTimer() {
     timeElapsed += 1;
-    document.getElementById("tempo").innerHTML =
-      "Tempo decorrido: " + timeElapsed;
+    document.getElementById(
+      "tempo"
+    ).innerHTML = `Tempo decorrido: ${timeElapsed}`;
   }
 
   function decreaseMines() {
     mines_counter -= 1;
-    document.getElementById("numero_minas").innerHTML =
-      "Minas restantes:" + mines_counter;
+    document.getElementById(
+      "numero_minas"
+    ).innerHTML = `Minas restantes:${mines_counter}`;
   }
 
   function increaseMines() {
     mines_counter += 1;
-    document.getElementById("numero_minas").innerHTML =
-      "Minas restantes:" + mines_counter;
+    document.getElementById(
+      "numero_minas"
+    ).innerHTML = `Minas restantes:${mines_counter}`;
   }
 
   function validPos(r, c) {
@@ -1227,8 +1235,9 @@ window.onload = function () {
   }
 
   function showWhosTurn() {
-    document.getElementById("whos_turn").innerHTML =
-      "É o turno do jogador: " + turn;
+    document.getElementById(
+      "whos_turn"
+    ).innerHTML = `É o turno do jogador: ${turn}`;
   }
 
   function clearWhosTurn() {
@@ -1236,10 +1245,12 @@ window.onload = function () {
   }
 
   function updatePlayersStats() {
-    document.getElementById("player_stats").innerHTML =
-      "Jogador " + username + " encontrou : " + p_bombs + " bombas";
-    document.getElementById("opponent_stats").innerHTML =
-      "Adversario " + opponent + " encontrou : " + op_bombs + " bombas";
+    document.getElementById(
+      "player_stats"
+    ).innerHTML = `Jogador ${username} encontrou : ${p_bombs} bombas`;
+    document.getElementById(
+      "opponent_stats"
+    ).innerHTML = `Adversario ${opponent} encontrou : ${op_bombs} bombas`;
     return false;
   }
 
@@ -1250,7 +1261,7 @@ window.onload = function () {
     }
 
     a.splice(i, 0, o);
-    console.log("----------" + o.uname + " " + o.score + "-------");
+    console.log(`----------${o.uname} ${o.score}-------`);
   }
 
   function dealWithFirstClick(r, c) {
@@ -1441,9 +1452,7 @@ window.onload = function () {
 
     for (let i = 0; i < showHonor.length; i++) {
       const node = document.createElement("li");
-      const textnode = document.createTextNode(
-        " " + showHonor[i].uname + " " + showHonor[i].score
-      );
+      const textnode = document.createTextNode(` ${item.uname} ${item.score}`);
       node.appendChild(textnode);
       document.getElementById("honorlist").appendChild(node);
     }
