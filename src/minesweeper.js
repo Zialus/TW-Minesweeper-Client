@@ -392,7 +392,7 @@ window.onload = function () {
             default:
           }
 
-          for (let i = 0; i < showHonor.length; i++) {
+          for (const item of showHonor) {
             const node = document.createElement("li");
             const textnode = document.createTextNode(
               ` ${item.name} ${item.score}`
@@ -1396,8 +1396,8 @@ window.onload = function () {
     }
 
     if (tmp !== null) {
-      for (let i = 0; i < tmp.length; i++) {
-        pointerHonor.push(tmp[i]);
+      for (const item of tmp) {
+        pointerHonor.push(item);
       }
     }
   }
@@ -1408,22 +1408,22 @@ window.onload = function () {
 
     tmp = JSON.parse(localStorage.getItem("beginner"));
     if (tmp !== null) {
-      for (let i = 0; i < tmp.length; i++) {
-        begHonor.push(tmp[i]);
+      for (const item of tmp) {
+        begHonor.push(item);
       }
     }
 
     tmp = JSON.parse(localStorage.getItem("intermediate"));
     if (tmp !== null) {
-      for (let i = 0; i < tmp.length; i++) {
-        intHonor.push(tmp[i]);
+      for (const item of tmp) {
+        intHonor.push(item);
       }
     }
 
     tmp = JSON.parse(localStorage.getItem("expert"));
     if (tmp !== null) {
-      for (let i = 0; i < tmp.length; i++) {
-        expHonor.push(tmp[i]);
+      for (const item of tmp) {
+        expHonor.push(item);
       }
     }
   }
@@ -1450,7 +1450,7 @@ window.onload = function () {
       default:
     }
 
-    for (let i = 0; i < showHonor.length; i++) {
+    for (const item of showHonor) {
       const node = document.createElement("li");
       const textnode = document.createTextNode(` ${item.uname} ${item.score}`);
       node.appendChild(textnode);
