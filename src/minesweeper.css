@@ -86,7 +86,7 @@
 }
 
 body {
-  background-image: url("./imgs/background.jpeg");
+  background-image: url("static/imgs/background.jpeg");
 }
 
 th,

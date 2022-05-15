@@ -21,13 +21,13 @@ window.onload = function () {
   let acorde = false;
 
   //-------------------------VARIAVEIS PARA LIDAR COM AUDIO-------------------------------------//
-  const bomb_audio = new Audio("./music/explosion.wav");
+  const bomb_audio = new Audio("static/music/explosion.wav");
   bomb_audio.muted = true;
-  const victory_audio = new Audio("./music/victory.m4a");
+  const victory_audio = new Audio("static/music/victory.m4a");
   victory_audio.muted = true;
-  const defeat_audio = new Audio("./music/gameover.m4a");
+  const defeat_audio = new Audio("static/music/gameover.m4a");
   defeat_audio.muted = true;
-  const turn_audio = new Audio("./music/turn.mp3");
+  const turn_audio = new Audio("static/music/turn.mp3");
   turn_audio.muted = true;
 
   //-------------------------VARIAVEIS PARA LIDAR COM ESTADO DO JOGO MP-------------------------//
@@ -175,7 +175,7 @@ window.onload = function () {
     img.onload = function () {
       setIntID = setInterval(animate, 150);
     };
-    img.src = "explosion.png";
+    img.src = "static/imgs/explosion.png";
   }
 
   function burstMP(cell, player) {
@@ -190,11 +190,11 @@ window.onload = function () {
       if (player === opponent) {
         table.rows[r].cells[c]
           .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/bombdeath.gif");
+          .setAttribute("src", "static/imgs/bombdeath.gif");
       } else {
         table.rows[r].cells[c]
           .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/bombrevealed.gif");
+          .setAttribute("src", "static/imgs/bombrevealed.gif");
       }
 
       if (player === username) {
@@ -460,7 +460,7 @@ window.onload = function () {
       const row = table.insertRow();
       for (let j = 0; j < cols; j++) {
         const cell = row.insertCell();
-        cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
+        cell.innerHTML = "<img alt='blankCell' src='static/imgs/blank.gif'/>";
         cell.onclick = makeCellLeftClickHandlerMP();
         //cell.oncontextmenu = makeCellRightClickHandlerMP();
       }
@@ -473,7 +473,7 @@ window.onload = function () {
       for (let j = 0; j < cols; j++) {
         const cell = row.insertCell();
 
-        cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
+        cell.innerHTML = "<img alt='blankCell' src='static/imgs/blank.gif'/>";
 
         const canvas = document.createElement("canvas");
         canvas.width = 20;
@@ -597,7 +597,7 @@ window.onload = function () {
     console.log("bom dia");
     document.getElementById(
       "message_to_player"
-    ).innerHTML = `<p>${username} está a espera dum adversário...</p><img src='./imgs/waiting.svg' alt='waiting...' />`;
+    ).innerHTML = `<p>${username} está a espera dum adversário...</p><img src='static/imgs/waiting.svg' alt='waiting...' />`;
     return false;
   }
 
@@ -837,7 +837,7 @@ window.onload = function () {
       for (let j = 0; j < cols; j++) {
         const cell = row.insertCell();
 
-        cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
+        cell.innerHTML = "<img alt='blankCell' src='static/imgs/blank.gif'/>";
 
         const canvas = document.createElement("canvas");
         canvas.width = 20;
@@ -858,7 +858,7 @@ window.onload = function () {
       const row = table.insertRow();
       for (let j = 0; j < cols; j++) {
         const cell = row.insertCell();
-        cell.innerHTML = "<img alt='blankCell' src='./imgs/blank.gif'/>";
+        cell.innerHTML = "<img alt='blankCell' src='static/imgs/blank.gif'/>";
         cell.onclick = makeCellLeftClickHandler();
         //cell.onmousedown = makeAcordeHandler();
         cell.oncontextmenu = makeCellRightClickHandler();
@@ -951,7 +951,7 @@ window.onload = function () {
       if (
         table.rows[r].cells[c]
           .getElementsByTagName("img")[0]
-          .getAttribute("src") === "./imgs/blank.gif"
+          .getAttribute("src") === "static/imgs/blank.gif"
       ) {
         if (matrix[r][c] === -1) {
           //Game OVER!!!
@@ -1012,7 +1012,7 @@ window.onload = function () {
     if (
       table.rows[r].cells[c]
         .getElementsByTagName("img")[0]
-        .setAttribute("src", "./imgs/flag.png")
+        .setAttribute("src", "static/imgs/flag.png")
     ) {
       increaseMines();
     }
@@ -1078,7 +1078,7 @@ window.onload = function () {
   function chooseAndSetPicture(r, c, n) {
     table.rows[r].cells[c]
       .getElementsByTagName("img")[0]
-      .setAttribute("src", `./imgs/open${n}.gif`);
+      .setAttribute("src", `static/imgs/open${n}.gif`);
   }
 
   function updateTimer() {
@@ -1128,29 +1128,29 @@ window.onload = function () {
       if (
         table.rows[r].cells[c]
           .getElementsByTagName("img")[0]
-          .getAttribute("src") === "./imgs/blank.gif"
+          .getAttribute("src") === "static/imgs/blank.gif"
       ) {
         table.rows[r].cells[c]
           .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/flag.png");
+          .setAttribute("src", "static/imgs/flag.png");
         decreaseMines();
       } else if (
         table.rows[r].cells[c]
           .getElementsByTagName("img")[0]
-          .getAttribute("src") === "./imgs/flag.png"
+          .getAttribute("src") === "static/imgs/flag.png"
       ) {
         table.rows[r].cells[c]
           .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/questionmark.png");
+          .setAttribute("src", "static/imgs/questionmark.png");
         increaseMines();
       } else if (
         table.rows[r].cells[c]
           .getElementsByTagName("img")[0]
-          .getAttribute("src") === "./imgs/questionmark.png"
+          .getAttribute("src") === "static/imgs/questionmark.png"
       ) {
         table.rows[r].cells[c]
           .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/blank.gif");
+          .setAttribute("src", "static/imgs/blank.gif");
       }
     }
   }
@@ -1161,7 +1161,7 @@ window.onload = function () {
         if (matrix[r][c] === -1) {
           table.rows[r].cells[c]
             .getElementsByTagName("img")[0]
-            .setAttribute("src", "./imgs/bombrevealed.gif");
+            .setAttribute("src", "static/imgs/bombrevealed.gif");
         }
       }
     }
@@ -1172,7 +1172,7 @@ window.onload = function () {
     const c = o.y;
     table.rows[r].cells[c]
       .getElementsByTagName("img")[0]
-      .setAttribute("src", "./imgs/bombdeath.gif");
+      .setAttribute("src", "static/imgs/bombdeath.gif");
   }
 
   // -------------------------------- MENSAGENS PARA O JOGADOR E TAL --------------------------------------------------- //

@@ -6,7 +6,12 @@
     "build": "parcel build",
     "test": "exit 1"
   },
+  "staticFiles": {
+    "staticPath": "src/static",
+    "staticOutPath": "static"
+  },
   "devDependencies": {
-    "parcel": "^2.5.0"
+    "parcel": "^2.5.0",
+    "parcel-reporter-static-files-copy": "^1.3.4"
   }
 }
