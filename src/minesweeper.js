@@ -1076,54 +1076,9 @@ window.onload = function () {
   }
 
   function chooseAndSetPicture(r, c, n) {
-    switch (n) {
-      case 0:
-        table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/open0.gif");
-        break;
-      case 1:
-        table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/open1.gif");
-        break;
-      case 2:
-        table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/open2.gif");
-        break;
-      case 3:
-        table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/open3.gif");
-        break;
-      case 4:
-        table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/open4.gif");
-        break;
-      case 5:
-        table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/open5.gif");
-        break;
-      case 6:
-        table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/open6.gif");
-        break;
-      case 7:
-        table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/open7.gif");
-        break;
-      case 8:
-        table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "./imgs/open8.gif");
-        break;
-      default:
-    }
+    table.rows[r].cells[c]
+      .getElementsByTagName("img")[0]
+      .setAttribute("src", `./imgs/open${n}.gif`);
   }
 
   function updateTimer() {
