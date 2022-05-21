@@ -1012,7 +1012,7 @@ window.onload = function () {
     if (
       table.rows[r].cells[c]
         .getElementsByTagName("img")[0]
-        .setAttribute("src", "static/imgs/flag.png")
+        .getAttribute("src") === "static/imgs/flag.png"
     ) {
       increaseMines();
     }
