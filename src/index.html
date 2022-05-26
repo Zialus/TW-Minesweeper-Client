@@ -19,6 +19,7 @@
     <div id="authentication" class="authentication">
       <form id="log_in">
         <input
+          aria-label="username"
           id="username"
           type="text"
           placeholder="Nome de Utilizador"
@@ -27,6 +28,7 @@
         />
         <br />
         <input
+          aria-label="password"
           id="password"
           type="password"
           placeholder="Password"
@@ -56,12 +58,17 @@
     </div>
 
     <div id="menu" class="menu">
-      <select name="modo" title="modo" id="modo">
+      <select aria-label="game_mode" name="modo" title="modo" id="modo">
         <option>1 Player</option>
         <option selected="selected">2 Players</option>
       </select>
 
-      <select name="dificuldade" id="dificuldade" title="dificuldade">
+      <select
+        aria-label="game_dificulty"
+        name="dificuldade"
+        id="dificuldade"
+        title="dificuldade"
+      >
         <option selected="selected" value="beginner">Beginner</option>
         <option value="intermediate">Intermediate</option>
         <option value="expert">Expert</option>
@@ -86,7 +93,7 @@
     <p></p>
 
     <div id="jogo">
-      <table id="tab" class="tab"></table>
+      <table aria-label="game_table" id="tab" class="tab"></table>
     </div>
 
     <div id="errorzone">
@@ -120,13 +127,20 @@
 
       <br />
 
-      <select name="difHonra" class="difHonra" id="difHonra" title="difHonra">
+      <select
+        aria-label="high_score_board"
+        name="difHonra"
+        class="difHonra"
+        id="difHonra"
+        title="difHonra"
+      >
         <option selected="selected" value="beginner">Beginner</option>
         <option value="intermediate">Intermediate</option>
         <option value="expert">Expert</option>
       </select>
 
       <select
+        aria-label="multiplayer_high_score_board"
         name="difHonraMP"
         class="difHonraMP"
         id="difHonraMP"
