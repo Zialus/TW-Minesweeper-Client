@@ -1,11 +1,11 @@
 window.onload = function () {
-  const apiUrl = "https://tw-minesweeper-server.herokuapp.com/";
+  const apiUrl = 'https://tw-minesweeper-server.herokuapp.com/';
 
   //-------------------------MISC VARIABLES-----------------------------------------------------//
   let rows; // nº of rows
   let cols; // nº of columns
   let mines; // nº of mines
-  const table = document.getElementById("tab"); // html table where the game matrix will be displayed
+  const table = document.getElementById('tab'); // html table where the game matrix will be displayed
   let matrix; // Matrix with "mine information" of each cell
   let visited; // Matrix with information about visited state of cells
   let mines_counter; // Counts how many mines have been "found"
@@ -15,19 +15,19 @@ window.onload = function () {
   let firstclick = true; // Stores the state of the current click ( Whether it is the first one or not)
   let game_over = false; // Stores the state of the current game ( Whether it is over or not)
   let points; // Stores the score of the player in the multiplayer mode
-  let username = "Default User"; // Set a default value in case a username isn't picked
+  let username = 'Default User'; // Set a default value in case a username isn't picked
   let password; // Stores the password
   let difc; // Stores the game dificulty
   let acorde = false;
 
   //-------------------------VARIAVEIS PARA LIDAR COM AUDIO-------------------------------------//
-  const bomb_audio = new Audio("static/music/explosion.wav");
+  const bomb_audio = new Audio('static/music/explosion.wav');
   bomb_audio.muted = true;
-  const victory_audio = new Audio("static/music/victory.m4a");
+  const victory_audio = new Audio('static/music/victory.m4a');
   victory_audio.muted = true;
-  const defeat_audio = new Audio("static/music/gameover.m4a");
+  const defeat_audio = new Audio('static/music/gameover.m4a');
   defeat_audio.muted = true;
-  const turn_audio = new Audio("static/music/turn.mp3");
+  const turn_audio = new Audio('static/music/turn.mp3');
   turn_audio.muted = true;
 
   //-------------------------VARIAVEIS PARA LIDAR COM ESTADO DO JOGO MP-------------------------//
@@ -54,38 +54,38 @@ window.onload = function () {
   let currentHonor = begHonor; // In which Honor Table should the Hi-Score of the current game be stored
   let showHonor = begHonor; // Which Honor Table should be shown
 
-  document.getElementById("difHonra").onchange = refreshHonra;
+  document.getElementById('difHonra').onchange = refreshHonra;
 
-  document.getElementById("difHonraMP").onchange = refreshHonraMP;
+  document.getElementById('difHonraMP').onchange = refreshHonraMP;
 
-  document.getElementById("validate").onclick = validateGame;
+  document.getElementById('validate').onclick = validateGame;
 
-  document.getElementById("iniciar").onclick = startGame;
+  document.getElementById('iniciar').onclick = startGame;
 
-  document.getElementById("encerrar").onclick = endGame;
+  document.getElementById('encerrar').onclick = endGame;
 
-  document.getElementById("log_out").onclick = logOut;
+  document.getElementById('log_out').onclick = logOut;
 
-  document.getElementById("mute_audio").onclick = changeAudio;
+  document.getElementById('mute_audio').onclick = changeAudio;
 
-  document.getElementById("mostrar_honra").onclick = showHonorTable;
+  document.getElementById('mostrar_honra').onclick = showHonorTable;
 
-  document.getElementById("esconder_honra").onclick = hideHonorTable;
+  document.getElementById('esconder_honra').onclick = hideHonorTable;
 
-  document.getElementById("sair").onclick = leaveMP;
+  document.getElementById('sair').onclick = leaveMP;
 
-  document.getElementById("honraSP").onclick = switchHonraSP;
+  document.getElementById('honraSP').onclick = switchHonraSP;
 
-  document.getElementById("honraMP").onclick = switchHonraMP;
+  document.getElementById('honraMP').onclick = switchHonraMP;
 
   function changeAudio() {
-    if (document.getElementById("mute_audio").value === "Sound OFF") unmute();
-    else if (document.getElementById("mute_audio").value === "Sound ON") mute();
+    if (document.getElementById('mute_audio').value === 'Sound OFF') unmute();
+    else if (document.getElementById('mute_audio').value === 'Sound ON') mute();
   }
 
   function mute() {
-    console.log("MUTED!!");
-    document.getElementById("mute_audio").value = "Sound OFF";
+    console.log('MUTED!!');
+    document.getElementById('mute_audio').value = 'Sound OFF';
     turn_audio.muted = true;
     victory_audio.muted = true;
     defeat_audio.muted = true;
@@ -94,8 +94,8 @@ window.onload = function () {
   }
 
   function unmute() {
-    console.log("UNMUTED!!");
-    document.getElementById("mute_audio").value = "Sound ON";
+    console.log('UNMUTED!!');
+    document.getElementById('mute_audio').value = 'Sound ON';
     turn_audio.muted = false;
     victory_audio.muted = false;
     defeat_audio.muted = false;
@@ -104,15 +104,15 @@ window.onload = function () {
   }
 
   function switchHonraSP() {
-    document.getElementById("difHonra").style.display = "inline";
-    document.getElementById("difHonraMP").style.display = "none";
+    document.getElementById('difHonra').style.display = 'inline';
+    document.getElementById('difHonraMP').style.display = 'none';
     refreshHonra();
     return false;
   }
 
   function switchHonraMP() {
-    document.getElementById("difHonra").style.display = "none";
-    document.getElementById("difHonraMP").style.display = "inline";
+    document.getElementById('difHonra').style.display = 'none';
+    document.getElementById('difHonraMP').style.display = 'inline';
     refreshHonraMP();
     return false;
   }
@@ -122,7 +122,7 @@ window.onload = function () {
   // console.log(xhr.readyState + "-----" + xhr.status);
 
   function notify(r, c) {
-    console.log("ENTROU NO NOTIFY");
+    console.log('ENTROU NO NOTIFY');
 
     const xhr = new XMLHttpRequest();
 
@@ -134,8 +134,8 @@ window.onload = function () {
       col: c,
     });
 
-    xhr.open("post", `${apiUrl}notify`, true);
-    xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
+    xhr.open('post', `${apiUrl}notify`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
     xhr.send(value);
 
     xhr.onreadystatechange = function () {
@@ -144,7 +144,7 @@ window.onload = function () {
         const res = JSON.parse(xhr.responseText);
         if (res.error !== undefined) {
           console.log(`res.error : ${res.error}`);
-          errorMessage("Posição já destapada, DUMMY!!");
+          errorMessage('Posição já destapada, DUMMY!!');
           setTimeout(cleanError, 2000);
         } else {
           updateMP();
@@ -156,7 +156,7 @@ window.onload = function () {
   function canvas_explode(r, c) {
     const elemento = `${r}#${c}`;
     const canvas = document.getElementById(elemento);
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
 
     let frame = 0;
     let setIntID;
@@ -175,7 +175,7 @@ window.onload = function () {
     img.onload = function () {
       setIntID = setInterval(animate, 150);
     };
-    img.src = "static/imgs/explosion.png";
+    img.src = 'static/imgs/explosion.png';
   }
 
   function burstMP(cell, player) {
@@ -189,12 +189,12 @@ window.onload = function () {
       decreaseMines();
       if (player === opponent) {
         table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "static/imgs/bombdeath.gif");
+          .getElementsByTagName('img')[0]
+          .setAttribute('src', 'static/imgs/bombdeath.gif');
       } else {
         table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "static/imgs/bombrevealed.gif");
+          .getElementsByTagName('img')[0]
+          .setAttribute('src', 'static/imgs/bombrevealed.gif');
       }
 
       if (player === username) {
@@ -212,7 +212,7 @@ window.onload = function () {
     clearInterval(timer);
     game_over = true;
     showGameMode();
-    document.getElementById("iniciar").style.display = "inline";
+    document.getElementById('iniciar').style.display = 'inline';
     return false;
   }
 
@@ -262,7 +262,7 @@ window.onload = function () {
   }
 
   function leaveMP() {
-    console.log("Im LEAVING!!!");
+    console.log('Im LEAVING!!!');
 
     const value = JSON.stringify({
       name: username,
@@ -272,8 +272,8 @@ window.onload = function () {
 
     const xhttp = new XMLHttpRequest();
 
-    xhttp.open("post", `${apiUrl}leave`, true);
-    xhttp.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
+    xhttp.open('post', `${apiUrl}leave`, true);
+    xhttp.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
     xhttp.send(value);
 
     xhttp.onreadystatechange = function () {
@@ -291,13 +291,13 @@ window.onload = function () {
     playerNotWaiting();
     showGameMode();
 
-    document.getElementById("sair").style.display = "none";
-    document.getElementById("iniciar").style.display = "inline";
+    document.getElementById('sair').style.display = 'none';
+    document.getElementById('iniciar').style.display = 'inline';
     return false;
   }
 
   function getScore() {
-    console.log("ENTROU NO SCORE!");
+    console.log('ENTROU NO SCORE!');
 
     const value = JSON.stringify({
       name: username,
@@ -306,8 +306,8 @@ window.onload = function () {
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open("post", `${apiUrl}score`, true);
-    xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
+    xhr.open('post', `${apiUrl}score`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
     xhr.send(value);
 
     xhr.onreadystatechange = function () {
@@ -330,24 +330,24 @@ window.onload = function () {
 
   function showScore() {
     if (points === undefined) {
-      document.getElementById("score").innerHTML = "";
+      document.getElementById('score').innerHTML = '';
     } else {
       document.getElementById(
-        "score"
+        'score'
       ).innerHTML = `A tua pontuação neste modo de jogo é ${points}`;
     }
   }
 
   function cleanScore() {
-    document.getElementById("score").innerHTML = "";
+    document.getElementById('score').innerHTML = '';
   }
 
   function refreshHonraMP() {
-    console.log("Refresh the list MultiPlayer!");
+    console.log('Refresh the list MultiPlayer!');
 
-    document.getElementById("honorlist").innerHTML = "";
+    document.getElementById('honorlist').innerHTML = '';
 
-    const honor_value = document.getElementById("difHonraMP").value;
+    const honor_value = document.getElementById('difHonraMP').value;
 
     const value = JSON.stringify({
       level: honor_value,
@@ -363,53 +363,53 @@ window.onload = function () {
           errorMessage(res.error);
           setTimeout(cleanError, 2000);
         } else {
-          console.log("Getting all the rankings!");
+          console.log('Getting all the rankings!');
           const ranking = res.ranking;
 
           switch (honor_value) {
-            case "beginner":
+            case 'beginner':
               begHonorMP = ranking;
               break;
-            case "intermediate":
+            case 'intermediate':
               intHonorMP = ranking;
               break;
-            case "expert":
+            case 'expert':
               expHonorMP = ranking;
               break;
             default:
           }
 
           switch (honor_value) {
-            case "beginner":
+            case 'beginner':
               showHonor = begHonorMP;
               break;
-            case "intermediate":
+            case 'intermediate':
               showHonor = intHonorMP;
               break;
-            case "expert":
+            case 'expert':
               showHonor = expHonorMP;
               break;
             default:
           }
 
           for (const item of showHonor) {
-            const node = document.createElement("li");
+            const node = document.createElement('li');
             const textnode = document.createTextNode(
               ` ${item.name} ${item.score}`
             );
             node.appendChild(textnode);
-            document.getElementById("honorlist").appendChild(node);
+            document.getElementById('honorlist').appendChild(node);
           }
         }
       }
     };
-    xhr.open("post", `${apiUrl}ranking`, true);
-    xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
+    xhr.open('post', `${apiUrl}ranking`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
     xhr.send(value);
   }
 
   function initMP() {
-    console.log("initMP");
+    console.log('initMP');
 
     sse = new EventSource(
       `${apiUrl}update?name=${username}&game=${gameId}&key=${gameKey}`
@@ -426,15 +426,15 @@ window.onload = function () {
         showWhosTurn();
 
         console.log(`Oponente: ${opponent} | Turno: ${turn}`);
-        document.getElementById("sair").style.display = "none";
+        document.getElementById('sair').style.display = 'none';
 
         // O jogo começou
 
         timer = setInterval(updateTimer, 1000);
         setTabuleiroMP_CanvasMode();
 
-        document.getElementById("jogo").style.display = "block";
-        document.getElementById("progresso").style.display = "block";
+        document.getElementById('jogo').style.display = 'block';
+        document.getElementById('progresso').style.display = 'block';
         updatePlayersStats();
         updateMP();
 
@@ -475,11 +475,11 @@ window.onload = function () {
 
         cell.innerHTML = "<img alt='blankCell' src='static/imgs/blank.gif'/>";
 
-        const canvas = document.createElement("canvas");
+        const canvas = document.createElement('canvas');
         canvas.width = 20;
         canvas.height = 20;
         const name_dat_canvas = `${i}#${j}`;
-        canvas.setAttribute("id", name_dat_canvas);
+        canvas.setAttribute('id', name_dat_canvas);
         cell.appendChild(canvas);
 
         cell.onclick = makeCellLeftClickHandlerMP();
@@ -500,23 +500,23 @@ window.onload = function () {
           //positions start at (1,1) instead of (0,0) on Rui's server
           notify(row + 1, col + 1);
         } else {
-          console.log("Game is already Over!");
+          console.log('Game is already Over!');
         }
       } else {
         if (!game_over) {
           //Not my Turn
-          console.log("NOT MY TURN");
-          errorMessage("AINDA NAO PODES JOGAR!!!");
+          console.log('NOT MY TURN');
+          errorMessage('AINDA NAO PODES JOGAR!!!');
           setTimeout(cleanError, 2000);
         } else {
-          console.log("Game is already Over!");
+          console.log('Game is already Over!');
         }
       }
     };
   }
 
   function joinGame() {
-    console.log("Lets join a game!");
+    console.log('Lets join a game!');
     playerIsWaiting();
 
     const value = JSON.stringify({
@@ -528,8 +528,8 @@ window.onload = function () {
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open("post", `${apiUrl}join`, true);
-    xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
+    xhr.open('post', `${apiUrl}join`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
     xhr.send(value);
 
     xhr.onreadystatechange = function () {
@@ -554,57 +554,57 @@ window.onload = function () {
   // ----------------------------------------------------- SINGLE PLAYER ------------------------------------------------------------------ //
 
   function showHonorTable() {
-    document.getElementById("quadro_honra").style.display = "block";
-    document.getElementById("mostrar_honra").style.display = "none";
-    document.getElementById("esconder_honra").style.display = "inline";
+    document.getElementById('quadro_honra').style.display = 'block';
+    document.getElementById('mostrar_honra').style.display = 'none';
+    document.getElementById('esconder_honra').style.display = 'inline';
   }
 
   function hideHonorTable() {
-    document.getElementById("quadro_honra").style.display = "none";
-    document.getElementById("mostrar_honra").style.display = "inline";
-    document.getElementById("esconder_honra").style.display = "none";
+    document.getElementById('quadro_honra').style.display = 'none';
+    document.getElementById('mostrar_honra').style.display = 'inline';
+    document.getElementById('esconder_honra').style.display = 'none';
   }
 
   function logOut() {
-    document.getElementById("log_in").style.display = "block";
-    document.getElementById("log_out").style.display = "none";
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("jogo").style.display = "none";
-    document.getElementById("progresso").style.display = "none";
-    document.getElementById("quadro_honra").style.display = "none";
+    document.getElementById('log_in').style.display = 'block';
+    document.getElementById('log_out').style.display = 'none';
+    document.getElementById('menu').style.display = 'none';
+    document.getElementById('jogo').style.display = 'none';
+    document.getElementById('progresso').style.display = 'none';
+    document.getElementById('quadro_honra').style.display = 'none';
     return false;
   }
 
   function errorMessage(mensagem) {
-    console.log("Sending error message to player");
-    document.getElementById("error_message").innerHTML = mensagem;
+    console.log('Sending error message to player');
+    document.getElementById('error_message').innerHTML = mensagem;
     return false;
   }
 
   function cleanError() {
-    document.getElementById("error_message").innerHTML = "";
+    document.getElementById('error_message').innerHTML = '';
     return false;
   }
 
   function playerLoggedIn() {
     document.getElementById(
-      "message_to_player"
+      'message_to_player'
     ).innerHTML = `${username} logged in!`;
     return false;
   }
 
   function playerIsWaiting() {
-    console.log("bom dia");
+    console.log('bom dia');
     document.getElementById(
-      "message_to_player"
+      'message_to_player'
     ).innerHTML = `<p>${username} está a espera dum adversário...</p><img src='static/imgs/waiting.svg' alt='waiting...' />`;
     return false;
   }
 
   function playerNotWaiting() {
-    console.log("bom dia");
+    console.log('bom dia');
     document.getElementById(
-      "message_to_player"
+      'message_to_player'
     ).innerHTML = `${username} has given up waiting...`;
     return false;
   }
@@ -615,11 +615,11 @@ window.onload = function () {
   }
 
   function serverLogin() {
-    const username_html = document.getElementById("username").value;
-    if (username_html !== "") {
+    const username_html = document.getElementById('username').value;
+    if (username_html !== '') {
       username = username_html;
     }
-    password = document.getElementById("password").value;
+    password = document.getElementById('password').value;
 
     const value = JSON.stringify({
       name: username,
@@ -628,8 +628,8 @@ window.onload = function () {
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open("post", `${apiUrl}register`, true);
-    xhr.setRequestHeader("Content-Type", 'application/json; charset="utf-8"');
+    xhr.open('post', `${apiUrl}register`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
     xhr.send(value);
 
     xhr.onreadystatechange = function () {
@@ -641,37 +641,37 @@ window.onload = function () {
           setTimeout(cleanError, 2000);
         } else {
           playerLoggedIn();
-          console.log("Logged in!");
-          document.getElementById("log_in").style.display = "none";
-          document.getElementById("mute_audio").style.display = "inline";
-          document.getElementById("log_out").style.display = "block";
-          document.getElementById("menu").style.display = "block";
-          document.getElementById("jogo").style.display = "block";
-          document.getElementById("progresso").style.display = "block";
+          console.log('Logged in!');
+          document.getElementById('log_in').style.display = 'none';
+          document.getElementById('mute_audio').style.display = 'inline';
+          document.getElementById('log_out').style.display = 'block';
+          document.getElementById('menu').style.display = 'block';
+          document.getElementById('jogo').style.display = 'block';
+          document.getElementById('progresso').style.display = 'block';
         }
       }
     };
   }
 
   function showSair() {
-    document.getElementById("sair").style.display = "inline";
+    document.getElementById('sair').style.display = 'inline';
   }
 
   function hideGameMode() {
-    document.getElementById("dificuldade").style.display = "none";
-    document.getElementById("modo").style.display = "none";
+    document.getElementById('dificuldade').style.display = 'none';
+    document.getElementById('modo').style.display = 'none';
   }
 
   function showGameMode() {
-    document.getElementById("dificuldade").style.display = "inline";
-    document.getElementById("modo").style.display = "inline";
+    document.getElementById('dificuldade').style.display = 'inline';
+    document.getElementById('modo').style.display = 'inline';
   }
 
   function startGame() {
     getAndSetDificulty(); // Collects information about dificulty
 
-    if (document.getElementsByName("modo")[0].value === "2 Players") {
-      console.log("2 Players Mode");
+    if (document.getElementsByName('modo')[0].value === '2 Players') {
+      console.log('2 Players Mode');
 
       getScore();
       hideGameMode();
@@ -684,17 +684,17 @@ window.onload = function () {
       visitedFalse(); // Fills the visited matrix with false
       game_over = false;
       firstclick = true;
-      document.getElementById("iniciar").style.display = "none";
+      document.getElementById('iniciar').style.display = 'none';
       //  document.getElementById("encerrar").style.display = "inline";
       timeElapsed = 0;
       document.getElementById(
-        "tempo"
+        'tempo'
       ).innerHTML = `Tempo decorrido: ${timeElapsed}`;
       document.getElementById(
-        "numero_minas"
+        'numero_minas'
       ).innerHTML = `Minas restantes:${mines_counter}`;
-    } else if (document.getElementsByName("modo")[0].value === "1 Player") {
-      console.log("1 Player Mode");
+    } else if (document.getElementsByName('modo')[0].value === '1 Player') {
+      console.log('1 Player Mode');
 
       hideGameMode();
       cleanScore();
@@ -703,14 +703,14 @@ window.onload = function () {
       visitedFalse(); // Fills the visited matrix with false
       game_over = false;
       firstclick = true;
-      document.getElementById("iniciar").style.display = "none";
-      document.getElementById("encerrar").style.display = "inline";
+      document.getElementById('iniciar').style.display = 'none';
+      document.getElementById('encerrar').style.display = 'inline';
       timeElapsed = 0;
       document.getElementById(
-        "tempo"
+        'tempo'
       ).innerHTML = `Tempo decorrido: ${timeElapsed}`;
       document.getElementById(
-        "numero_minas"
+        'numero_minas'
       ).innerHTML = `Minas restantes:${mines_counter}`;
       generateGameMatrix(); // Generates Matrix with correct size
       placeMines(); // Places mines on the matrix
@@ -722,8 +722,8 @@ window.onload = function () {
 
   function endGame() {
     clearMatrix();
-    document.getElementById("encerrar").style.display = "none";
-    document.getElementById("iniciar").style.display = "inline";
+    document.getElementById('encerrar').style.display = 'none';
+    document.getElementById('iniciar').style.display = 'inline';
     clearInterval(timer);
     game_over = true;
     showGameMode();
@@ -731,7 +731,7 @@ window.onload = function () {
   }
 
   function clearTable() {
-    document.getElementById("tab").innerHTML = "";
+    document.getElementById('tab').innerHTML = '';
   }
 
   function clearMatrix() {
@@ -739,23 +739,23 @@ window.onload = function () {
   }
 
   function getAndSetDificulty() {
-    difc = document.getElementById("dificuldade").value;
+    difc = document.getElementById('dificuldade').value;
     console.log(`ola ${difc}`);
     switch (difc) {
-      case "beginner":
-        console.log("asdfasdlfasgdf");
+      case 'beginner':
+        console.log('asdfasdlfasgdf');
         rows = 9;
         cols = 9;
         mines = 10;
         mines_counter = mines;
         break;
-      case "intermediate":
+      case 'intermediate':
         rows = 16;
         cols = 16;
         mines = 40;
         mines_counter = mines;
         break;
-      case "expert":
+      case 'expert':
         rows = 16;
         cols = 30;
         mines = 99;
@@ -769,13 +769,13 @@ window.onload = function () {
 
   function changeHonor() {
     switch (difc) {
-      case "beginner":
+      case 'beginner':
         currentHonor = begHonor;
         break;
-      case "intermediate":
+      case 'intermediate':
         currentHonor = intHonor;
         break;
-      case "expert":
+      case 'expert':
         currentHonor = expHonor;
         break;
       default:
@@ -804,7 +804,7 @@ window.onload = function () {
       if (!game_over) {
         leftClick(row, col);
       } else {
-        console.log("Game is already Over!");
+        console.log('Game is already Over!');
       }
     };
   }
@@ -818,7 +818,7 @@ window.onload = function () {
       if (!game_over) {
         rightClick(row, col);
       } else {
-        console.log("Game is already Over!");
+        console.log('Game is already Over!');
       }
       return false;
     };
@@ -827,7 +827,7 @@ window.onload = function () {
   function makeAcordeHandler() {
     return function () {
       acorde = true;
-      console.log("MOUSE_IS_DOWN_MOFO!!");
+      console.log('MOUSE_IS_DOWN_MOFO!!');
     };
   }
 
@@ -839,11 +839,11 @@ window.onload = function () {
 
         cell.innerHTML = "<img alt='blankCell' src='static/imgs/blank.gif'/>";
 
-        const canvas = document.createElement("canvas");
+        const canvas = document.createElement('canvas');
         canvas.width = 20;
         canvas.height = 20;
         const name_dat_canvas = `${i}#${j}`;
-        canvas.setAttribute("id", name_dat_canvas);
+        canvas.setAttribute('id', name_dat_canvas);
         cell.appendChild(canvas);
 
         cell.onclick = makeCellLeftClickHandler();
@@ -913,7 +913,7 @@ window.onload = function () {
       }
     }
 
-    console.log("----Cheats----START----");
+    console.log('----Cheats----START----');
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         if (matrix[i][j] === -1) {
@@ -921,7 +921,7 @@ window.onload = function () {
         }
       }
     }
-    console.log("----Cheats----END-----");
+    console.log('----Cheats----END-----');
   }
 
   function visitedFalse() {
@@ -941,7 +941,7 @@ window.onload = function () {
   function leftClick(r, c) {
     if (visited[r][c] === false) {
       if (firstclick && matrix[r][c] === -1) {
-        console.log("Shuffle Bombs!");
+        console.log('Shuffle Bombs!');
         dealWithFirstClick(r, c);
       } else if (firstclick) {
         firstclick = false;
@@ -950,8 +950,8 @@ window.onload = function () {
 
       if (
         table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .getAttribute("src") === "static/imgs/blank.gif"
+          .getElementsByTagName('img')[0]
+          .getAttribute('src') === 'static/imgs/blank.gif'
       ) {
         if (matrix[r][c] === -1) {
           //Game OVER!!!
@@ -1011,8 +1011,8 @@ window.onload = function () {
   function burst(r, c) {
     if (
       table.rows[r].cells[c]
-        .getElementsByTagName("img")[0]
-        .getAttribute("src") === "static/imgs/flag.png"
+        .getElementsByTagName('img')[0]
+        .getAttribute('src') === 'static/imgs/flag.png'
     ) {
       increaseMines();
     }
@@ -1077,28 +1077,28 @@ window.onload = function () {
 
   function chooseAndSetPicture(r, c, n) {
     table.rows[r].cells[c]
-      .getElementsByTagName("img")[0]
-      .setAttribute("src", `static/imgs/open${n}.gif`);
+      .getElementsByTagName('img')[0]
+      .setAttribute('src', `static/imgs/open${n}.gif`);
   }
 
   function updateTimer() {
     timeElapsed += 1;
     document.getElementById(
-      "tempo"
+      'tempo'
     ).innerHTML = `Tempo decorrido: ${timeElapsed}`;
   }
 
   function decreaseMines() {
     mines_counter -= 1;
     document.getElementById(
-      "numero_minas"
+      'numero_minas'
     ).innerHTML = `Minas restantes:${mines_counter}`;
   }
 
   function increaseMines() {
     mines_counter += 1;
     document.getElementById(
-      "numero_minas"
+      'numero_minas'
     ).innerHTML = `Minas restantes:${mines_counter}`;
   }
 
@@ -1107,7 +1107,7 @@ window.onload = function () {
   }
 
   function checkWin() {
-    console.log("ola");
+    console.log('ola');
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         if (matrix[i][j] !== -1 && visited[i][j] === false) {
@@ -1120,37 +1120,37 @@ window.onload = function () {
 
   function rightClick(r, c) {
     if (acorde === true) {
-      console.log("ACORDE ACTIVATION!!!!!!!!");
+      console.log('ACORDE ACTIVATION!!!!!!!!');
       megaBurst(r, c);
     }
 
     if (visited[r][c] === false) {
       if (
         table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .getAttribute("src") === "static/imgs/blank.gif"
+          .getElementsByTagName('img')[0]
+          .getAttribute('src') === 'static/imgs/blank.gif'
       ) {
         table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "static/imgs/flag.png");
+          .getElementsByTagName('img')[0]
+          .setAttribute('src', 'static/imgs/flag.png');
         decreaseMines();
       } else if (
         table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .getAttribute("src") === "static/imgs/flag.png"
+          .getElementsByTagName('img')[0]
+          .getAttribute('src') === 'static/imgs/flag.png'
       ) {
         table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "static/imgs/questionmark.png");
+          .getElementsByTagName('img')[0]
+          .setAttribute('src', 'static/imgs/questionmark.png');
         increaseMines();
       } else if (
         table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .getAttribute("src") === "static/imgs/questionmark.png"
+          .getElementsByTagName('img')[0]
+          .getAttribute('src') === 'static/imgs/questionmark.png'
       ) {
         table.rows[r].cells[c]
-          .getElementsByTagName("img")[0]
-          .setAttribute("src", "static/imgs/blank.gif");
+          .getElementsByTagName('img')[0]
+          .setAttribute('src', 'static/imgs/blank.gif');
       }
     }
   }
@@ -1160,8 +1160,8 @@ window.onload = function () {
       for (let c = 0; c < cols; c++) {
         if (matrix[r][c] === -1) {
           table.rows[r].cells[c]
-            .getElementsByTagName("img")[0]
-            .setAttribute("src", "static/imgs/bombrevealed.gif");
+            .getElementsByTagName('img')[0]
+            .setAttribute('src', 'static/imgs/bombrevealed.gif');
         }
       }
     }
@@ -1171,40 +1171,40 @@ window.onload = function () {
     const r = o.x;
     const c = o.y;
     table.rows[r].cells[c]
-      .getElementsByTagName("img")[0]
-      .setAttribute("src", "static/imgs/bombdeath.gif");
+      .getElementsByTagName('img')[0]
+      .setAttribute('src', 'static/imgs/bombdeath.gif');
   }
 
   // -------------------------------- MENSAGENS PARA O JOGADOR E TAL --------------------------------------------------- //
 
   function playerWon() {
-    document.getElementById("message_to_player").innerHTML = "GANHASTE!!";
+    document.getElementById('message_to_player').innerHTML = 'GANHASTE!!';
   }
 
   function playerLost() {
-    document.getElementById("message_to_player").innerHTML = "PERDESTE!!";
+    document.getElementById('message_to_player').innerHTML = 'PERDESTE!!';
   }
 
   function clearMessage() {
-    document.getElementById("message_to_player").innerHTML = "";
+    document.getElementById('message_to_player').innerHTML = '';
   }
 
   function showWhosTurn() {
     document.getElementById(
-      "whos_turn"
+      'whos_turn'
     ).innerHTML = `É o turno do jogador: ${turn}`;
   }
 
   function clearWhosTurn() {
-    document.getElementById("whos_turn").innerHTML = "";
+    document.getElementById('whos_turn').innerHTML = '';
   }
 
   function updatePlayersStats() {
     document.getElementById(
-      "player_stats"
+      'player_stats'
     ).innerHTML = `Jogador ${username} encontrou : ${p_bombs} bombas`;
     document.getElementById(
-      "opponent_stats"
+      'opponent_stats'
     ).innerHTML = `Adversario ${opponent} encontrou : ${op_bombs} bombas`;
     return false;
   }
@@ -1328,26 +1328,26 @@ window.onload = function () {
   // ----------------------------------------------------- GENERAL FUNCTIONS ----------------------------------------------- //
 
   function localStorageInsert(difc) {
-    if (difc === "beginner") {
-      localStorage.setItem("beginner", JSON.stringify(begHonor));
-    } else if (difc === "intermediate") {
-      localStorage.setItem("intermediate", JSON.stringify(intHonor));
+    if (difc === 'beginner') {
+      localStorage.setItem('beginner', JSON.stringify(begHonor));
+    } else if (difc === 'intermediate') {
+      localStorage.setItem('intermediate', JSON.stringify(intHonor));
     } else {
-      localStorage.setItem("expert", JSON.stringify(expHonor));
+      localStorage.setItem('expert', JSON.stringify(expHonor));
     }
   }
 
   function localStorageGet(difc, honorToChange) {
     let tmp = [];
     const pointerHonor = honorToChange;
-    console.log("getting some scores from storage!");
+    console.log('getting some scores from storage!');
 
-    if (difc === "beginner") {
-      tmp = JSON.parse(localStorage.getItem("beginner"));
-    } else if (difc === "intermediate") {
-      tmp = JSON.parse(localStorage.getItem("intermediate"));
+    if (difc === 'beginner') {
+      tmp = JSON.parse(localStorage.getItem('beginner'));
+    } else if (difc === 'intermediate') {
+      tmp = JSON.parse(localStorage.getItem('intermediate'));
     } else {
-      tmp = JSON.parse(localStorage.getItem("expert"));
+      tmp = JSON.parse(localStorage.getItem('expert'));
     }
 
     if (tmp !== null) {
@@ -1359,23 +1359,23 @@ window.onload = function () {
 
   function localStorageGetAll() {
     let tmp;
-    console.log("Getting all scores from storage!");
+    console.log('Getting all scores from storage!');
 
-    tmp = JSON.parse(localStorage.getItem("beginner"));
+    tmp = JSON.parse(localStorage.getItem('beginner'));
     if (tmp !== null) {
       for (const item of tmp) {
         begHonor.push(item);
       }
     }
 
-    tmp = JSON.parse(localStorage.getItem("intermediate"));
+    tmp = JSON.parse(localStorage.getItem('intermediate'));
     if (tmp !== null) {
       for (const item of tmp) {
         intHonor.push(item);
       }
     }
 
-    tmp = JSON.parse(localStorage.getItem("expert"));
+    tmp = JSON.parse(localStorage.getItem('expert'));
     if (tmp !== null) {
       for (const item of tmp) {
         expHonor.push(item);
@@ -1384,32 +1384,32 @@ window.onload = function () {
   }
 
   function cleanHonor() {
-    document.getElementById("honorlist").innerHTML = "";
+    document.getElementById('honorlist').innerHTML = '';
   }
 
   function refreshHonra() {
-    console.log("Refreshing the honor list!");
+    console.log('Refreshing the honor list!');
     cleanHonor();
-    const honor_value = document.getElementById("difHonra").value;
+    const honor_value = document.getElementById('difHonra').value;
 
     switch (honor_value) {
-      case "beginner":
+      case 'beginner':
         showHonor = begHonor;
         break;
-      case "intermediate":
+      case 'intermediate':
         showHonor = intHonor;
         break;
-      case "expert":
+      case 'expert':
         showHonor = expHonor;
         break;
       default:
     }
 
     for (const item of showHonor) {
-      const node = document.createElement("li");
+      const node = document.createElement('li');
       const textnode = document.createTextNode(` ${item.uname} ${item.score}`);
       node.appendChild(textnode);
-      document.getElementById("honorlist").appendChild(node);
+      document.getElementById('honorlist').appendChild(node);
     }
   }
 }; //Fim
