@@ -1,3 +1,11 @@
+import { addToArray, canvas_explode } from './helpers';
+import {
+  errorMessage,
+  hideHonorTable,
+  logOut,
+  showHonorTable,
+} from './domModifiers';
+
 window.onload = function () {
   const apiUrl = 'https://tw-minesweeper-server.herokuapp.com/';
 
@@ -151,31 +159,6 @@ window.onload = function () {
         }
       }
     };
-  }
-
-  function canvas_explode(r, c) {
-    const elemento = `${r}#${c}`;
-    const canvas = document.getElementById(elemento);
-    const ctx = canvas.getContext('2d');
-
-    let frame = 0;
-    let setIntID;
-    const img = new Image();
-
-    function animate() {
-      ctx.clearRect(0, 0, 25, 25);
-      if (frame === 13) {
-        clearInterval(setIntID);
-        return;
-      }
-      ctx.drawImage(img, 39 * frame, 0, 39, 38, 0, 0, 25, 25);
-      frame++;
-    }
-
-    img.onload = function () {
-      setIntID = setInterval(animate, 150);
-    };
-    img.src = 'static/imgs/explosion.png';
   }
 
   function burstMP(cell, player) {
@@ -552,34 +535,6 @@ window.onload = function () {
   }
 
   // ----------------------------------------------------- SINGLE PLAYER ------------------------------------------------------------------ //
-
-  function showHonorTable() {
-    document.getElementById('quadro_honra').style.display = 'block';
-    document.getElementById('mostrar_honra').style.display = 'none';
-    document.getElementById('esconder_honra').style.display = 'inline';
-  }
-
-  function hideHonorTable() {
-    document.getElementById('quadro_honra').style.display = 'none';
-    document.getElementById('mostrar_honra').style.display = 'inline';
-    document.getElementById('esconder_honra').style.display = 'none';
-  }
-
-  function logOut() {
-    document.getElementById('log_in').style.display = 'block';
-    document.getElementById('log_out').style.display = 'none';
-    document.getElementById('menu').style.display = 'none';
-    document.getElementById('jogo').style.display = 'none';
-    document.getElementById('progresso').style.display = 'none';
-    document.getElementById('quadro_honra').style.display = 'none';
-    return false;
-  }
-
-  function errorMessage(mensagem) {
-    console.log('Sending error message to player');
-    document.getElementById('error_message').innerHTML = mensagem;
-    return false;
-  }
 
   function cleanError() {
     document.getElementById('error_message').innerHTML = '';
@@ -1177,18 +1132,6 @@ window.onload = function () {
 
   // -------------------------------- MENSAGENS PARA O JOGADOR E TAL --------------------------------------------------- //
 
-  function playerWon() {
-    document.getElementById('message_to_player').innerHTML = 'GANHASTE!!';
-  }
-
-  function playerLost() {
-    document.getElementById('message_to_player').innerHTML = 'PERDESTE!!';
-  }
-
-  function clearMessage() {
-    document.getElementById('message_to_player').innerHTML = '';
-  }
-
   function showWhosTurn() {
     document.getElementById(
       'whos_turn'
@@ -1207,16 +1150,6 @@ window.onload = function () {
       'opponent_stats'
     ).innerHTML = `Adversario ${opponent} encontrou : ${op_bombs} bombas`;
     return false;
-  }
-
-  function addToArray(o, a) {
-    let i = 0;
-    while (i < a.length && o.score > a[i].score) {
-      i++;
-    }
-
-    a.splice(i, 0, o);
-    console.log(`----------${o.uname} ${o.score}-------`);
   }
 
   function dealWithFirstClick(r, c) {
