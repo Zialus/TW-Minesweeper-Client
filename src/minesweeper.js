@@ -1,9 +1,23 @@
 import { addToArray, canvas_explode } from './helpers';
 import {
+  cleanError,
+  cleanHonor,
+  clearMessage,
+  clearTable,
   errorMessage,
+  hideGameMode,
   hideHonorTable,
   logOut,
+  playerIsWaiting,
+  playerLoggedIn,
+  playerLost,
+  playerNotWaiting,
+  playerWon,
+  showGameMode,
   showHonorTable,
+  showSair,
+  showWhosTurn,
+  updatePlayersStats,
 } from './domModifiers';
 
 window.onload = function () {
@@ -185,7 +199,7 @@ window.onload = function () {
       } else {
         op_bombs++;
       }
-      updatePlayersStats();
+      updatePlayersStats(username, p_bombs, opponent, op_bombs);
     } else {
       chooseAndSetPicture(r, c, value);
     }
@@ -232,7 +246,7 @@ window.onload = function () {
         if (msg.turn !== undefined) {
           turn = msg.turn;
           if (turn === username) turn_audio.play();
-          showWhosTurn();
+          showWhosTurn(turn);
         }
       }
       //ERRO
@@ -271,7 +285,7 @@ window.onload = function () {
       }
     };
 
-    playerNotWaiting();
+    playerNotWaiting(username);
     showGameMode();
 
     document.getElementById('sair').style.display = 'none';
@@ -406,7 +420,7 @@ window.onload = function () {
         opponent = res.opponent;
         turn = res.turn;
         if (turn === username) turn_audio.play();
-        showWhosTurn();
+        showWhosTurn(turn);
 
         console.log(`Oponente: ${opponent} | Turno: ${turn}`);
         document.getElementById('sair').style.display = 'none';
@@ -418,7 +432,7 @@ window.onload = function () {
 
         document.getElementById('jogo').style.display = 'block';
         document.getElementById('progresso').style.display = 'block';
-        updatePlayersStats();
+        updatePlayersStats(username, p_bombs, opponent, op_bombs);
         updateMP();
 
         console.log(`Oponente: ${opponent} | Turno: ${turn}`);
@@ -500,7 +514,7 @@ window.onload = function () {
 
   function joinGame() {
     console.log('Lets join a game!');
-    playerIsWaiting();
+    playerIsWaiting(username);
 
     const value = JSON.stringify({
       name: username,
@@ -536,34 +550,6 @@ window.onload = function () {
 
   // ----------------------------------------------------- SINGLE PLAYER ------------------------------------------------------------------ //
 
-  function cleanError() {
-    document.getElementById('error_message').innerHTML = '';
-    return false;
-  }
-
-  function playerLoggedIn() {
-    document.getElementById(
-      'message_to_player'
-    ).innerHTML = `${username} logged in!`;
-    return false;
-  }
-
-  function playerIsWaiting() {
-    console.log('bom dia');
-    document.getElementById(
-      'message_to_player'
-    ).innerHTML = `<p>${username} está a espera dum adversário...</p><img src='static/imgs/waiting.svg' alt='waiting...' />`;
-    return false;
-  }
-
-  function playerNotWaiting() {
-    console.log('bom dia');
-    document.getElementById(
-      'message_to_player'
-    ).innerHTML = `${username} has given up waiting...`;
-    return false;
-  }
-
   function validateGame() {
     serverLogin();
     return false;
@@ -595,7 +581,7 @@ window.onload = function () {
           errorMessage(resposta.error);
           setTimeout(cleanError, 2000);
         } else {
-          playerLoggedIn();
+          playerLoggedIn(username);
           console.log('Logged in!');
           document.getElementById('log_in').style.display = 'none';
           document.getElementById('mute_audio').style.display = 'inline';
@@ -606,20 +592,6 @@ window.onload = function () {
         }
       }
     };
-  }
-
-  function showSair() {
-    document.getElementById('sair').style.display = 'inline';
-  }
-
-  function hideGameMode() {
-    document.getElementById('dificuldade').style.display = 'none';
-    document.getElementById('modo').style.display = 'none';
-  }
-
-  function showGameMode() {
-    document.getElementById('dificuldade').style.display = 'inline';
-    document.getElementById('modo').style.display = 'inline';
   }
 
   function startGame() {
@@ -683,10 +655,6 @@ window.onload = function () {
     game_over = true;
     showGameMode();
     return false;
-  }
-
-  function clearTable() {
-    document.getElementById('tab').innerHTML = '';
   }
 
   function clearMatrix() {
@@ -1132,26 +1100,6 @@ window.onload = function () {
 
   // -------------------------------- MENSAGENS PARA O JOGADOR E TAL --------------------------------------------------- //
 
-  function showWhosTurn() {
-    document.getElementById(
-      'whos_turn'
-    ).innerHTML = `É o turno do jogador: ${turn}`;
-  }
-
-  function clearWhosTurn() {
-    document.getElementById('whos_turn').innerHTML = '';
-  }
-
-  function updatePlayersStats() {
-    document.getElementById(
-      'player_stats'
-    ).innerHTML = `Jogador ${username} encontrou : ${p_bombs} bombas`;
-    document.getElementById(
-      'opponent_stats'
-    ).innerHTML = `Adversario ${opponent} encontrou : ${op_bombs} bombas`;
-    return false;
-  }
-
   function dealWithFirstClick(r, c) {
     matrix[r][c] = newValue(r, c);
     decreaseSurroundingCells(r, c);
@@ -1314,10 +1262,6 @@ window.onload = function () {
         expHonor.push(item);
       }
     }
-  }
-
-  function cleanHonor() {
-    document.getElementById('honorlist').innerHTML = '';
   }
 
   function refreshHonra() {
