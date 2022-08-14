@@ -1,10 +1,10 @@
-.titulo {
+.title {
   text-align: center;
   font-family: palatino, serif;
   font-size: 30px;
 }
 
-.mute_button {
+.mute-button {
   display: none;
 }
 
@@ -16,7 +16,7 @@
   font-size: 15px;
 }
 
-.log_out {
+.log-out {
   margin-left: auto;
   margin-right: auto;
   display: none;
@@ -37,7 +37,7 @@
   width: auto;
 }
 
-.quadro_honra {
+.honor-table {
   font-family: palatino, serif;
   font-size: 15px;
   width: 200px;
@@ -51,34 +51,34 @@
   display: none;
 }
 
-.encerrar {
+.shutdown {
   display: none;
 }
 
-.progresso {
+.progress {
   text-align: center;
   font-family: palatino, serif;
   font-size: 15px;
   display: none;
 }
 
-.esconder_honra {
+.honor-hide {
   display: none;
 }
 
-.difHonra {
+.honor-dif {
   display: none;
 }
 
-.difHonraMP {
+.honor-dif-multiplayer {
   display: none;
 }
 
-.sair {
+.exit {
   display: none;
 }
 
-.warning_message {
+.warning-message {
   text-align: center;
   font-family: palatino, serif;
   color: red;
@@ -88,8 +88,8 @@
 body {
   background-image: radial-gradient(
     circle farthest-corner at 22.4% 21.7%,
-    rgba(4, 189, 228, 1) 0%,
-    rgba(2, 83, 185, 1) 100.2%
+    rgb(4 189 228 / 100%) 0%,
+    rgb(2 83 185 / 100%) 100.2%
   );
 }
 
@@ -109,9 +109,6 @@ td img {
   height: 20px;
   width: 20px;
   text-align: center;
-}
-
-td img {
   position: absolute;
   z-index: 0;
 }
