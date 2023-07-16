@@ -330,7 +330,7 @@ window.onload = function () {
       document.getElementById('score').innerHTML = '';
     } else {
       document.getElementById(
-        'score'
+        'score',
       ).innerHTML = `A tua pontuação neste modo de jogo é ${points}`;
     }
   }
@@ -392,7 +392,7 @@ window.onload = function () {
           for (const item of showHonor) {
             const node = document.createElement('li');
             const textnode = document.createTextNode(
-              ` ${item.name} ${item.score}`
+              ` ${item.name} ${item.score}`,
             );
             node.appendChild(textnode);
             document.getElementById('honorlist').appendChild(node);
@@ -409,7 +409,7 @@ window.onload = function () {
     console.log('initMP');
 
     sse = new EventSource(
-      `${apiUrl}update?name=${username}&game=${gameId}&key=${gameKey}`
+      `${apiUrl}update?name=${username}&game=${gameId}&key=${gameKey}`,
     );
     sse.onmessage = function (event) {
       const res = JSON.parse(event.data);
@@ -615,10 +615,10 @@ window.onload = function () {
       //  document.getElementById("encerrar").style.display = "inline";
       timeElapsed = 0;
       document.getElementById(
-        'tempo'
+        'tempo',
       ).innerHTML = `Tempo decorrido: ${timeElapsed}`;
       document.getElementById(
-        'numero_minas'
+        'numero_minas',
       ).innerHTML = `Minas restantes:${mines_counter}`;
     } else if (document.getElementsByName('modo')[0].value === '1 Player') {
       console.log('1 Player Mode');
@@ -634,10 +634,10 @@ window.onload = function () {
       document.getElementById('encerrar').style.display = 'inline';
       timeElapsed = 0;
       document.getElementById(
-        'tempo'
+        'tempo',
       ).innerHTML = `Tempo decorrido: ${timeElapsed}`;
       document.getElementById(
-        'numero_minas'
+        'numero_minas',
       ).innerHTML = `Minas restantes:${mines_counter}`;
       generateGameMatrix(); // Generates Matrix with correct size
       placeMines(); // Places mines on the matrix
@@ -1007,21 +1007,21 @@ window.onload = function () {
   function updateTimer() {
     timeElapsed += 1;
     document.getElementById(
-      'tempo'
+      'tempo',
     ).innerHTML = `Tempo decorrido: ${timeElapsed}`;
   }
 
   function decreaseMines() {
     mines_counter -= 1;
     document.getElementById(
-      'numero_minas'
+      'numero_minas',
     ).innerHTML = `Minas restantes:${mines_counter}`;
   }
 
   function increaseMines() {
     mines_counter += 1;
     document.getElementById(
-      'numero_minas'
+      'numero_minas',
     ).innerHTML = `Minas restantes:${mines_counter}`;
   }
 
