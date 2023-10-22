@@ -11,11 +11,11 @@
     "staticOutPath": "static"
   },
   "devDependencies": {
-    "eslint": "^8.51.0",
-    "parcel": "^2.9.3",
+    "eslint": "^8.53.0",
+    "parcel": "^2.10.2",
     "parcel-reporter-static-files-copy": "^1.5.3",
     "prettier": "^3.0.3",
-    "stylelint": "^15.10.3",
+    "stylelint": "^15.11.0",
     "stylelint-config-standard": "^34.0.0"
   }
 }
