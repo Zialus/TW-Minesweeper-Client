@@ -329,9 +329,8 @@ window.onload = function () {
     if (points === undefined) {
       document.getElementById('score').innerHTML = '';
     } else {
-      document.getElementById(
-        'score',
-      ).innerHTML = `A tua pontuação neste modo de jogo é ${points}`;
+      document.getElementById('score').innerHTML =
+        `A tua pontuação neste modo de jogo é ${points}`;
     }
   }
 
@@ -614,12 +613,10 @@ window.onload = function () {
       document.getElementById('iniciar').style.display = 'none';
       //  document.getElementById("encerrar").style.display = "inline";
       timeElapsed = 0;
-      document.getElementById(
-        'tempo',
-      ).innerHTML = `Tempo decorrido: ${timeElapsed}`;
-      document.getElementById(
-        'numero_minas',
-      ).innerHTML = `Minas restantes:${mines_counter}`;
+      document.getElementById('tempo').innerHTML =
+        `Tempo decorrido: ${timeElapsed}`;
+      document.getElementById('numero_minas').innerHTML =
+        `Minas restantes:${mines_counter}`;
     } else if (document.getElementsByName('modo')[0].value === '1 Player') {
       console.log('1 Player Mode');
 
@@ -633,12 +630,10 @@ window.onload = function () {
       document.getElementById('iniciar').style.display = 'none';
       document.getElementById('encerrar').style.display = 'inline';
       timeElapsed = 0;
-      document.getElementById(
-        'tempo',
-      ).innerHTML = `Tempo decorrido: ${timeElapsed}`;
-      document.getElementById(
-        'numero_minas',
-      ).innerHTML = `Minas restantes:${mines_counter}`;
+      document.getElementById('tempo').innerHTML =
+        `Tempo decorrido: ${timeElapsed}`;
+      document.getElementById('numero_minas').innerHTML =
+        `Minas restantes:${mines_counter}`;
       generateGameMatrix(); // Generates Matrix with correct size
       placeMines(); // Places mines on the matrix
       setTabuleiroCanvas(); // Generates HTML Table based on the information on the matrix
@@ -1006,23 +1001,20 @@ window.onload = function () {
 
   function updateTimer() {
     timeElapsed += 1;
-    document.getElementById(
-      'tempo',
-    ).innerHTML = `Tempo decorrido: ${timeElapsed}`;
+    document.getElementById('tempo').innerHTML =
+      `Tempo decorrido: ${timeElapsed}`;
   }
 
   function decreaseMines() {
     mines_counter -= 1;
-    document.getElementById(
-      'numero_minas',
-    ).innerHTML = `Minas restantes:${mines_counter}`;
+    document.getElementById('numero_minas').innerHTML =
+      `Minas restantes:${mines_counter}`;
   }
 
   function increaseMines() {
     mines_counter += 1;
-    document.getElementById(
-      'numero_minas',
-    ).innerHTML = `Minas restantes:${mines_counter}`;
+    document.getElementById('numero_minas').innerHTML =
+      `Minas restantes:${mines_counter}`;
   }
 
   function validPos(r, c) {
