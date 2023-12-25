@@ -4,7 +4,11 @@
   "scripts": {
     "serve": "parcel",
     "build": "parcel build",
-    "test": "exit 1"
+    "test": "jest",
+    "lint:fix": "npm run lint:prettier && npm run lint:stylelint && npm run lint:eslint",
+    "lint:prettier": "prettier --write src",
+    "lint:stylelint": "stylelint 'src/**/*.css'",
+    "lint:eslint": "eslint src"
   },
   "staticFiles": {
     "staticPath": "src/static",
@@ -12,10 +16,11 @@
   },
   "devDependencies": {
     "eslint": "^8.56.0",
+    "jest": "^29.7.0",
     "parcel": "^2.10.3",
     "parcel-reporter-static-files-copy": "^1.5.3",
     "prettier": "^3.1.1",
-    "stylelint": "^16.0.2",
-    "stylelint-config-standard": "^35.0.0"
+    "stylelint": "^16.1.0",
+    "stylelint-config-standard": "^36.0.0"
   }
 }
