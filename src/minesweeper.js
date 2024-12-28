@@ -21,7 +21,7 @@ import {
 } from './domModifiers';
 
 window.onload = function () {
-  const apiUrl = 'https://tw-minesweeper-server.herokuapp.com/';
+  const apiUrl = 'https://tw-minesweeper-server.onrender.com/';
 
   //-------------------------MISC VARIABLES-----------------------------------------------------//
   let rows; // nº of rows
