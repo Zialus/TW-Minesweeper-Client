@@ -20,7 +20,7 @@
     "parcel": "^2.16.3",
     "parcel-reporter-static-files-copy": "^1.5.3",
     "prettier": "^3.7.4",
-    "stylelint": "^16.26.1",
+    "stylelint": "^17.0.0",
     "stylelint-config-standard": "^39.0.1"
   }
 }
