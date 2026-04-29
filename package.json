@@ -5,22 +5,26 @@
     "serve": "parcel",
     "build": "parcel build",
     "test": "jest",
-    "lint:fix": "npm run lint:prettier && npm run lint:stylelint && npm run lint:eslint",
-    "lint:prettier": "prettier --write src",
+    "lint": "pnpm run lint:prettier && pnpm run lint:stylelint && pnpm run lint:eslint",
+    "lint:fix": "pnpm run lint:prettier:fix && pnpm run lint:stylelint:fix && pnpm run lint:eslint:fix",
+    "lint:prettier": "prettier --check src",
+    "lint:prettier:fix": "prettier --write src",
     "lint:stylelint": "stylelint 'src/**/*.css'",
-    "lint:eslint": "eslint src"
+    "lint:stylelint:fix": "stylelint --fix 'src/**/*.css'",
+    "lint:eslint": "eslint src",
+    "lint:eslint:fix": "eslint --fix src"
   },
   "staticFiles": {
     "staticPath": "src/static",
     "staticOutPath": "static"
   },
   "devDependencies": {
-    "eslint": "^9.39.2",
-    "jest": "^30.2.0",
-    "parcel": "^2.16.3",
+    "eslint": "^10.2.1",
+    "jest": "^30.3.0",
+    "parcel": "^2.16.4",
     "parcel-reporter-static-files-copy": "^1.5.3",
-    "prettier": "^3.7.4",
-    "stylelint": "^16.26.1",
-    "stylelint-config-standard": "^39.0.1"
+    "prettier": "^3.8.3",
+    "stylelint": "^17.9.1",
+    "stylelint-config-standard": "^40.0.0"
   }
 }
