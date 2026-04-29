@@ -1,5 +1,6 @@
 import globals from 'globals';
 import js from '@eslint/js';
+import vitestPlugin from '@vitest/eslint-plugin';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
@@ -13,5 +14,18 @@ export default defineConfig([
       sourceType: 'module',
     },
     rules: {},
+  },
+  {
+    files: ['src/**/*.test.js'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...vitestPlugin.globals,
+      },
+    },
+    plugins: {
+      vitest: vitestPlugin,
+    },
+    rules: vitestPlugin.configs.recommended.rules,
   },
 ]);
