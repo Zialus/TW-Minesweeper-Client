@@ -20,6 +20,7 @@
     "staticOutPath": "static"
   },
   "devDependencies": {
+    "@parcel/config-default": "^2.16.4",
     "eslint": "^10.2.1",
     "jest": "^30.3.0",
     "parcel": "^2.16.4",
