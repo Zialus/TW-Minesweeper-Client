@@ -19,14 +19,14 @@ jobs:
         cache: true
 
     - name: Install dependencies
-      run: pnpm install
+      run: pnpm install --ignore-scripts --frozen-lockfile
+
+    - name: Run build
+      run: pnpm run build
 
     - name: Run lint
       run: pnpm run lint
       continue-on-error: true # to be fixed later
-
-    - name: Run build
-      run: pnpm run build
 
     - name: Run tests
       run: pnpm run test:coverage
