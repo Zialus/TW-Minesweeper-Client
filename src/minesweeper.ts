@@ -20,11 +20,10 @@ import {
   updatePlayersStats,
 } from './domModifiers';
 
-
 export interface Player {
   uname: string;
   score: number;
-};
+}
 
 window.onload = function () {
   const apiUrl = 'https://tw-minesweeper-server.onrender.com/';

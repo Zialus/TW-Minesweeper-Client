@@ -1,4 +1,4 @@
-import { Player } from "./minesweeper";
+import { Player } from './minesweeper';
 
 export function canvas_explode(r: number, c: number) {
   const elemento = `${r}#${c}`;
