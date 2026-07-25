@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { addToArray, canvas_explode } from './helpers.js';
+import { addToArray, canvas_explode } from './helpers';
 
 describe('addToArray', () => {
   it('should iterate through array until finding correct insertion position', () => {
