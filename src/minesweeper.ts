@@ -66,7 +66,7 @@ window.onload = function () {
   let turn: string; // nome do jogador a quem pertence o turno actual
   let p_bombs = 0; // quantidade de bombas econtradas pelo jogador
   let op_bombs = 0; // quantidade de bombas econtradas pelo adversario
-  let sse;
+  let sse: EventSource;
 
   //------------------------ARRAYS PARA GUARDAR QUADRO DE HONRA --------------------------------//
   const begHonor: Player[] = []; // Stores Hi-Scores for the Beginner dificulty
