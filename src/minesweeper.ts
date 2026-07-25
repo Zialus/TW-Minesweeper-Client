@@ -20,26 +20,32 @@ import {
   updatePlayersStats,
 } from './domModifiers';
 
+
+export interface Player {
+  uname: string;
+  score: number;
+};
+
 window.onload = function () {
   const apiUrl = 'https://tw-minesweeper-server.onrender.com/';
 
   //-------------------------MISC VARIABLES-----------------------------------------------------//
-  let rows; // nº of rows
-  let cols; // nº of columns
-  let mines; // nº of mines
+  let rows: number;
+  let cols: number;
+  let mines: number;
   const table = document.getElementById('tab'); // html table where the game matrix will be displayed
-  let matrix; // Matrix with "mine information" of each cell
-  let visited; // Matrix with information about visited state of cells
-  let mines_counter; // Counts how many mines have been "found"
+  let matrix: number[][]; // Matrix with "mine information" of each cell
+  let visited: boolean[][]; // Matrix with information about visited state of cells
+  let mines_counter: number; // Counts how many mines have been "found"
   let realBomb; // Pair of coordinates of the bomb that made the player lose the game
-  let timer; // Javascript timer
+  let timer: NodeJS.Timeout; // Javascript timer
   let timeElapsed = 0; // Time elapsed since the game began
   let firstclick = true; // Stores the state of the current click ( Whether it is the first one or not)
   let game_over = false; // Stores the state of the current game ( Whether it is over or not)
-  let points; // Stores the score of the player in the multiplayer mode
+  let points: number; // Stores the score of the player in the multiplayer mode
   let username = 'Default User'; // Set a default value in case a username isn't picked
-  let password; // Stores the password
-  let difc; // Stores the game dificulty
+  let password: string;
+  let difc: 'beginner' | 'intermediate' | 'expert';
   let acorde = false;
 
   //-------------------------VARIAVEIS PARA LIDAR COM AUDIO-------------------------------------//
@@ -54,22 +60,22 @@ window.onload = function () {
 
   //-------------------------VARIAVEIS PARA LIDAR COM ESTADO DO JOGO MP-------------------------//
   const our_group = 4;
-  let gameId;
-  let gameKey;
-  let opponent; // nome do jogador adversario
-  let turn; // nome do jogador a quem pertence o turno actual
+  let gameId: string; // id do jogo
+  let gameKey: string;
+  let opponent: string; // nome do jogador adversario
+  let turn: string; // nome do jogador a quem pertence o turno actual
   let p_bombs = 0; // quantidade de bombas econtradas pelo jogador
   let op_bombs = 0; // quantidade de bombas econtradas pelo adversario
   let sse;
 
   //------------------------ARRAYS PARA GUARDAR QUADRO DE HONRA --------------------------------//
-  const begHonor = []; // Stores Hi-Scores for the Beginner dificulty
-  const intHonor = []; // Stores Hi-Scores for the Intermediate dificulty
-  const expHonor = []; // Stores Hi-Scores for the Expert dificulty
+  const begHonor: Player[] = []; // Stores Hi-Scores for the Beginner dificulty
+  const intHonor: Player[] = []; // Stores Hi-Scores for the Intermediate dificulty
+  const expHonor: Player[] = []; // Stores Hi-Scores for the Expert dificulty
 
-  let begHonorMP = []; // Stores Hi-Scores for the Beginner dificulty for the MultiPlayer Mode
-  let intHonorMP = []; // Stores Hi-Scores for the Intermediate dificulty for the MultiPlayer Mode
-  let expHonorMP = []; // Stores Hi-Scores for the Expert dificulty for the MultiPlayer Mode
+  let begHonorMP: Player[] = []; // Stores Hi-Scores for the Beginner dificulty for the MultiPlayer Mode
+  let intHonorMP: Player[] = []; // Stores Hi-Scores for the Intermediate dificulty for the MultiPlayer Mode
+  let expHonorMP: Player[] = []; // Stores Hi-Scores for the Expert dificulty for the MultiPlayer Mode
 
   localStorageGetAll();
 
@@ -143,7 +149,7 @@ window.onload = function () {
 
   // console.log(xhr.readyState + "-----" + xhr.status);
 
-  function notify(r, c) {
+  function notify(r: number, c: number) {
     console.log('ENTROU NO NOTIFY');
 
     const xhr = new XMLHttpRequest();
@@ -175,7 +181,7 @@ window.onload = function () {
     };
   }
 
-  function burstMP(cell, player) {
+  function burstMP(cell: [number, number, number], player: string) {
     const r = cell[0] - 1; // (0,0) vs (1,1)
     const c = cell[1] - 1; // (0,0) vs (1,1)
     const value = cell[2];
@@ -856,7 +862,7 @@ window.onload = function () {
     }
   }
 
-  function leftClick(r, c) {
+  function leftClick(r: number, c: number) {
     if (visited[r][c] === false) {
       if (firstclick && matrix[r][c] === -1) {
         console.log('Shuffle Bombs!');
@@ -892,7 +898,7 @@ window.onload = function () {
     }
   }
 
-  function megaBurst(r, c) {
+  function megaBurst(r: number, c: number) {
     if (validPos(r - 1, c) && visited[r - 1][c] === false) {
       leftClick(r - 1, c);
     }
@@ -926,7 +932,7 @@ window.onload = function () {
     }
   }
 
-  function burst(r, c) {
+  function burst(r: number, c: number) {
     if (
       table.rows[r].cells[c]
         .getElementsByTagName('img')[0]
@@ -993,7 +999,7 @@ window.onload = function () {
     }
   }
 
-  function chooseAndSetPicture(r, c, n) {
+  function chooseAndSetPicture(r: number, c: number, n: number) {
     table.rows[r].cells[c]
       .getElementsByTagName('img')[0]
       .setAttribute('src', `static/imgs/open${n}.gif`);
@@ -1017,7 +1023,7 @@ window.onload = function () {
       `Minas restantes:${mines_counter}`;
   }
 
-  function validPos(r, c) {
+  function validPos(r: number, c: number) {
     return r >= 0 && r < rows && c >= 0 && c < cols;
   }
 
@@ -1033,7 +1039,7 @@ window.onload = function () {
     return true;
   }
 
-  function rightClick(r, c) {
+  function rightClick(r: number, c: number) {
     if (acorde === true) {
       console.log('ACORDE ACTIVATION!!!!!!!!');
       megaBurst(r, c);
@@ -1082,7 +1088,7 @@ window.onload = function () {
     }
   }
 
-  function showRealBomb(o) {
+  function showRealBomb(o: { x: number; y: number }) {
     const r = o.x;
     const c = o.y;
     table.rows[r].cells[c]
@@ -1092,7 +1098,7 @@ window.onload = function () {
 
   // -------------------------------- MENSAGENS PARA O JOGADOR E TAL --------------------------------------------------- //
 
-  function dealWithFirstClick(r, c) {
+  function dealWithFirstClick(r: number, c: number) {
     matrix[r][c] = newValue(r, c);
     decreaseSurroundingCells(r, c);
     const t = newPos(r, c);
@@ -1102,7 +1108,7 @@ window.onload = function () {
     timer = setInterval(updateTimer, 1000);
   }
 
-  function newPos(r, c) {
+  function newPos(r: number, c: number) {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         if (matrix[i][j] !== -1 && i !== r && j !== c) {
@@ -1115,7 +1121,7 @@ window.onload = function () {
     }
   }
 
-  function newValue(x, y) {
+  function newValue(x: number, y: number) {
     let aux = 0;
     if (validPos(x - 1, y) && matrix[x - 1][y] === -1) {
       aux++;
@@ -1144,7 +1150,7 @@ window.onload = function () {
     return aux;
   }
 
-  function decreaseSurroundingCells(x, y) {
+  function decreaseSurroundingCells(x: number, y: number) {
     if (validPos(x - 1, y) && matrix[x - 1][y] !== -1) {
       matrix[x - 1][y]--;
     }
@@ -1171,7 +1177,7 @@ window.onload = function () {
     }
   }
 
-  function increaseSurroundingCells(x, y) {
+  function increaseSurroundingCells(x: number, y: number) {
     if (validPos(x - 1, y) && matrix[x - 1][y] !== -1) {
       matrix[x - 1][y]++;
     }

@@ -6,13 +6,13 @@ import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
   {
+    files: ['src/**/*.ts'],
     extends: [
-      eslint.configs.recommended,
+      // eslint.configs.recommended,
       // tseslint.configs.eslintRecommended,
       // ...tseslint.configs.strictTypeChecked,
-      // ...tseslint.configs.stylisticTypeChecked,  
+      ...tseslint.configs.stylisticTypeChecked,  
     ],
-    files: ['src/**/*.ts'],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -26,13 +26,13 @@ export default defineConfig([
     rules: {},
   },
   {
+    files: ['src/**/*.test.ts'],
     extends: [
-      eslint.configs.recommended,
+      // eslint.configs.recommended,
       // tseslint.configs.eslintRecommended,
-      // ...tseslint.configs.strictTypeChecked,
+      ...tseslint.configs.strictTypeChecked,
       // ...tseslint.configs.stylisticTypeChecked,
     ],
-    files: ['src/**/*.test.ts'],
     languageOptions: {
       globals: {
         ...globals.node,

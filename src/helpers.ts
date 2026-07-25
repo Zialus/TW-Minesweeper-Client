@@ -1,10 +1,12 @@
-export function canvas_explode(r, c) {
+import { Player } from "./minesweeper";
+
+export function canvas_explode(r: number, c: number) {
   const elemento = `${r}#${c}`;
   const canvas = document.getElementById(elemento);
   const ctx = canvas.getContext('2d');
 
   let frame = 0;
-  let setIntID;
+  let setIntID: NodeJS.Timeout;
   const img = new Image();
 
   function animate() {
@@ -23,7 +25,7 @@ export function canvas_explode(r, c) {
   img.src = 'static/imgs/explosion.png';
 }
 
-export function addToArray(o, a) {
+export function addToArray(o: Player, a: Player[]) {
   let i = 0;
   while (i < a.length && o.score > a[i].score) {
     i++;
