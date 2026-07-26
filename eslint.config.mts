@@ -8,10 +8,10 @@ export default defineConfig([
   {
     files: ['src/**/*.ts'],
     extends: [
-      // eslint.configs.recommended,
-      // tseslint.configs.eslintRecommended,
+      eslint.configs.recommended,
+      tseslint.configs.eslintRecommended,
       // ...tseslint.configs.strictTypeChecked,
-      ...tseslint.configs.stylisticTypeChecked,  
+      ...tseslint.configs.stylisticTypeChecked,
     ],
     languageOptions: {
       globals: {
@@ -28,20 +28,23 @@ export default defineConfig([
   {
     files: ['src/**/*.test.ts'],
     extends: [
-      // eslint.configs.recommended,
-      // tseslint.configs.eslintRecommended,
       ...tseslint.configs.strictTypeChecked,
-      // ...tseslint.configs.stylisticTypeChecked,
+      vitestPlugin.configs.recommended
     ],
     languageOptions: {
       globals: {
         ...globals.node,
-        ...vitestPlugin.globals,
+        ...vitestPlugin.environments.env.globals,
       },
     },
     plugins: {
       vitest: vitestPlugin,
     },
-    rules: { ...vitestPlugin.configs.recommended.rules },
+    settings: {
+      vitest: {
+        typecheck: true,
+      },
+    },
+    rules: {},
   },
 ]);
