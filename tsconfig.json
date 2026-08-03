@@ -10,6 +10,7 @@
     "module": "esnext",
     "target": "esnext",
     "types": [],
+    "moduleResolution": "bundler",
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -22,9 +23,10 @@
 
     // Stricter Typechecking Options
     // "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    // "exactOptionalPropertyTypes": true,
 
     // Style Options
+    "strictNullChecks": false,
     "noImplicitReturns": true,
     "noImplicitOverride": true,
     "noUnusedLocals": true,

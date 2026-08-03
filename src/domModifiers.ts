@@ -20,7 +20,7 @@ export function logOut() {
   return false;
 }
 
-export function errorMessage(mensagem) {
+export function errorMessage(mensagem: string) {
   console.log('Sending error message to player');
   document.getElementById('error_message').innerHTML = mensagem;
   return false;

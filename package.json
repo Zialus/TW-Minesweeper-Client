@@ -2,6 +2,7 @@
   "packageManager": "pnpm@11.17.0",
   "name": "tw-minesweeper-client",
   "scripts": {
+    "check": "tsc --noEmit",
     "serve": "vite",
     "build": "vite build",
     "preview": "vite preview",

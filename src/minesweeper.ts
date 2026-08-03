@@ -44,7 +44,9 @@ window.onload = function () {
   let points: number; // Stores the score of the player in the multiplayer mode
   let username = 'Default User'; // Set a default value in case a username isn't picked
   let password: string;
-  let difc: 'beginner' | 'intermediate' | 'expert';
+  type Dificulty = 'beginner' | 'intermediate' | 'expert';
+
+  let difc: Dificulty;
   let acorde = false;
 
   //-------------------------VARIAVEIS PARA LIDAR COM AUDIO-------------------------------------//
@@ -1205,7 +1207,7 @@ window.onload = function () {
 
   // ----------------------------------------------------- GENERAL FUNCTIONS ----------------------------------------------- //
 
-  function localStorageInsert(difc) {
+  function localStorageInsert(difc: Dificulty) {
     if (difc === 'beginner') {
       localStorage.setItem('beginner', JSON.stringify(begHonor));
     } else if (difc === 'intermediate') {
@@ -1215,7 +1217,7 @@ window.onload = function () {
     }
   }
 
-  function localStorageGet(difc, honorToChange) {
+  function localStorageGet(difc: Dificulty, honorToChange: Player[]) {
     let tmp = [];
     const pointerHonor = honorToChange;
     console.log('getting some scores from storage!');
