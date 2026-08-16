@@ -42,7 +42,7 @@ export function cleanHonor() {
   document.getElementById('honorlist').innerHTML = '';
 }
 
-export function showWhosTurn(turn) {
+export function showWhosTurn(turn: string) {
   document.getElementById('whos_turn').innerHTML =
     `É o turno do jogador: ${turn}`;
 }
@@ -51,7 +51,12 @@ export function clearWhosTurn() {
   document.getElementById('whos_turn').innerHTML = '';
 }
 
-export function updatePlayersStats(username, p_bombs, opponent, op_bombs) {
+export function updatePlayersStats(
+  username: string,
+  p_bombs: number,
+  opponent: string,
+  op_bombs: number,
+) {
   document.getElementById('player_stats').innerHTML =
     `Jogador ${username} encontrou : ${p_bombs} bombas`;
   document.getElementById('opponent_stats').innerHTML =
@@ -64,20 +69,20 @@ export function cleanError() {
   return false;
 }
 
-export function playerLoggedIn(username) {
+export function playerLoggedIn(username: string) {
   document.getElementById('message_to_player').innerHTML =
     `${username} logged in!`;
   return false;
 }
 
-export function playerIsWaiting(username) {
+export function playerIsWaiting(username: string) {
   console.log('bom dia');
   document.getElementById('message_to_player').innerHTML =
     `<p>${username} está a espera dum adversário...</p><img src='static/imgs/waiting.svg' alt='waiting...' />`;
   return false;
 }
 
-export function playerNotWaiting(username) {
+export function playerNotWaiting(username: string) {
   console.log('bom dia');
   document.getElementById('message_to_player').innerHTML =
     `${username} has given up waiting...`;

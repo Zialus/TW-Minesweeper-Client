@@ -1,4 +1,4 @@
-import { addToArray, canvas_explode } from './helpers';
+import { addToArray, canvas_explode, getRequiredElement } from './helpers';
 import {
   cleanError,
   cleanHonor,
@@ -21,18 +21,19 @@ import {
 } from './domModifiers';
 
 export interface Player {
-  uname: string;
+  name?: string;
+  uname?: string;
   score: number;
 }
 
-window.onload = function () {
+window.onload = () => {
   const apiUrl = 'https://tw-minesweeper-server.onrender.com/';
 
   //-------------------------MISC VARIABLES-----------------------------------------------------//
   let rows: number;
   let cols: number;
   let mines: number;
-  const table = document.getElementById('tab'); // html table where the game matrix will be displayed
+  const table = getRequiredElement('tab', HTMLTableElement); // html table where the game matrix will be displayed
   let matrix: number[][]; // Matrix with "mine information" of each cell
   let visited: boolean[][]; // Matrix with information about visited state of cells
   let mines_counter: number; // Counts how many mines have been "found"
@@ -108,13 +109,19 @@ window.onload = function () {
   document.getElementById('honraMP').onclick = switchHonraMP;
 
   function changeAudio() {
-    if (document.getElementById('mute_audio').value === 'Sound OFF') unmute();
-    else if (document.getElementById('mute_audio').value === 'Sound ON') mute();
+    if (
+      getRequiredElement('mute_audio', HTMLInputElement).value === 'Sound OFF'
+    )
+      unmute();
+    else if (
+      getRequiredElement('mute_audio', HTMLInputElement).value === 'Sound ON'
+    )
+      mute();
   }
 
   function mute() {
     console.log('MUTED!!');
-    document.getElementById('mute_audio').value = 'Sound OFF';
+    getRequiredElement('mute_audio', HTMLInputElement).value = 'Sound OFF';
     turn_audio.muted = true;
     victory_audio.muted = true;
     defeat_audio.muted = true;
@@ -124,7 +131,7 @@ window.onload = function () {
 
   function unmute() {
     console.log('UNMUTED!!');
-    document.getElementById('mute_audio').value = 'Sound ON';
+    getRequiredElement('mute_audio', HTMLInputElement).value = 'Sound ON';
     turn_audio.muted = false;
     victory_audio.muted = false;
     defeat_audio.muted = false;
@@ -167,7 +174,7 @@ window.onload = function () {
     xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
     xhr.send(value);
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = () => {
       console.log(`${xhr.readyState}-----${xhr.status}`);
       if (xhr.readyState === 4 && xhr.status === 200) {
         const res = JSON.parse(xhr.responseText);
@@ -221,7 +228,7 @@ window.onload = function () {
   }
 
   function updateMP() {
-    sse.onmessage = function (event) {
+    sse.onmessage = (event) => {
       const msg = JSON.parse(event.data);
       if (msg.error === undefined) {
         //houve uma jogada
@@ -280,7 +287,7 @@ window.onload = function () {
     xhttp.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
     xhttp.send(value);
 
-    xhttp.onreadystatechange = function () {
+    xhttp.onreadystatechange = () => {
       console.log(`${xhttp.readyState}-----${xhttp.status}`);
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         const res = JSON.parse(xhttp.responseText);
@@ -314,7 +321,7 @@ window.onload = function () {
     xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
     xhr.send(value);
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = () => {
       console.log(`${xhr.readyState}-----${xhr.status}`);
       if (xhr.readyState === 4 && xhr.status === 200) {
         const res = JSON.parse(xhr.responseText);
@@ -350,14 +357,17 @@ window.onload = function () {
 
     document.getElementById('honorlist').innerHTML = '';
 
-    const honor_value = document.getElementById('difHonraMP').value;
+    const honor_value = getRequiredElement(
+      'difHonraMP',
+      HTMLSelectElement,
+    ).value;
 
     const value = JSON.stringify({
       level: honor_value,
     });
 
     const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = () => {
       console.log(`${xhr.readyState}-----${xhr.status}`);
       if (xhr.readyState === 4 && xhr.status === 200) {
         const res = JSON.parse(xhr.responseText);
@@ -417,7 +427,7 @@ window.onload = function () {
     sse = new EventSource(
       `${apiUrl}update?name=${username}&game=${gameId}&key=${gameKey}`,
     );
-    sse.onmessage = function (event) {
+    sse.onmessage = (event) => {
       const res = JSON.parse(event.data);
 
       //SUCCESS
@@ -492,11 +502,16 @@ window.onload = function () {
   }
 
   function makeCellLeftClickHandlerMP() {
-    return function () {
+    return function (event: PointerEvent) {
+      const cell = event.currentTarget;
+      if (!(cell instanceof HTMLTableCellElement))
+        throw new Error('Cell is not a HTMLTableCellElement');
       if (turn === username) {
         //My Turn
-        const col = this.cellIndex;
-        const row = this.parentNode.rowIndex;
+        const col = cell.cellIndex;
+        if (!(cell.parentElement instanceof HTMLTableRowElement))
+          throw new Error('Row is not a HTMLTableRowElement');
+        const row = cell.parentElement.rowIndex;
         const print = `Left Clicked on (${row},${col})`;
         console.log(print);
         if (!game_over) {
@@ -562,11 +577,14 @@ window.onload = function () {
   }
 
   function serverLogin() {
-    const username_html = document.getElementById('username').value;
+    const username_html = getRequiredElement(
+      'username',
+      HTMLInputElement,
+    ).value;
     if (username_html !== '') {
       username = username_html;
     }
-    password = document.getElementById('password').value;
+    password = getRequiredElement('password', HTMLInputElement).value;
 
     const value = JSON.stringify({
       name: username,
@@ -579,7 +597,7 @@ window.onload = function () {
     xhr.setRequestHeader('Content-Type', 'application/json; charset="utf-8"');
     xhr.send(value);
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = () => {
       if (xhr.readyState === 4 && xhr.status === 200) {
         const resposta = JSON.parse(xhr.responseText);
         if (resposta.error !== undefined) {
@@ -664,7 +682,7 @@ window.onload = function () {
   }
 
   function getAndSetDificulty() {
-    difc = document.getElementById('dificuldade').value;
+    difc = getRequiredElement('dificuldade', HTMLSelectElement).value;
     console.log(`ola ${difc}`);
     switch (difc) {
       case 'beginner':
@@ -721,9 +739,14 @@ window.onload = function () {
   }
 
   function makeCellLeftClickHandler() {
-    return function () {
-      const col = this.cellIndex;
-      const row = this.parentNode.rowIndex;
+    return (event: MouseEvent) => {
+      const cell = event.currentTarget;
+      if (!(cell instanceof HTMLTableCellElement))
+        throw new Error('Cell is not a HTMLTableCellElement');
+      const col = cell.cellIndex;
+      if (!(cell.parentElement instanceof HTMLTableRowElement))
+        throw new Error('Row is not a HTMLTableRowElement');
+      const row = cell.parentElement.rowIndex;
       const print = `Left Clicked on (${row},${col})`;
       console.log(print);
       if (!game_over) {
@@ -735,9 +758,14 @@ window.onload = function () {
   }
 
   function makeCellRightClickHandler() {
-    return function () {
-      const col = this.cellIndex;
-      const row = this.parentNode.rowIndex;
+    return (event: MouseEvent) => {
+      const cell = event.currentTarget;
+      if (!(cell instanceof HTMLTableCellElement))
+        throw new Error('Cell is not a HTMLTableCellElement');
+      const col = cell.cellIndex;
+      if (!(cell.parentElement instanceof HTMLTableRowElement))
+        throw new Error('Row is not a HTMLTableRowElement');
+      const row = cell.parentElement.rowIndex;
       const print = `Right Clicked on (${row},${col})`;
       console.log(print);
       if (!game_over) {
@@ -750,7 +778,7 @@ window.onload = function () {
   }
 
   function makeAcordeHandler() {
-    return function () {
+    return () => {
       acorde = true;
       console.log('MOUSE_IS_DOWN_MOFO!!');
     };
@@ -1266,7 +1294,7 @@ window.onload = function () {
   function refreshHonra() {
     console.log('Refreshing the honor list!');
     cleanHonor();
-    const honor_value = document.getElementById('difHonra').value;
+    const honor_value = getRequiredElement('difHonra', HTMLSelectElement).value;
 
     switch (honor_value) {
       case 'beginner':
