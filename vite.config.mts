@@ -19,8 +19,8 @@ export default defineConfig({
       apply: 'build',
       enforce: 'post',
       async writeBundle() {
-        const src = path.resolve(__dirname, 'src/static')
-        const dest = path.resolve(__dirname, 'dist/static')
+        const src = path.resolve(import.meta.dirname, 'src/static')
+        const dest = path.resolve(import.meta.dirname, 'dist/static')
         
         if (fs.existsSync(src)) {
           fs.cpSync(src, dest, { recursive: true, force: true })
