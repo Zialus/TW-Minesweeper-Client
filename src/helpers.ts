@@ -2,25 +2,28 @@ import { Player } from './minesweeper';
 
 export function canvas_explode(r: number, c: number) {
   const elemento = `${r}#${c}`;
-  const canvas = document.getElementById(elemento);
+  const canvas = getRequiredElement(elemento, HTMLCanvasElement);
   const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    throw new Error(`Canvas (#${elemento}) does not support 2D rendering`);
+  }
 
   let frame = 0;
-  let setIntID: NodeJS.Timeout;
+  let setIntID: ReturnType<typeof setInterval>;
   const img = new Image();
 
-  function animate() {
-    ctx.clearRect(0, 0, 25, 25);
+  function animate(context: CanvasRenderingContext2D) {
+    context.clearRect(0, 0, 25, 25);
     if (frame === 13) {
       clearInterval(setIntID);
       return;
     }
-    ctx.drawImage(img, 39 * frame, 0, 39, 38, 0, 0, 25, 25);
+    context.drawImage(img, 39 * frame, 0, 39, 38, 0, 0, 25, 25);
     frame++;
   }
 
   img.onload = function () {
-    setIntID = setInterval(animate, 150);
+    setIntID = setInterval(() => animate(ctx), 150);
   };
   img.src = 'static/imgs/explosion.png';
 }
@@ -35,9 +38,9 @@ export function addToArray(o: Player, a: Player[]) {
   console.log(`----------${o.uname} ${o.score}-------`);
 }
 
-export function getRequiredElement<T extends HTMLElement>(
+export function getRequiredElement<T extends HTMLElement = HTMLElement>(
   id: string,
-  constructor: new () => T,
+  constructor?: new () => T,
 ): T {
   const element = document.getElementById(id);
 
@@ -45,9 +48,9 @@ export function getRequiredElement<T extends HTMLElement>(
     throw new Error(`Missing element (#${id})`);
   }
 
-  if (!(element instanceof constructor)) {
+  if (constructor && !(element instanceof constructor)) {
     throw new Error(`Element (#${id}) is not a ${constructor.name}`);
   }
 
-  return element;
+  return element as T;
 }

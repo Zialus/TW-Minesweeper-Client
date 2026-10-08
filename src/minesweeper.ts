@@ -48,8 +48,6 @@ window.onload = () => {
   type Dificulty = 'beginner' | 'intermediate' | 'expert';
 
   let difc: Dificulty;
-  let acorde = false;
-
   //-------------------------VARIAVEIS PARA LIDAR COM AUDIO-------------------------------------//
   const bomb_audio = new Audio('static/music/explosion.wav');
   bomb_audio.muted = true;
@@ -84,29 +82,29 @@ window.onload = () => {
   let currentHonor = begHonor; // In which Honor Table should the Hi-Score of the current game be stored
   let showHonor = begHonor; // Which Honor Table should be shown
 
-  document.getElementById('difHonra').onchange = refreshHonra;
+  getRequiredElement('difHonra').onchange = refreshHonra;
 
-  document.getElementById('difHonraMP').onchange = refreshHonraMP;
+  getRequiredElement('difHonraMP').onchange = refreshHonraMP;
 
-  document.getElementById('validate').onclick = validateGame;
+  getRequiredElement('validate').onclick = validateGame;
 
-  document.getElementById('iniciar').onclick = startGame;
+  getRequiredElement('iniciar').onclick = startGame;
 
-  document.getElementById('encerrar').onclick = endGame;
+  getRequiredElement('encerrar').onclick = endGame;
 
-  document.getElementById('log_out').onclick = logOut;
+  getRequiredElement('log_out').onclick = logOut;
 
-  document.getElementById('mute_audio').onclick = changeAudio;
+  getRequiredElement('mute_audio').onclick = changeAudio;
 
-  document.getElementById('mostrar_honra').onclick = showHonorTable;
+  getRequiredElement('mostrar_honra').onclick = showHonorTable;
 
-  document.getElementById('esconder_honra').onclick = hideHonorTable;
+  getRequiredElement('esconder_honra').onclick = hideHonorTable;
 
-  document.getElementById('sair').onclick = leaveMP;
+  getRequiredElement('sair').onclick = leaveMP;
 
-  document.getElementById('honraSP').onclick = switchHonraSP;
+  getRequiredElement('honraSP').onclick = switchHonraSP;
 
-  document.getElementById('honraMP').onclick = switchHonraMP;
+  getRequiredElement('honraMP').onclick = switchHonraMP;
 
   function changeAudio() {
     if (
@@ -140,15 +138,15 @@ window.onload = () => {
   }
 
   function switchHonraSP() {
-    document.getElementById('difHonra').style.display = 'inline';
-    document.getElementById('difHonraMP').style.display = 'none';
+    getRequiredElement('difHonra').style.display = 'inline';
+    getRequiredElement('difHonraMP').style.display = 'none';
     refreshHonra();
     return false;
   }
 
   function switchHonraMP() {
-    document.getElementById('difHonra').style.display = 'none';
-    document.getElementById('difHonraMP').style.display = 'inline';
+    getRequiredElement('difHonra').style.display = 'none';
+    getRequiredElement('difHonraMP').style.display = 'inline';
     refreshHonraMP();
     return false;
   }
@@ -223,7 +221,7 @@ window.onload = () => {
     clearInterval(timer);
     game_over = true;
     showGameMode();
-    document.getElementById('iniciar').style.display = 'inline';
+    getRequiredElement('iniciar').style.display = 'inline';
     return false;
   }
 
@@ -236,14 +234,14 @@ window.onload = () => {
           const cells = msg.move.cells;
 
           //destapa as células
-          for (let i = 0; i < cells.length; i++) {
-            const player = msg.move.name;
-            burstMP(cells[i], player);
+          const player = msg.move.name;
+          for (const cell of cells) {
+            burstMP(cell, player);
           }
 
           //jogo acaba
           if (msg.winner !== undefined) {
-            event.target.close();
+            sse.close();
             if (msg.winner === opponent) {
               playerLost();
               defeat_audio.play();
@@ -302,8 +300,8 @@ window.onload = () => {
     playerNotWaiting(username);
     showGameMode();
 
-    document.getElementById('sair').style.display = 'none';
-    document.getElementById('iniciar').style.display = 'inline';
+    getRequiredElement('sair').style.display = 'none';
+    getRequiredElement('iniciar').style.display = 'inline';
     return false;
   }
 
@@ -341,21 +339,21 @@ window.onload = () => {
 
   function showScore() {
     if (points === undefined) {
-      document.getElementById('score').innerHTML = '';
+      getRequiredElement('score').innerHTML = '';
     } else {
-      document.getElementById('score').innerHTML =
+      getRequiredElement('score').innerHTML =
         `A tua pontuação neste modo de jogo é ${points}`;
     }
   }
 
   function cleanScore() {
-    document.getElementById('score').innerHTML = '';
+    getRequiredElement('score').innerHTML = '';
   }
 
   function refreshHonraMP() {
     console.log('Refresh the list MultiPlayer!');
 
-    document.getElementById('honorlist').innerHTML = '';
+    getRequiredElement('honorlist').innerHTML = '';
 
     const honor_value = getRequiredElement(
       'difHonraMP',
@@ -411,7 +409,7 @@ window.onload = () => {
               ` ${item.name} ${item.score}`,
             );
             node.appendChild(textnode);
-            document.getElementById('honorlist').appendChild(node);
+            getRequiredElement('honorlist').appendChild(node);
           }
         }
       }
@@ -439,15 +437,15 @@ window.onload = () => {
         showWhosTurn(turn);
 
         console.log(`Oponente: ${opponent} | Turno: ${turn}`);
-        document.getElementById('sair').style.display = 'none';
+        getRequiredElement('sair').style.display = 'none';
 
         // O jogo começou
 
         timer = setInterval(updateTimer, 1000);
         setTabuleiroMP_CanvasMode();
 
-        document.getElementById('jogo').style.display = 'block';
-        document.getElementById('progresso').style.display = 'block';
+        getRequiredElement('jogo').style.display = 'block';
+        getRequiredElement('progresso').style.display = 'block';
         updatePlayersStats(username, p_bombs, opponent, op_bombs);
         updateMP();
 
@@ -463,21 +461,9 @@ window.onload = () => {
         errorMessage(res.error);
         setTimeout(cleanError, 2000);
 
-        event.target.close();
+        sse.close();
       }
     };
-  }
-
-  function setTabuleiroMP() {
-    for (let i = 0; i < rows; i++) {
-      const row = table.insertRow();
-      for (let j = 0; j < cols; j++) {
-        const cell = row.insertCell();
-        cell.innerHTML = "<img alt='blankCell' src='static/imgs/blank.gif'/>";
-        cell.onclick = makeCellLeftClickHandlerMP();
-        //cell.oncontextmenu = makeCellRightClickHandlerMP();
-      }
-    }
   }
 
   function setTabuleiroMP_CanvasMode() {
@@ -607,12 +593,12 @@ window.onload = () => {
         } else {
           playerLoggedIn(username);
           console.log('Logged in!');
-          document.getElementById('log_in').style.display = 'none';
-          document.getElementById('mute_audio').style.display = 'inline';
-          document.getElementById('log_out').style.display = 'block';
-          document.getElementById('menu').style.display = 'block';
-          document.getElementById('jogo').style.display = 'block';
-          document.getElementById('progresso').style.display = 'block';
+          getRequiredElement('log_in').style.display = 'none';
+          getRequiredElement('mute_audio').style.display = 'inline';
+          getRequiredElement('log_out').style.display = 'block';
+          getRequiredElement('menu').style.display = 'block';
+          getRequiredElement('jogo').style.display = 'block';
+          getRequiredElement('progresso').style.display = 'block';
         }
       }
     };
@@ -621,7 +607,7 @@ window.onload = () => {
   function startGame() {
     getAndSetDificulty(); // Collects information about dificulty
 
-    if (document.getElementsByName('modo')[0].value === '2 Players') {
+    if (getRequiredElement('modo', HTMLSelectElement).value === '2 Players') {
       console.log('2 Players Mode');
 
       getScore();
@@ -635,14 +621,14 @@ window.onload = () => {
       visitedFalse(); // Fills the visited matrix with false
       game_over = false;
       firstclick = true;
-      document.getElementById('iniciar').style.display = 'none';
-      //  document.getElementById("encerrar").style.display = "inline";
+      getRequiredElement('iniciar').style.display = 'none';
       timeElapsed = 0;
-      document.getElementById('tempo').innerHTML =
-        `Tempo decorrido: ${timeElapsed}`;
-      document.getElementById('numero_minas').innerHTML =
+      getRequiredElement('tempo').innerHTML = `Tempo decorrido: ${timeElapsed}`;
+      getRequiredElement('numero_minas').innerHTML =
         `Minas restantes:${mines_counter}`;
-    } else if (document.getElementsByName('modo')[0].value === '1 Player') {
+    } else if (
+      getRequiredElement('modo', HTMLSelectElement).value === '1 Player'
+    ) {
       console.log('1 Player Mode');
 
       hideGameMode();
@@ -652,12 +638,11 @@ window.onload = () => {
       visitedFalse(); // Fills the visited matrix with false
       game_over = false;
       firstclick = true;
-      document.getElementById('iniciar').style.display = 'none';
-      document.getElementById('encerrar').style.display = 'inline';
+      getRequiredElement('iniciar').style.display = 'none';
+      getRequiredElement('encerrar').style.display = 'inline';
       timeElapsed = 0;
-      document.getElementById('tempo').innerHTML =
-        `Tempo decorrido: ${timeElapsed}`;
-      document.getElementById('numero_minas').innerHTML =
+      getRequiredElement('tempo').innerHTML = `Tempo decorrido: ${timeElapsed}`;
+      getRequiredElement('numero_minas').innerHTML =
         `Minas restantes:${mines_counter}`;
       generateGameMatrix(); // Generates Matrix with correct size
       placeMines(); // Places mines on the matrix
@@ -669,8 +654,8 @@ window.onload = () => {
 
   function endGame() {
     clearMatrix();
-    document.getElementById('encerrar').style.display = 'none';
-    document.getElementById('iniciar').style.display = 'inline';
+    getRequiredElement('encerrar').style.display = 'none';
+    getRequiredElement('iniciar').style.display = 'inline';
     clearInterval(timer);
     game_over = true;
     showGameMode();
@@ -682,7 +667,18 @@ window.onload = () => {
   }
 
   function getAndSetDificulty() {
-    difc = getRequiredElement('dificuldade', HTMLSelectElement).value;
+    const difficulty = getRequiredElement(
+      'dificuldade',
+      HTMLSelectElement,
+    ).value;
+    if (
+      difficulty !== 'beginner' &&
+      difficulty !== 'intermediate' &&
+      difficulty !== 'expert'
+    ) {
+      throw new Error(`Unknown difficulty: ${difficulty}`);
+    }
+    difc = difficulty;
     console.log(`ola ${difc}`);
     switch (difc) {
       case 'beginner':
@@ -777,13 +773,6 @@ window.onload = () => {
     };
   }
 
-  function makeAcordeHandler() {
-    return () => {
-      acorde = true;
-      console.log('MOUSE_IS_DOWN_MOFO!!');
-    };
-  }
-
   function setTabuleiroCanvas() {
     for (let i = 0; i < rows; i++) {
       const row = table.insertRow();
@@ -800,20 +789,6 @@ window.onload = () => {
         cell.appendChild(canvas);
 
         cell.onclick = makeCellLeftClickHandler();
-        //cell.onmousedown = makeAcordeHandler();
-        cell.oncontextmenu = makeCellRightClickHandler();
-      }
-    }
-  }
-
-  function setTabuleiro() {
-    for (let i = 0; i < rows; i++) {
-      const row = table.insertRow();
-      for (let j = 0; j < cols; j++) {
-        const cell = row.insertCell();
-        cell.innerHTML = "<img alt='blankCell' src='static/imgs/blank.gif'/>";
-        cell.onclick = makeCellLeftClickHandler();
-        //cell.onmousedown = makeAcordeHandler();
         cell.oncontextmenu = makeCellRightClickHandler();
       }
     }
@@ -927,40 +902,6 @@ window.onload = () => {
     }
   }
 
-  function megaBurst(r: number, c: number) {
-    if (validPos(r - 1, c) && visited[r - 1][c] === false) {
-      leftClick(r - 1, c);
-    }
-
-    if (validPos(r + 1, c) && visited[r + 1][c] === false) {
-      leftClick(r + 1, c);
-    }
-
-    if (validPos(r, c - 1) && visited[r][c - 1] === false) {
-      leftClick(r, c - 1);
-    }
-
-    if (validPos(r, c + 1) && visited[r][c + 1] === false) {
-      leftClick(r, c + 1);
-    }
-
-    if (validPos(r - 1, c - 1) && visited[r - 1][c - 1] === false) {
-      leftClick(r - 1, c - 1);
-    }
-
-    if (validPos(r - 1, c + 1) && visited[r - 1][c + 1] === false) {
-      leftClick(r - 1, c + 1);
-    }
-
-    if (validPos(r + 1, c - 1) && visited[r + 1][c - 1] === false) {
-      leftClick(r + 1, c - 1);
-    }
-
-    if (validPos(r + 1, c + 1) && visited[r + 1][c + 1] === false) {
-      leftClick(r + 1, c + 1);
-    }
-  }
-
   function burst(r: number, c: number) {
     if (
       table.rows[r].cells[c]
@@ -1036,19 +977,18 @@ window.onload = () => {
 
   function updateTimer() {
     timeElapsed += 1;
-    document.getElementById('tempo').innerHTML =
-      `Tempo decorrido: ${timeElapsed}`;
+    getRequiredElement('tempo').innerHTML = `Tempo decorrido: ${timeElapsed}`;
   }
 
   function decreaseMines() {
     mines_counter -= 1;
-    document.getElementById('numero_minas').innerHTML =
+    getRequiredElement('numero_minas').innerHTML =
       `Minas restantes:${mines_counter}`;
   }
 
   function increaseMines() {
     mines_counter += 1;
-    document.getElementById('numero_minas').innerHTML =
+    getRequiredElement('numero_minas').innerHTML =
       `Minas restantes:${mines_counter}`;
   }
 
@@ -1069,11 +1009,6 @@ window.onload = () => {
   }
 
   function rightClick(r: number, c: number) {
-    if (acorde === true) {
-      console.log('ACORDE ACTIVATION!!!!!!!!');
-      megaBurst(r, c);
-    }
-
     if (visited[r][c] === false) {
       if (
         table.rows[r].cells[c]
@@ -1148,6 +1083,7 @@ window.onload = () => {
         }
       }
     }
+    throw new Error(`No replacement mine position available for (${r}, ${c})`);
   }
 
   function newValue(x: number, y: number) {
@@ -1245,50 +1181,17 @@ window.onload = () => {
     }
   }
 
-  function localStorageGet(difc: Dificulty, honorToChange: Player[]) {
-    let tmp = [];
-    const pointerHonor = honorToChange;
-    console.log('getting some scores from storage!');
-
-    if (difc === 'beginner') {
-      tmp = JSON.parse(localStorage.getItem('beginner'));
-    } else if (difc === 'intermediate') {
-      tmp = JSON.parse(localStorage.getItem('intermediate'));
-    } else {
-      tmp = JSON.parse(localStorage.getItem('expert'));
-    }
-
-    if (tmp !== null) {
-      for (const item of tmp) {
-        pointerHonor.push(item);
-      }
-    }
-  }
-
   function localStorageGetAll() {
-    let tmp;
     console.log('Getting all scores from storage!');
 
-    tmp = JSON.parse(localStorage.getItem('beginner'));
-    if (tmp !== null) {
-      for (const item of tmp) {
-        begHonor.push(item);
-      }
-    }
+    begHonor.push(...getStoredHonor('beginner'));
+    intHonor.push(...getStoredHonor('intermediate'));
+    expHonor.push(...getStoredHonor('expert'));
+  }
 
-    tmp = JSON.parse(localStorage.getItem('intermediate'));
-    if (tmp !== null) {
-      for (const item of tmp) {
-        intHonor.push(item);
-      }
-    }
-
-    tmp = JSON.parse(localStorage.getItem('expert'));
-    if (tmp !== null) {
-      for (const item of tmp) {
-        expHonor.push(item);
-      }
-    }
+  function getStoredHonor(key: Dificulty): Player[] {
+    const storedHonor = localStorage.getItem(key);
+    return storedHonor === null ? [] : JSON.parse(storedHonor);
   }
 
   function refreshHonra() {
@@ -1313,7 +1216,7 @@ window.onload = () => {
       const node = document.createElement('li');
       const textnode = document.createTextNode(` ${item.uname} ${item.score}`);
       node.appendChild(textnode);
-      document.getElementById('honorlist').appendChild(node);
+      getRequiredElement('honorlist').appendChild(node);
     }
   }
 }; //Fim

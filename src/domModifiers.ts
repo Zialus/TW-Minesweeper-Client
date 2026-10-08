@@ -1,54 +1,55 @@
+import { getRequiredElement } from './helpers';
+
 export function showHonorTable() {
-  document.getElementById('quadro_honra').style.display = 'block';
-  document.getElementById('mostrar_honra').style.display = 'none';
-  document.getElementById('esconder_honra').style.display = 'inline';
+  getRequiredElement('quadro_honra').style.display = 'block';
+  getRequiredElement('mostrar_honra').style.display = 'none';
+  getRequiredElement('esconder_honra').style.display = 'inline';
 }
 
 export function hideHonorTable() {
-  document.getElementById('quadro_honra').style.display = 'none';
-  document.getElementById('mostrar_honra').style.display = 'inline';
-  document.getElementById('esconder_honra').style.display = 'none';
+  getRequiredElement('quadro_honra').style.display = 'none';
+  getRequiredElement('mostrar_honra').style.display = 'inline';
+  getRequiredElement('esconder_honra').style.display = 'none';
 }
 
 export function logOut() {
-  document.getElementById('log_in').style.display = 'block';
-  document.getElementById('log_out').style.display = 'none';
-  document.getElementById('menu').style.display = 'none';
-  document.getElementById('jogo').style.display = 'none';
-  document.getElementById('progresso').style.display = 'none';
-  document.getElementById('quadro_honra').style.display = 'none';
+  getRequiredElement('log_in').style.display = 'block';
+  getRequiredElement('log_out').style.display = 'none';
+  getRequiredElement('menu').style.display = 'none';
+  getRequiredElement('jogo').style.display = 'none';
+  getRequiredElement('progresso').style.display = 'none';
+  getRequiredElement('quadro_honra').style.display = 'none';
   return false;
 }
 
 export function errorMessage(mensagem: string) {
   console.log('Sending error message to player');
-  document.getElementById('error_message').innerHTML = mensagem;
+  getRequiredElement('error_message').innerHTML = mensagem;
   return false;
 }
 
 export function playerWon() {
-  document.getElementById('message_to_player').innerHTML = 'GANHASTE!!';
+  getRequiredElement('message_to_player').innerHTML = 'GANHASTE!!';
 }
 
 export function playerLost() {
-  document.getElementById('message_to_player').innerHTML = 'PERDESTE!!';
+  getRequiredElement('message_to_player').innerHTML = 'PERDESTE!!';
 }
 
 export function clearMessage() {
-  document.getElementById('message_to_player').innerHTML = '';
+  getRequiredElement('message_to_player').innerHTML = '';
 }
 
 export function cleanHonor() {
-  document.getElementById('honorlist').innerHTML = '';
+  getRequiredElement('honorlist').innerHTML = '';
 }
 
 export function showWhosTurn(turn: string) {
-  document.getElementById('whos_turn').innerHTML =
-    `É o turno do jogador: ${turn}`;
+  getRequiredElement('whos_turn').innerHTML = `É o turno do jogador: ${turn}`;
 }
 
 export function clearWhosTurn() {
-  document.getElementById('whos_turn').innerHTML = '';
+  getRequiredElement('whos_turn').innerHTML = '';
 }
 
 export function updatePlayersStats(
@@ -57,52 +58,51 @@ export function updatePlayersStats(
   opponent: string,
   op_bombs: number,
 ) {
-  document.getElementById('player_stats').innerHTML =
+  getRequiredElement('player_stats').innerHTML =
     `Jogador ${username} encontrou : ${p_bombs} bombas`;
-  document.getElementById('opponent_stats').innerHTML =
+  getRequiredElement('opponent_stats').innerHTML =
     `Adversario ${opponent} encontrou : ${op_bombs} bombas`;
   return false;
 }
 
 export function cleanError() {
-  document.getElementById('error_message').innerHTML = '';
+  getRequiredElement('error_message').innerHTML = '';
   return false;
 }
 
 export function playerLoggedIn(username: string) {
-  document.getElementById('message_to_player').innerHTML =
-    `${username} logged in!`;
+  getRequiredElement('message_to_player').innerHTML = `${username} logged in!`;
   return false;
 }
 
 export function playerIsWaiting(username: string) {
   console.log('bom dia');
-  document.getElementById('message_to_player').innerHTML =
+  getRequiredElement('message_to_player').innerHTML =
     `<p>${username} está a espera dum adversário...</p><img src='static/imgs/waiting.svg' alt='waiting...' />`;
   return false;
 }
 
 export function playerNotWaiting(username: string) {
   console.log('bom dia');
-  document.getElementById('message_to_player').innerHTML =
+  getRequiredElement('message_to_player').innerHTML =
     `${username} has given up waiting...`;
   return false;
 }
 
 export function showSair() {
-  document.getElementById('sair').style.display = 'inline';
+  getRequiredElement('sair').style.display = 'inline';
 }
 
 export function hideGameMode() {
-  document.getElementById('dificuldade').style.display = 'none';
-  document.getElementById('modo').style.display = 'none';
+  getRequiredElement('dificuldade').style.display = 'none';
+  getRequiredElement('modo').style.display = 'none';
 }
 
 export function showGameMode() {
-  document.getElementById('dificuldade').style.display = 'inline';
-  document.getElementById('modo').style.display = 'inline';
+  getRequiredElement('dificuldade').style.display = 'inline';
+  getRequiredElement('modo').style.display = 'inline';
 }
 
 export function clearTable() {
-  document.getElementById('tab').innerHTML = '';
+  getRequiredElement('tab').innerHTML = '';
 }
