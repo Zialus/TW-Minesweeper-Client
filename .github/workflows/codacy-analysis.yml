@@ -26,13 +26,13 @@ permissions:
   contents: read
 
 jobs:
-  codacy-security-scan:
+  codacy-analysis:
     permissions:
       contents: read  # for actions/checkout to fetch code
       security-events: write  # for github/codeql-action/upload-sarif to upload SARIF results
       actions: read  # Only required for private repositories to get upload-sarif action run status.
-    name: Codacy Security Scan
-    runs-on: ubuntu-latest
+    name: Analyze with Codacy
+    runs-on: ubuntu-26.04
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout code

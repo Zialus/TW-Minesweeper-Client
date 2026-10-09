@@ -1,4 +1,4 @@
-name: 'CodeQL Advanced'
+name: CodeQL
 
 on:
   push:
@@ -9,14 +9,14 @@ on:
     - cron: '23 4 * * 1'
 
 jobs:
-  analyze:
-    name: Analyze (${{ matrix.language }})
-    runs-on: 'ubuntu-latest'
+  codeql-analysis:
+    name: Analyze ${{ matrix.language }} with CodeQL
+    runs-on: ubuntu-26.04
     permissions:
-      security-events: write
-      packages: read
-      actions: read
-      contents: read
+      security-events: write  # Required for CodeQL to upload SARIF results.
+      packages: read  # Required to fetch internal or private CodeQL packs.
+      actions: read  # Only required for private repos to read workflow run info.
+      contents: read  # Required for actions/checkout to fetch code.
 
     strategy:
       fail-fast: false

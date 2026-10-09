@@ -1,4 +1,4 @@
-name: GHAS Analysis with zizmor 🌈
+name: Workflow Lint
 
 on:
   push:
@@ -10,11 +10,11 @@ on:
 permissions: {}
 
 jobs:
-  zizmor:
-    name: Run zizmor 🌈
-    runs-on: ubuntu-latest
+  lint-workflows:
+    name: Lint workflows
+    runs-on: ubuntu-26.04
     permissions:
-      checks: write
+      checks: write  # Required by reviewdog actions to report check annotations.
       security-events: write  # Required for upload-sarif to send SARIF files.
       contents: read  # Only needed for private repos. Needed to clone the repo.
       actions: read  # Only needed for private repos to read workflow run info.

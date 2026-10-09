@@ -6,8 +6,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  latest:
-    runs-on: ubuntu-latest
+  coverity-scan:
+    name: Build and submit to Coverity
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read  # for actions/checkout to fetch code
     steps:
       - name: Checkout Code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1

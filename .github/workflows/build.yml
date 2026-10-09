@@ -1,4 +1,4 @@
-name: Build and Lint
+name: CI
 
 on:
   push:
@@ -7,8 +7,11 @@ on:
     branches: [master]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-lint-test:
+    name: Build, lint and test
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read  # for actions/checkout to fetch code
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
