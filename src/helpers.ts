@@ -38,9 +38,9 @@ export function addToArray(o: Player, a: Player[]) {
   console.log(`----------${o.uname} ${o.score}-------`);
 }
 
-export function getRequiredElement<T extends HTMLElement = HTMLElement>(
+export function getRequiredElement<T extends HTMLElement>(
   id: string,
-  constructor?: new () => T,
+  constructor: new () => T,
 ): T {
   const element = document.getElementById(id);
 
@@ -48,9 +48,9 @@ export function getRequiredElement<T extends HTMLElement = HTMLElement>(
     throw new Error(`Missing element (#${id})`);
   }
 
-  if (constructor && !(element instanceof constructor)) {
+  if (!(element instanceof constructor)) {
     throw new Error(`Element (#${id}) is not a ${constructor.name}`);
   }
 
-  return element as T;
+  return element;
 }

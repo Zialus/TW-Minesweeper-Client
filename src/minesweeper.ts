@@ -82,29 +82,31 @@ window.onload = () => {
   let currentHonor = begHonor; // In which Honor Table should the Hi-Score of the current game be stored
   let showHonor = begHonor; // Which Honor Table should be shown
 
-  getRequiredElement('difHonra').onchange = refreshHonra;
+  getRequiredElement('difHonra', HTMLSelectElement).onchange = refreshHonra;
 
-  getRequiredElement('difHonraMP').onchange = refreshHonraMP;
+  getRequiredElement('difHonraMP', HTMLSelectElement).onchange = refreshHonraMP;
 
-  getRequiredElement('validate').onclick = validateGame;
+  getRequiredElement('validate', HTMLInputElement).onclick = validateGame;
 
-  getRequiredElement('iniciar').onclick = startGame;
+  getRequiredElement('iniciar', HTMLInputElement).onclick = startGame;
 
-  getRequiredElement('encerrar').onclick = endGame;
+  getRequiredElement('encerrar', HTMLInputElement).onclick = endGame;
 
-  getRequiredElement('log_out').onclick = logOut;
+  getRequiredElement('log_out', HTMLInputElement).onclick = logOut;
 
-  getRequiredElement('mute_audio').onclick = changeAudio;
+  getRequiredElement('mute_audio', HTMLInputElement).onclick = changeAudio;
 
-  getRequiredElement('mostrar_honra').onclick = showHonorTable;
+  getRequiredElement('mostrar_honra', HTMLInputElement).onclick =
+    showHonorTable;
 
-  getRequiredElement('esconder_honra').onclick = hideHonorTable;
+  getRequiredElement('esconder_honra', HTMLInputElement).onclick =
+    hideHonorTable;
 
-  getRequiredElement('sair').onclick = leaveMP;
+  getRequiredElement('sair', HTMLInputElement).onclick = leaveMP;
 
-  getRequiredElement('honraSP').onclick = switchHonraSP;
+  getRequiredElement('honraSP', HTMLInputElement).onclick = switchHonraSP;
 
-  getRequiredElement('honraMP').onclick = switchHonraMP;
+  getRequiredElement('honraMP', HTMLInputElement).onclick = switchHonraMP;
 
   function changeAudio() {
     if (
@@ -138,15 +140,15 @@ window.onload = () => {
   }
 
   function switchHonraSP() {
-    getRequiredElement('difHonra').style.display = 'inline';
-    getRequiredElement('difHonraMP').style.display = 'none';
+    getRequiredElement('difHonra', HTMLSelectElement).style.display = 'inline';
+    getRequiredElement('difHonraMP', HTMLSelectElement).style.display = 'none';
     refreshHonra();
     return false;
   }
 
   function switchHonraMP() {
-    getRequiredElement('difHonra').style.display = 'none';
-    getRequiredElement('difHonraMP').style.display = 'inline';
+    getRequiredElement('difHonra', HTMLSelectElement).style.display = 'none';
+    getRequiredElement('difHonraMP', HTMLSelectElement).style.display = 'inline';
     refreshHonraMP();
     return false;
   }
@@ -221,7 +223,7 @@ window.onload = () => {
     clearInterval(timer);
     game_over = true;
     showGameMode();
-    getRequiredElement('iniciar').style.display = 'inline';
+    getRequiredElement('iniciar', HTMLInputElement).style.display = 'inline';
     return false;
   }
 
@@ -300,8 +302,8 @@ window.onload = () => {
     playerNotWaiting(username);
     showGameMode();
 
-    getRequiredElement('sair').style.display = 'none';
-    getRequiredElement('iniciar').style.display = 'inline';
+    getRequiredElement('sair', HTMLInputElement).style.display = 'none';
+    getRequiredElement('iniciar', HTMLInputElement).style.display = 'inline';
     return false;
   }
 
@@ -339,21 +341,21 @@ window.onload = () => {
 
   function showScore() {
     if (points === undefined) {
-      getRequiredElement('score').innerHTML = '';
+      getRequiredElement('score', HTMLElement).innerHTML = '';
     } else {
-      getRequiredElement('score').innerHTML =
+      getRequiredElement('score', HTMLElement).innerHTML =
         `A tua pontuação neste modo de jogo é ${points}`;
     }
   }
 
   function cleanScore() {
-    getRequiredElement('score').innerHTML = '';
+    getRequiredElement('score', HTMLElement).innerHTML = '';
   }
 
   function refreshHonraMP() {
     console.log('Refresh the list MultiPlayer!');
 
-    getRequiredElement('honorlist').innerHTML = '';
+    getRequiredElement('honorlist', HTMLElement).innerHTML = '';
 
     const honor_value = getRequiredElement(
       'difHonraMP',
@@ -409,7 +411,7 @@ window.onload = () => {
               ` ${item.name} ${item.score}`,
             );
             node.appendChild(textnode);
-            getRequiredElement('honorlist').appendChild(node);
+            getRequiredElement('honorlist', HTMLElement).appendChild(node);
           }
         }
       }
@@ -437,15 +439,15 @@ window.onload = () => {
         showWhosTurn(turn);
 
         console.log(`Oponente: ${opponent} | Turno: ${turn}`);
-        getRequiredElement('sair').style.display = 'none';
+        getRequiredElement('sair', HTMLInputElement).style.display = 'none';
 
         // O jogo começou
 
         timer = setInterval(updateTimer, 1000);
         setTabuleiroMP_CanvasMode();
 
-        getRequiredElement('jogo').style.display = 'block';
-        getRequiredElement('progresso').style.display = 'block';
+        getRequiredElement('jogo', HTMLElement).style.display = 'block';
+        getRequiredElement('progresso', HTMLElement).style.display = 'block';
         updatePlayersStats(username, p_bombs, opponent, op_bombs);
         updateMP();
 
@@ -593,12 +595,14 @@ window.onload = () => {
         } else {
           playerLoggedIn(username);
           console.log('Logged in!');
-          getRequiredElement('log_in').style.display = 'none';
-          getRequiredElement('mute_audio').style.display = 'inline';
-          getRequiredElement('log_out').style.display = 'block';
-          getRequiredElement('menu').style.display = 'block';
-          getRequiredElement('jogo').style.display = 'block';
-          getRequiredElement('progresso').style.display = 'block';
+          getRequiredElement('log_in', HTMLFormElement).style.display = 'none';
+          getRequiredElement('mute_audio', HTMLInputElement).style.display =
+            'inline';
+          getRequiredElement('log_out', HTMLInputElement).style.display =
+            'block';
+          getRequiredElement('menu', HTMLElement).style.display = 'block';
+          getRequiredElement('jogo', HTMLElement).style.display = 'block';
+          getRequiredElement('progresso', HTMLElement).style.display = 'block';
         }
       }
     };
@@ -621,10 +625,11 @@ window.onload = () => {
       visitedFalse(); // Fills the visited matrix with false
       game_over = false;
       firstclick = true;
-      getRequiredElement('iniciar').style.display = 'none';
+      getRequiredElement('iniciar', HTMLInputElement).style.display = 'none';
       timeElapsed = 0;
-      getRequiredElement('tempo').innerHTML = `Tempo decorrido: ${timeElapsed}`;
-      getRequiredElement('numero_minas').innerHTML =
+      getRequiredElement('tempo', HTMLElement).innerHTML =
+        `Tempo decorrido: ${timeElapsed}`;
+      getRequiredElement('numero_minas', HTMLElement).innerHTML =
         `Minas restantes:${mines_counter}`;
     } else if (
       getRequiredElement('modo', HTMLSelectElement).value === '1 Player'
@@ -638,11 +643,12 @@ window.onload = () => {
       visitedFalse(); // Fills the visited matrix with false
       game_over = false;
       firstclick = true;
-      getRequiredElement('iniciar').style.display = 'none';
-      getRequiredElement('encerrar').style.display = 'inline';
+      getRequiredElement('iniciar', HTMLInputElement).style.display = 'none';
+      getRequiredElement('encerrar', HTMLInputElement).style.display = 'inline';
       timeElapsed = 0;
-      getRequiredElement('tempo').innerHTML = `Tempo decorrido: ${timeElapsed}`;
-      getRequiredElement('numero_minas').innerHTML =
+      getRequiredElement('tempo', HTMLElement).innerHTML =
+        `Tempo decorrido: ${timeElapsed}`;
+      getRequiredElement('numero_minas', HTMLElement).innerHTML =
         `Minas restantes:${mines_counter}`;
       generateGameMatrix(); // Generates Matrix with correct size
       placeMines(); // Places mines on the matrix
@@ -654,8 +660,8 @@ window.onload = () => {
 
   function endGame() {
     clearMatrix();
-    getRequiredElement('encerrar').style.display = 'none';
-    getRequiredElement('iniciar').style.display = 'inline';
+    getRequiredElement('encerrar', HTMLInputElement).style.display = 'none';
+    getRequiredElement('iniciar', HTMLInputElement).style.display = 'inline';
     clearInterval(timer);
     game_over = true;
     showGameMode();
@@ -977,18 +983,19 @@ window.onload = () => {
 
   function updateTimer() {
     timeElapsed += 1;
-    getRequiredElement('tempo').innerHTML = `Tempo decorrido: ${timeElapsed}`;
+    getRequiredElement('tempo', HTMLElement).innerHTML =
+      `Tempo decorrido: ${timeElapsed}`;
   }
 
   function decreaseMines() {
     mines_counter -= 1;
-    getRequiredElement('numero_minas').innerHTML =
+    getRequiredElement('numero_minas', HTMLElement).innerHTML =
       `Minas restantes:${mines_counter}`;
   }
 
   function increaseMines() {
     mines_counter += 1;
-    getRequiredElement('numero_minas').innerHTML =
+    getRequiredElement('numero_minas', HTMLElement).innerHTML =
       `Minas restantes:${mines_counter}`;
   }
 
@@ -1216,7 +1223,7 @@ window.onload = () => {
       const node = document.createElement('li');
       const textnode = document.createTextNode(` ${item.uname} ${item.score}`);
       node.appendChild(textnode);
-      getRequiredElement('honorlist').appendChild(node);
+      getRequiredElement('honorlist', HTMLElement).appendChild(node);
     }
   }
 }; //Fim
