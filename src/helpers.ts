@@ -1,8 +1,8 @@
-import { Player } from './minesweeper';
+import type { Player } from './minesweeper';
 
 export function canvas_explode(r: number, c: number) {
   const elemento = `${r}#${c}`;
-  const canvas = document.getElementById(elemento);
+  const canvas = getRequiredElement(elemento, HTMLCanvasElement);
   const ctx = canvas.getContext('2d');
 
   let frame = 0;
