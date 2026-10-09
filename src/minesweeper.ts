@@ -148,7 +148,8 @@ window.onload = () => {
 
   function switchHonraMP() {
     getRequiredElement('difHonra', HTMLSelectElement).style.display = 'none';
-    getRequiredElement('difHonraMP', HTMLSelectElement).style.display = 'inline';
+    getRequiredElement('difHonraMP', HTMLSelectElement).style.display =
+      'inline';
     refreshHonraMP();
     return false;
   }
