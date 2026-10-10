@@ -1,12 +1,29 @@
-import type { Player } from './minesweeper';
+export interface Player {
+  name?: string;
+  uname?: string;
+  score: number;
+}
+
+export type Dificulty = 'beginner' | 'intermediate' | 'expert';
+
+export const isDificulty = (value: string): value is Dificulty =>
+  value === 'beginner' || value === 'intermediate' || value === 'expert';
 
 export function canvas_explode(r: number, c: number) {
   const elemento = `${r}#${c}`;
   const canvas = getRequiredElement(elemento, HTMLCanvasElement);
+<<<<<<< HEAD
   const ctx = canvas.getContext('2d');
   if (!ctx) {
     throw new Error(`Canvas (#${elemento}) does not support 2D rendering`);
   }
+=======
+  const context = canvas.getContext('2d');
+  if (!context) {
+    throw new Error(`Canvas (#${elemento}) does not support 2D rendering`);
+  }
+  const ctx: CanvasRenderingContext2D = context;
+>>>>>>> origin/master
 
   let frame = 0;
   let setIntID: ReturnType<typeof setInterval>;
