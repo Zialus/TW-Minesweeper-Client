@@ -26,10 +26,7 @@
     "exactOptionalPropertyTypes": true,
 
     // Style Options
-<<<<<<< HEAD
     "strictNullChecks": true,
-=======
->>>>>>> origin/master
     "noImplicitReturns": true,
     "noImplicitOverride": true,
     "noUnusedLocals": true,

@@ -244,11 +244,7 @@ window.onload = () => {
 
           //jogo acaba
           if (msg.winner !== undefined) {
-<<<<<<< HEAD
             sse.close();
-=======
-            event.target?.close();
->>>>>>> origin/master
             if (msg.winner === opponent) {
               playerLost();
               defeat_audio.play();
@@ -468,11 +464,7 @@ window.onload = () => {
         errorMessage(res.error);
         setTimeout(cleanError, 2000);
 
-<<<<<<< HEAD
         sse.close();
-=======
-        event.target?.close();
->>>>>>> origin/master
       }
     };
   }
@@ -682,28 +674,12 @@ window.onload = () => {
   }
 
   function getAndSetDificulty() {
-<<<<<<< HEAD
-    const difficulty = getRequiredElement(
-      'dificuldade',
-      HTMLSelectElement,
-    ).value;
-    if (
-      difficulty !== 'beginner' &&
-      difficulty !== 'intermediate' &&
-      difficulty !== 'expert'
-    ) {
-      throw new Error(`Unknown difficulty: ${difficulty}`);
-    }
-    difc = difficulty;
-=======
     const u_difc = getRequiredElement('dificuldade', HTMLSelectElement).value;
 
     if (!isDificulty(u_difc)) {
       throw new Error(`Unknown difficulty (${u_difc})`);
     }
-
     difc = u_difc;
->>>>>>> origin/master
     console.log(`ola ${difc}`);
     switch (difc) {
       case 'beginner':
@@ -1109,11 +1085,7 @@ window.onload = () => {
         }
       }
     }
-<<<<<<< HEAD
     throw new Error(`No replacement mine position available for (${r}, ${c})`);
-=======
-    throw new Error('No available position for the relocated mine');
->>>>>>> origin/master
   }
 
   function newValue(x: number, y: number) {
@@ -1202,14 +1174,6 @@ window.onload = () => {
   // ----------------------------------------------------- GENERAL FUNCTIONS ----------------------------------------------- //
 
   function localStorageInsert(difc: Dificulty) {
-<<<<<<< HEAD
-    if (difc === 'beginner') {
-      localStorage.setItem('beginner', JSON.stringify(begHonor));
-    } else if (difc === 'intermediate') {
-      localStorage.setItem('intermediate', JSON.stringify(intHonor));
-    } else {
-      localStorage.setItem('expert', JSON.stringify(expHonor));
-=======
     switch (difc) {
       case 'beginner':
         localStorage.setItem('beginner', JSON.stringify(begHonor));
@@ -1220,23 +1184,12 @@ window.onload = () => {
       case 'expert':
         localStorage.setItem('expert', JSON.stringify(expHonor));
         break;
->>>>>>> origin/master
     }
   }
 
   function localStorageGetAll() {
     console.log('Getting all scores from storage!');
 
-<<<<<<< HEAD
-    begHonor.push(...getStoredHonor('beginner'));
-    intHonor.push(...getStoredHonor('intermediate'));
-    expHonor.push(...getStoredHonor('expert'));
-  }
-
-  function getStoredHonor(key: Dificulty): Player[] {
-    const storedHonor = localStorage.getItem(key);
-    return storedHonor === null ? [] : JSON.parse(storedHonor);
-=======
     const beginnerScores: Player[] =
       JSON.parse(localStorage.getItem('beginner') ?? '[]') ?? [];
     const intermediateScores: Player[] =
@@ -1247,7 +1200,6 @@ window.onload = () => {
     begHonor.push(...beginnerScores);
     intHonor.push(...intermediateScores);
     expHonor.push(...expertScores);
->>>>>>> origin/master
   }
 
   function refreshHonra() {
