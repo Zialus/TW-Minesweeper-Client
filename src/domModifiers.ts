@@ -24,33 +24,35 @@ export function logOut() {
 
 export function errorMessage(mensagem: string) {
   console.log('Sending error message to player');
-  getRequiredElement('error_message', HTMLElement).innerHTML = mensagem;
+  getRequiredElement('error_message', HTMLElement).textContent = mensagem;
   return false;
 }
 
 export function playerWon() {
-  getRequiredElement('message_to_player', HTMLElement).innerHTML = 'GANHASTE!!';
+  getRequiredElement('message_to_player', HTMLElement).textContent =
+    'GANHASTE!!';
 }
 
 export function playerLost() {
-  getRequiredElement('message_to_player', HTMLElement).innerHTML = 'PERDESTE!!';
+  getRequiredElement('message_to_player', HTMLElement).textContent =
+    'PERDESTE!!';
 }
 
 export function clearMessage() {
-  getRequiredElement('message_to_player', HTMLElement).innerHTML = '';
+  getRequiredElement('message_to_player', HTMLElement).textContent = '';
 }
 
 export function cleanHonor() {
-  getRequiredElement('honorlist', HTMLElement).innerHTML = '';
+  getRequiredElement('honorlist', HTMLElement).textContent = '';
 }
 
 export function showWhosTurn(turn: string) {
-  getRequiredElement('whos_turn', HTMLElement).innerHTML =
+  getRequiredElement('whos_turn', HTMLElement).textContent =
     `É o turno do jogador: ${turn}`;
 }
 
 export function clearWhosTurn() {
-  getRequiredElement('whos_turn', HTMLElement).innerHTML = '';
+  getRequiredElement('whos_turn', HTMLElement).textContent = '';
 }
 
 export function updatePlayersStats(
@@ -59,34 +61,39 @@ export function updatePlayersStats(
   opponent: string,
   op_bombs: number,
 ) {
-  getRequiredElement('player_stats', HTMLElement).innerHTML =
+  getRequiredElement('player_stats', HTMLElement).textContent =
     `Jogador ${username} encontrou : ${p_bombs} bombas`;
-  getRequiredElement('opponent_stats', HTMLElement).innerHTML =
+  getRequiredElement('opponent_stats', HTMLElement).textContent =
     `Adversario ${opponent} encontrou : ${op_bombs} bombas`;
   return false;
 }
 
 export function cleanError() {
-  getRequiredElement('error_message', HTMLElement).innerHTML = '';
+  getRequiredElement('error_message', HTMLElement).textContent = '';
   return false;
 }
 
 export function playerLoggedIn(username: string) {
-  getRequiredElement('message_to_player', HTMLElement).innerHTML =
+  getRequiredElement('message_to_player', HTMLElement).textContent =
     `${username} logged in!`;
   return false;
 }
 
 export function playerIsWaiting(username: string) {
   console.log('bom dia');
-  getRequiredElement('message_to_player', HTMLElement).innerHTML =
-    `<p>${username} está a espera dum adversário...</p><img src='static/imgs/waiting.svg' alt='waiting...' />`;
+  const message = getRequiredElement('message_to_player', HTMLElement);
+  const paragraph = document.createElement('p');
+  paragraph.textContent = `${username} está a espera dum adversário...`;
+  const image = document.createElement('img');
+  image.src = 'static/imgs/waiting.svg';
+  image.alt = 'waiting...';
+  message.replaceChildren(paragraph, image);
   return false;
 }
 
 export function playerNotWaiting(username: string) {
   console.log('bom dia');
-  getRequiredElement('message_to_player', HTMLElement).innerHTML =
+  getRequiredElement('message_to_player', HTMLElement).textContent =
     `${username} has given up waiting...`;
   return false;
 }
@@ -106,5 +113,5 @@ export function showGameMode() {
 }
 
 export function clearTable() {
-  getRequiredElement('tab', HTMLElement).innerHTML = '';
+  getRequiredElement('tab', HTMLElement).textContent = '';
 }
