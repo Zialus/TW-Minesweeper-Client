@@ -1,4 +1,11 @@
-import { addToArray, canvas_explode, getRequiredElement } from './helpers';
+import {
+  addToArray,
+  canvas_explode,
+  getRequiredElement,
+  isDificulty,
+  type Dificulty,
+  type Player,
+} from './helpers';
 import {
   cleanError,
   cleanHonor,
@@ -20,12 +27,6 @@ import {
   updatePlayersStats,
 } from './domModifiers';
 
-export interface Player {
-  name?: string;
-  uname?: string;
-  score: number;
-}
-
 window.onload = () => {
   const apiUrl = 'https://tw-minesweeper-server.onrender.com/';
 
@@ -45,7 +46,6 @@ window.onload = () => {
   let points: number; // Stores the score of the player in the multiplayer mode
   let username = 'Default User'; // Set a default value in case a username isn't picked
   let password: string;
-  type Dificulty = 'beginner' | 'intermediate' | 'expert';
 
   let difc: Dificulty;
   let acorde = false;
@@ -246,7 +246,7 @@ window.onload = () => {
 
           //jogo acaba
           if (msg.winner !== undefined) {
-            event.target.close();
+            event.target?.close();
             if (msg.winner === opponent) {
               playerLost();
               defeat_audio.play();
@@ -466,7 +466,7 @@ window.onload = () => {
         errorMessage(res.error);
         setTimeout(cleanError, 2000);
 
-        event.target.close();
+        event.target?.close();
       }
     };
   }
@@ -689,7 +689,13 @@ window.onload = () => {
   }
 
   function getAndSetDificulty() {
-    difc = getRequiredElement('dificuldade', HTMLSelectElement).value;
+    const u_difc = getRequiredElement('dificuldade', HTMLSelectElement).value;
+
+    if (!isDificulty(u_difc)) {
+      throw new Error(`Unknown difficulty (${u_difc})`);
+    }
+
+    difc = u_difc;
     console.log(`ola ${difc}`);
     switch (difc) {
       case 'beginner':
@@ -1155,6 +1161,7 @@ window.onload = () => {
         }
       }
     }
+    throw new Error('No available position for the relocated mine');
   }
 
   function newValue(x: number, y: number) {
@@ -1243,59 +1250,32 @@ window.onload = () => {
   // ----------------------------------------------------- GENERAL FUNCTIONS ----------------------------------------------- //
 
   function localStorageInsert(difc: Dificulty) {
-    if (difc === 'beginner') {
-      localStorage.setItem('beginner', JSON.stringify(begHonor));
-    } else if (difc === 'intermediate') {
-      localStorage.setItem('intermediate', JSON.stringify(intHonor));
-    } else {
-      localStorage.setItem('expert', JSON.stringify(expHonor));
-    }
-  }
-
-  function localStorageGet(difc: Dificulty, honorToChange: Player[]) {
-    let tmp = [];
-    const pointerHonor = honorToChange;
-    console.log('getting some scores from storage!');
-
-    if (difc === 'beginner') {
-      tmp = JSON.parse(localStorage.getItem('beginner'));
-    } else if (difc === 'intermediate') {
-      tmp = JSON.parse(localStorage.getItem('intermediate'));
-    } else {
-      tmp = JSON.parse(localStorage.getItem('expert'));
-    }
-
-    if (tmp !== null) {
-      for (const item of tmp) {
-        pointerHonor.push(item);
-      }
+    switch (difc) {
+      case 'beginner':
+        localStorage.setItem('beginner', JSON.stringify(begHonor));
+        break;
+      case 'intermediate':
+        localStorage.setItem('intermediate', JSON.stringify(intHonor));
+        break;
+      case 'expert':
+        localStorage.setItem('expert', JSON.stringify(expHonor));
+        break;
     }
   }
 
   function localStorageGetAll() {
-    let tmp;
     console.log('Getting all scores from storage!');
 
-    tmp = JSON.parse(localStorage.getItem('beginner'));
-    if (tmp !== null) {
-      for (const item of tmp) {
-        begHonor.push(item);
-      }
-    }
+    const beginnerScores: Player[] =
+      JSON.parse(localStorage.getItem('beginner') ?? '[]') ?? [];
+    const intermediateScores: Player[] =
+      JSON.parse(localStorage.getItem('intermediate') ?? '[]') ?? [];
+    const expertScores: Player[] =
+      JSON.parse(localStorage.getItem('expert') ?? '[]') ?? [];
 
-    tmp = JSON.parse(localStorage.getItem('intermediate'));
-    if (tmp !== null) {
-      for (const item of tmp) {
-        intHonor.push(item);
-      }
-    }
-
-    tmp = JSON.parse(localStorage.getItem('expert'));
-    if (tmp !== null) {
-      for (const item of tmp) {
-        expHonor.push(item);
-      }
-    }
+    begHonor.push(...beginnerScores);
+    intHonor.push(...intermediateScores);
+    expHonor.push(...expertScores);
   }
 
   function refreshHonra() {
