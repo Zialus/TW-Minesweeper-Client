@@ -342,21 +342,21 @@ window.onload = () => {
 
   function showScore() {
     if (points === undefined) {
-      getRequiredElement('score', HTMLElement).innerHTML = '';
+      getRequiredElement('score', HTMLElement).textContent = '';
     } else {
-      getRequiredElement('score', HTMLElement).innerHTML =
+      getRequiredElement('score', HTMLElement).textContent =
         `A tua pontuação neste modo de jogo é ${points}`;
     }
   }
 
   function cleanScore() {
-    getRequiredElement('score', HTMLElement).innerHTML = '';
+    getRequiredElement('score', HTMLElement).textContent = '';
   }
 
   function refreshHonraMP() {
     console.log('Refresh the list MultiPlayer!');
 
-    getRequiredElement('honorlist', HTMLElement).innerHTML = '';
+    getRequiredElement('honorlist', HTMLElement).textContent = '';
 
     const honor_value = getRequiredElement(
       'difHonraMP',
@@ -475,7 +475,7 @@ window.onload = () => {
       for (let j = 0; j < cols; j++) {
         const cell = row.insertCell();
 
-        cell.innerHTML = "<img alt='blankCell' src='static/imgs/blank.gif'/>";
+        addBlankCellImage(cell);
 
         const canvas = document.createElement('canvas');
         canvas.width = 20;
@@ -488,6 +488,13 @@ window.onload = () => {
         //cell.oncontextmenu = makeCellRightClickHandlerMP();
       }
     }
+  }
+
+  function addBlankCellImage(cell: HTMLTableCellElement) {
+    const image = document.createElement('img');
+    image.alt = 'blankCell';
+    image.src = 'static/imgs/blank.gif';
+    cell.appendChild(image);
   }
 
   function makeCellLeftClickHandlerMP() {
@@ -628,9 +635,9 @@ window.onload = () => {
       firstclick = true;
       getRequiredElement('iniciar', HTMLInputElement).style.display = 'none';
       timeElapsed = 0;
-      getRequiredElement('tempo', HTMLElement).innerHTML =
+      getRequiredElement('tempo', HTMLElement).textContent =
         `Tempo decorrido: ${timeElapsed}`;
-      getRequiredElement('numero_minas', HTMLElement).innerHTML =
+      getRequiredElement('numero_minas', HTMLElement).textContent =
         `Minas restantes:${mines_counter}`;
     } else if (
       getRequiredElement('modo', HTMLSelectElement).value === '1 Player'
@@ -647,9 +654,9 @@ window.onload = () => {
       getRequiredElement('iniciar', HTMLInputElement).style.display = 'none';
       getRequiredElement('encerrar', HTMLInputElement).style.display = 'inline';
       timeElapsed = 0;
-      getRequiredElement('tempo', HTMLElement).innerHTML =
+      getRequiredElement('tempo', HTMLElement).textContent =
         `Tempo decorrido: ${timeElapsed}`;
-      getRequiredElement('numero_minas', HTMLElement).innerHTML =
+      getRequiredElement('numero_minas', HTMLElement).textContent =
         `Minas restantes:${mines_counter}`;
       generateGameMatrix(); // Generates Matrix with correct size
       placeMines(); // Places mines on the matrix
@@ -780,7 +787,7 @@ window.onload = () => {
       for (let j = 0; j < cols; j++) {
         const cell = row.insertCell();
 
-        cell.innerHTML = "<img alt='blankCell' src='static/imgs/blank.gif'/>";
+        addBlankCellImage(cell);
 
         const canvas = document.createElement('canvas');
         canvas.width = 20;
@@ -978,19 +985,19 @@ window.onload = () => {
 
   function updateTimer() {
     timeElapsed += 1;
-    getRequiredElement('tempo', HTMLElement).innerHTML =
+    getRequiredElement('tempo', HTMLElement).textContent =
       `Tempo decorrido: ${timeElapsed}`;
   }
 
   function decreaseMines() {
     mines_counter -= 1;
-    getRequiredElement('numero_minas', HTMLElement).innerHTML =
+    getRequiredElement('numero_minas', HTMLElement).textContent =
       `Minas restantes:${mines_counter}`;
   }
 
   function increaseMines() {
     mines_counter += 1;
-    getRequiredElement('numero_minas', HTMLElement).innerHTML =
+    getRequiredElement('numero_minas', HTMLElement).textContent =
       `Minas restantes:${mines_counter}`;
   }
 
