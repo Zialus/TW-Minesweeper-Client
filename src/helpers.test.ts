@@ -48,18 +48,19 @@ describe('canvas_explode', () => {
     vi.useFakeTimers();
 
     // Mock Image constructor to capture onload
-    global.Image = vi.fn(function () {
+    type MockImage = InstanceType<typeof Image> & { _src?: string };
+    global.Image = vi.fn(function (this: MockImage) {
       this.onload = null;
       this.src = '';
       Object.defineProperty(this, 'src', {
-        set(value) {
+        set(this: MockImage, value) {
           this._src = value;
           // Simulate the image load
           if (this.onload) {
-            this.onload();
+            this.onload(new Event('load'));
           }
         },
-        get() {
+        get(this: MockImage) {
           return this._src;
         },
       });
