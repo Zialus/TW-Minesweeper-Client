@@ -21,14 +21,16 @@ on:
   schedule:
     - cron: '43 8 * * 5'
 
-permissions:
-  contents: read
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   codacy-analysis:
     permissions:
       contents: read  # for actions/checkout to fetch code
-      actions: read  # Only required for private repositories to get upload-sarif action run status.
     name: Analyze with Codacy
     runs-on: ubuntu-26.04
     steps:

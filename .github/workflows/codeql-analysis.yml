@@ -8,6 +8,12 @@ on:
   schedule:
     - cron: '23 4 * * 1'
 
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   codeql-analysis:
     name: Analyze ${{ matrix.language }} with CodeQL
