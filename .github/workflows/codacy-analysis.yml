@@ -4,8 +4,7 @@
 # documentation.
 
 # This workflow checks out code, performs a Codacy security scan
-# and integrates the results with the
-# GitHub Advanced Security code scanning feature.  For more information on
+# and sends the results to Codacy.  For more information on
 # the Codacy security scan action usage and parameters, see
 # https://github.com/codacy/codacy-analysis-cli-action.
 # For more information on Codacy Analysis CLI in general, see
@@ -29,7 +28,6 @@ jobs:
   codacy-analysis:
     permissions:
       contents: read  # for actions/checkout to fetch code
-      security-events: write  # for github/codeql-action/upload-sarif to upload SARIF results
       actions: read  # Only required for private repositories to get upload-sarif action run status.
     name: Analyze with Codacy
     runs-on: ubuntu-26.04
@@ -40,7 +38,7 @@ jobs:
         with:
           persist-credentials: false
 
-      # Execute Codacy Analysis CLI and generate a SARIF output with the security issues identified during the analysis
+      # Execute Codacy Analysis CLI and upload the results to Codacy
       - name: 🔍 Analyze with Codacy
         uses: codacy/codacy-analysis-cli-action@562ee3e92b8e92df8b67e0a5ff8aa8e261919c08  # v4.4.7
         with:
@@ -48,17 +46,6 @@ jobs:
           # You can also omit the token and run the tools that support default configurations
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           verbose: true
-          output: results.sarif
-          format: sarif
-          # Adjust severity of non-security issues.
-          gh-code-scanning-compat: true
-          # Force 0 exit code to allow SARIF file generation
-          # This will handover control about PR rejection to the GitHub side
+          # Send results to Codacy only (no SARIF / GitHub Security tab upload)
+          upload: true
           max-allowed-issues: 2147483647
-
-      # Upload the SARIF file generated in the previous step
-      - name: 📤 Upload SARIF results
-        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee  # v4.39.0
-        with:
-          sarif_file: results.sarif
-        continue-on-error: true  # BROKEN AT THE MOMENT - https://github.com/codacy/codacy-analysis-cli-action/issues/142
