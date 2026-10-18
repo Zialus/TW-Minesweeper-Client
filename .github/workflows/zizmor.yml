@@ -25,12 +25,12 @@ jobs:
           persist-credentials: false
 
       - name: 🧾 Yamllint
-        uses: reviewdog/action-yamllint@5dd4640db975e4cac6f4e775a401695bafc28068  # v1.25.1
+        uses: reviewdog/action-yamllint@3224b47de22a2fd9c8c0fbc120e6d0049d1f5060  # v1.25.2
 
       - name: 🛠️ Actionlint
-        uses: reviewdog/action-actionlint@a8ac3eea598697a830f7d8e701fc9fcbfde88974  # v1.80.0
+        uses: reviewdog/action-actionlint@419a49378266e892f40c773b4f2fc6de9aa87499  # v1.80.4
 
       - name: 🛡️ Zizmor
-        uses: zizmorcore/zizmor-action@cc914d7f3750a2d13d75c7f184a1060aa0e9d482  # v0.6.4
+        uses: zizmorcore/zizmor-action@85b2b9fb8e3325e7a23d7d0a9d7ba5ae0f999e3e  # v0.7.1
         with:
           persona: pedantic
