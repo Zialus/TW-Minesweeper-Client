@@ -29,11 +29,13 @@ export function errorMessage(mensagem: string) {
 }
 
 export function playerWon() {
-  getRequiredElement('message_to_player', HTMLElement).textContent = 'GANHASTE!!';
+  getRequiredElement('message_to_player', HTMLElement).textContent =
+    'GANHASTE!!';
 }
 
 export function playerLost() {
-  getRequiredElement('message_to_player', HTMLElement).textContent = 'PERDESTE!!';
+  getRequiredElement('message_to_player', HTMLElement).textContent =
+    'PERDESTE!!';
 }
 
 export function clearMessage() {
