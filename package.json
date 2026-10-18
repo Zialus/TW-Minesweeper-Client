@@ -9,6 +9,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "bench": "vitest bench --run",
     "lint": "pnpm run lint:prettier && pnpm run lint:stylelint && pnpm run lint:eslint",
     "lint:fix": "pnpm run lint:prettier:fix && pnpm run lint:stylelint:fix && pnpm run lint:eslint:fix",
     "lint:prettier": "prettier --check src",
@@ -19,6 +20,7 @@
     "lint:eslint:fix": "eslint --fix src"
   },
   "devDependencies": {
+    "@codspeed/vitest-plugin": "6.1.0",
     "@eslint/js": "10.0.1",
     "@vitest/coverage-v8": "5.0.5",
     "@vitest/eslint-plugin": "1.6.27",
