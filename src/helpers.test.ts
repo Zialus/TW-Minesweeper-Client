@@ -40,7 +40,9 @@ describe('canvas_explode', () => {
       clearRect: vi.fn(),
       drawImage: vi.fn(),
     };
-    canvas.getContext = vi.fn(() => mockCtx);
+    Object.defineProperty(canvas, 'getContext', {
+      value: vi.fn(() => mockCtx),
+    });
 
     document.body.appendChild(canvas);
 
@@ -48,23 +50,23 @@ describe('canvas_explode', () => {
     vi.useFakeTimers();
 
     // Mock Image constructor to capture onload
-    type MockImage = InstanceType<typeof Image> & { _src?: string };
-    global.Image = vi.fn(function (this: MockImage) {
-      this.onload = null;
-      this.src = '';
-      Object.defineProperty(this, 'src', {
-        set(this: MockImage, value) {
-          this._src = value;
-          // Simulate the image load
-          if (this.onload) {
-            this.onload(new Event('load'));
-          }
-        },
-        get(this: MockImage) {
-          return this._src;
-        },
-      });
-    });
+    global.Image = class extends originalImage {
+      private imageSource = '';
+
+      constructor() {
+        super();
+        this.onload = null;
+      }
+
+      override get src() {
+        return this.imageSource;
+      }
+
+      override set src(value: string) {
+        this.imageSource = value;
+        this.onload?.(new Event('load'));
+      }
+    };
   });
 
   afterEach(() => {
