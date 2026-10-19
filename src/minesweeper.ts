@@ -48,8 +48,6 @@ window.onload = () => {
   let password: string;
 
   let difc: Dificulty;
-  let acorde = false;
-
   //-------------------------VARIAVEIS PARA LIDAR COM AUDIO-------------------------------------//
   const bomb_audio = new Audio('static/music/explosion.wav');
   bomb_audio.muted = true;
@@ -239,9 +237,9 @@ window.onload = () => {
           const cells = msg.move.cells;
 
           //destapa as células
-          for (let i = 0; i < cells.length; i++) {
-            const player = msg.move.name;
-            burstMP(cells[i], player);
+          const player = msg.move.name;
+          for (const cell of cells) {
+            burstMP(cell, player);
           }
 
           //jogo acaba
@@ -416,7 +414,7 @@ window.onload = () => {
               ` ${item.name} ${item.score}`,
             );
             node.appendChild(textnode);
-            getRequiredElement('honorlist', HTMLOListElement).appendChild(node);
+            getRequiredElement('honorlist', HTMLElement).appendChild(node);
           }
         }
       }
@@ -473,18 +471,6 @@ window.onload = () => {
         }
       }
     };
-  }
-
-  function setTabuleiroMP() {
-    for (let i = 0; i < rows; i++) {
-      const row = table.insertRow();
-      for (let j = 0; j < cols; j++) {
-        const cell = row.insertCell();
-        addBlankCellImage(cell);
-        cell.onclick = makeCellLeftClickHandlerMP();
-        //cell.oncontextmenu = makeCellRightClickHandlerMP();
-      }
-    }
   }
 
   function setTabuleiroMP_CanvasMode() {
@@ -652,7 +638,6 @@ window.onload = () => {
       game_over = false;
       firstclick = true;
       getRequiredElement('iniciar', HTMLInputElement).style.display = 'none';
-      //  document.getElementById("encerrar").style.display = "inline";
       timeElapsed = 0;
       getRequiredElement('tempo', HTMLElement).textContent =
         `Tempo decorrido: ${timeElapsed}`;
@@ -705,7 +690,6 @@ window.onload = () => {
     if (!isDificulty(u_difc)) {
       throw new Error(`Unknown difficulty (${u_difc})`);
     }
-
     difc = u_difc;
     console.log(`ola ${difc}`);
     switch (difc) {
@@ -801,13 +785,6 @@ window.onload = () => {
     };
   }
 
-  function makeAcordeHandler() {
-    return () => {
-      acorde = true;
-      console.log('MOUSE_IS_DOWN_MOFO!!');
-    };
-  }
-
   function setTabuleiroCanvas() {
     for (let i = 0; i < rows; i++) {
       const row = table.insertRow();
@@ -824,20 +801,6 @@ window.onload = () => {
         cell.appendChild(canvas);
 
         cell.onclick = makeCellLeftClickHandler();
-        //cell.onmousedown = makeAcordeHandler();
-        cell.oncontextmenu = makeCellRightClickHandler();
-      }
-    }
-  }
-
-  function setTabuleiro() {
-    for (let i = 0; i < rows; i++) {
-      const row = table.insertRow();
-      for (let j = 0; j < cols; j++) {
-        const cell = row.insertCell();
-        addBlankCellImage(cell);
-        cell.onclick = makeCellLeftClickHandler();
-        //cell.onmousedown = makeAcordeHandler();
         cell.oncontextmenu = makeCellRightClickHandler();
       }
     }
@@ -951,40 +914,6 @@ window.onload = () => {
     }
   }
 
-  function megaBurst(r: number, c: number) {
-    if (validPos(r - 1, c) && visited[r - 1][c] === false) {
-      leftClick(r - 1, c);
-    }
-
-    if (validPos(r + 1, c) && visited[r + 1][c] === false) {
-      leftClick(r + 1, c);
-    }
-
-    if (validPos(r, c - 1) && visited[r][c - 1] === false) {
-      leftClick(r, c - 1);
-    }
-
-    if (validPos(r, c + 1) && visited[r][c + 1] === false) {
-      leftClick(r, c + 1);
-    }
-
-    if (validPos(r - 1, c - 1) && visited[r - 1][c - 1] === false) {
-      leftClick(r - 1, c - 1);
-    }
-
-    if (validPos(r - 1, c + 1) && visited[r - 1][c + 1] === false) {
-      leftClick(r - 1, c + 1);
-    }
-
-    if (validPos(r + 1, c - 1) && visited[r + 1][c - 1] === false) {
-      leftClick(r + 1, c - 1);
-    }
-
-    if (validPos(r + 1, c + 1) && visited[r + 1][c + 1] === false) {
-      leftClick(r + 1, c + 1);
-    }
-  }
-
   function burst(r: number, c: number) {
     if (
       table.rows[r].cells[c]
@@ -1093,11 +1022,6 @@ window.onload = () => {
   }
 
   function rightClick(r: number, c: number) {
-    if (acorde === true) {
-      console.log('ACORDE ACTIVATION!!!!!!!!');
-      megaBurst(r, c);
-    }
-
     if (visited[r][c] === false) {
       if (
         table.rows[r].cells[c]
@@ -1172,7 +1096,7 @@ window.onload = () => {
         }
       }
     }
-    throw new Error('No available position for the relocated mine');
+    throw new Error(`No replacement mine position available for (${r}, ${c})`);
   }
 
   function newValue(x: number, y: number) {
@@ -1311,7 +1235,7 @@ window.onload = () => {
       const node = document.createElement('li');
       const textnode = document.createTextNode(` ${item.uname} ${item.score}`);
       node.appendChild(textnode);
-      getRequiredElement('honorlist', HTMLOListElement).appendChild(node);
+      getRequiredElement('honorlist', HTMLElement).appendChild(node);
     }
   }
 }; //Fim
