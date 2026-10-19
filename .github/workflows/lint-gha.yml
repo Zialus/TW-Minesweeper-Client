@@ -9,6 +9,10 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   lint-workflows:
     name: Lint workflows
@@ -16,8 +20,7 @@ jobs:
     permissions:
       checks: write  # Required by reviewdog actions to report check annotations.
       security-events: write  # Required for upload-sarif to send SARIF files.
-      contents: read  # Only needed for private repos. Needed to clone the repo.
-      actions: read  # Only needed for private repos to read workflow run info.
+      contents: read  # Required for actions/checkout to fetch code.
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1

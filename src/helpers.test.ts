@@ -50,17 +50,23 @@ describe('canvas_explode', () => {
     vi.useFakeTimers();
 
     // Mock Image constructor to capture onload
-    global.Image = vi.fn(function (this: HTMLImageElement) {
-      Object.defineProperty(this, 'src', {
-        set(this: HTMLImageElement) {
-          // Simulate the image load
-          const onload = this.onload;
-          if (onload) {
-            onload.call(this, new Event('load'));
-          }
-        },
-      });
-    }) as unknown as typeof Image;
+    global.Image = class extends originalImage {
+      private imageSource = '';
+
+      constructor() {
+        super();
+        this.onload = null;
+      }
+
+      override get src() {
+        return this.imageSource;
+      }
+
+      override set src(value: string) {
+        this.imageSource = value;
+        this.onload?.(new Event('load'));
+      }
+    };
   });
 
   afterEach(() => {

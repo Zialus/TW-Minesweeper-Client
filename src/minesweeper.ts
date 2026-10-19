@@ -244,7 +244,9 @@ window.onload = () => {
 
           //jogo acaba
           if (msg.winner !== undefined) {
-            sse.close();
+            if (event.target instanceof EventSource) {
+              event.target.close();
+            }
             if (msg.winner === opponent) {
               playerLost();
               defeat_audio.play();
@@ -464,7 +466,9 @@ window.onload = () => {
         errorMessage(res.error);
         setTimeout(cleanError, 2000);
 
-        sse.close();
+        if (event.target instanceof EventSource) {
+          event.target.close();
+        }
       }
     };
   }

@@ -5,6 +5,12 @@ on:
 
   workflow_dispatch:
 
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   coverity-scan:
     name: Build and submit to Coverity

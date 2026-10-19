@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [master]
 
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build-lint-test:
     name: Build, lint and test
