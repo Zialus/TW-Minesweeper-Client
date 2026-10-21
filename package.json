@@ -16,10 +16,14 @@
     "lint:stylelint": "stylelint 'src/**/*.css'",
     "lint:stylelint:fix": "stylelint --fix 'src/**/*.css'",
     "lint:eslint": "eslint src",
-    "lint:eslint:fix": "eslint --fix src"
+    "lint:eslint:fix": "eslint --fix src",
+    "test:mutation": "stryker run"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@stryker-mutator/core": "10.0.0",
+    "@stryker-mutator/typescript-checker": "10.0.0",
+    "@stryker-mutator/vitest-runner": "10.0.0",
     "@vitest/coverage-v8": "5.0.5",
     "@vitest/eslint-plugin": "1.6.27",
     "eslint": "10.13.0",
