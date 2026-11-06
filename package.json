@@ -31,7 +31,7 @@
     "happy-dom": "21.0.4",
     "jiti": "2.7.0",
     "prettier": "3.9.10",
-    "stylelint": "17.16.0",
+    "stylelint": "18.0.0",
     "stylelint-config-standard": "40.0.0",
     "typescript": "6.0.3",
     "typescript-eslint": "8.72.1",
