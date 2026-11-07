@@ -28,7 +28,7 @@ jobs:
           persist-credentials: false
 
       - name: 🧾 Yamllint
-        uses: reviewdog/action-yamllint@8f84f0fb670d777d3e584ef50faf60eb61605b2a  # v1.25.3
+        uses: reviewdog/action-yamllint@020fba38ce9fed550c704d933aeeb7d6360f7d47  # v1.26.0
 
       - name: 🛠️ Actionlint
         uses: reviewdog/action-actionlint@78b296370c5c75abca79860e9baa9846e3286a29  # v1.84.0
