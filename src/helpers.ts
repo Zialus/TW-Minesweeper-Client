@@ -19,21 +19,21 @@ export function canvas_explode(r: number, c: number) {
   const ctx: CanvasRenderingContext2D = context;
 
   let frame = 0;
-  let setIntID: NodeJS.Timeout;
+  let setIntID: ReturnType<typeof setInterval>;
   const img = new Image();
 
-  function animate() {
-    ctx.clearRect(0, 0, 25, 25);
+  function animate(context: CanvasRenderingContext2D) {
+    context.clearRect(0, 0, 25, 25);
     if (frame === 13) {
       clearInterval(setIntID);
       return;
     }
-    ctx.drawImage(img, 39 * frame, 0, 39, 38, 0, 0, 25, 25);
+    context.drawImage(img, 39 * frame, 0, 39, 38, 0, 0, 25, 25);
     frame++;
   }
 
   img.onload = function () {
-    setIntID = setInterval(animate, 150);
+    setIntID = setInterval(() => animate(ctx), 150);
   };
   img.src = 'static/imgs/explosion.png';
 }
