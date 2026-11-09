@@ -75,11 +75,13 @@ jobs:
 
       - name: ♻️ Restore Stryker incremental results
         uses: actions/cache@b7dfcbd426fd074f80b6edd5b3e17d39da7e091e # v4.3.0
+        env:
+          STRYKER_CACHE_HASH: ${{ hashFiles('stryker.config.json', 'package.json', 'pnpm-lock.yaml') }}
         with:
           path: reports/stryker-pr-incremental.json
-          key: stryker-pr-${{ runner.os }}-${{ hashFiles('stryker.config.json', 'package.json', 'pnpm-lock.yaml') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          key: stryker-pr-${{ env.STRYKER_CACHE_HASH }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
-            stryker-pr-${{ runner.os }}-${{ hashFiles('stryker.config.json', 'package.json', 'pnpm-lock.yaml') }}-
+            stryker-pr-${{ env.STRYKER_CACHE_HASH }}-
           save-always: true
 
       - name: 🧬 Run Stryker mutation tests
