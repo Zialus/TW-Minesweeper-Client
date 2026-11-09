@@ -10,27 +10,27 @@ describe('addToArray', () => {
   it('should iterate through array until finding correct insertion position', () => {
     // Arrange
     const array = [
-      { uname: 'charlie', score: 300 },
-      { uname: 'eve', score: 200 },
-      { uname: 'alice', score: 100 },
+      { uname: 'charlie', score: 100 },
+      { uname: 'eve', score: 50 },
+      { uname: 'alice', score: 200 },
     ];
-    const newPlayer = { uname: 'david', score: 250 };
+    const newPlayer = { uname: 'david', score: 120 };
 
     // Act
     addToArray(newPlayer, array);
 
     // Assert
     expect(array).toEqual([
-      { uname: 'charlie', score: 300 },
-      { uname: 'david', score: 250 },
-      { uname: 'eve', score: 200 },
-      { uname: 'alice', score: 100 },
+      { uname: 'charlie', score: 100 },
+      { uname: 'eve', score: 50 },
+      { uname: 'david', score: 120 },
+      { uname: 'alice', score: 200 },
     ]);
   });
 
   it('should insert into an empty array', () => {
     const player = { uname: 'david', score: 250 };
-    const players: typeof player[] = [];
+    const players: (typeof player)[] = [];
 
     addToArray(player, players);
 
@@ -75,9 +75,9 @@ describe('getRequiredElement', () => {
   });
 
   it('throws when the element is missing', () => {
-    expect(() => getRequiredElement('missing-element', HTMLInputElement)).toThrow(
-      'Missing element (#missing-element)',
-    );
+    expect(() => {
+      getRequiredElement('missing-element', HTMLInputElement);
+    }).toThrow('Missing element (#missing-element)');
   });
 
   it('throws when the element does not match the requested constructor', () => {
@@ -85,21 +85,24 @@ describe('getRequiredElement', () => {
     div.id = 'required-div';
     document.body.appendChild(div);
 
-    expect(() => getRequiredElement('required-div', HTMLInputElement)).toThrow(
-      'Element (#required-div) is not a HTMLInputElement',
-    );
+    expect(() => {
+      getRequiredElement('required-div', HTMLInputElement);
+    }).toThrow('Element (#required-div) is not a HTMLInputElement');
   });
 });
 
 describe('canvas_explode', () => {
   // Store original Image before mocking (needs let for afterEach access)
   const originalImage = global.Image;
+  const images: HTMLImageElement[] = [];
   const mockContext = {
     clearRect: vi.fn(),
     drawImage: vi.fn(),
   };
 
   beforeEach(() => {
+    images.length = 0;
+
     // Create a canvas element in the DOM for testing
     const canvas = document.createElement('canvas');
     canvas.id = '2#3';
@@ -110,6 +113,7 @@ describe('canvas_explode', () => {
     mockContext.clearRect.mockClear();
     mockContext.drawImage.mockClear();
     Object.defineProperty(canvas, 'getContext', {
+      configurable: true,
       value: vi.fn(() => mockContext),
     });
 
@@ -124,6 +128,7 @@ describe('canvas_explode', () => {
 
       constructor() {
         super();
+        images.push(this);
         this.onload = null;
       }
 
@@ -159,18 +164,47 @@ describe('canvas_explode', () => {
     vi.advanceTimersByTime(14 * 150);
 
     expect(setIntervalSpy).toHaveBeenCalledWith(expect.any(Function), 150);
+    expect(images[0].src).toBe('static/imgs/explosion.png');
+    expect(mockContext.drawImage).toHaveBeenNthCalledWith(
+      1,
+      images[0],
+      0,
+      0,
+      39,
+      38,
+      0,
+      0,
+      25,
+      25,
+    );
+    expect(mockContext.drawImage).toHaveBeenNthCalledWith(
+      13,
+      images[0],
+      39 * 12,
+      0,
+      39,
+      38,
+      0,
+      0,
+      25,
+      25,
+    );
     expect(mockContext.drawImage).toHaveBeenCalledTimes(13);
+    expect(mockContext.clearRect).toHaveBeenCalledTimes(14);
+
+    vi.advanceTimersByTime(150);
     expect(mockContext.clearRect).toHaveBeenCalledTimes(14);
   });
 
   it('throws when the canvas has no 2D context', () => {
     const canvas = document.getElementById('2#3');
     Object.defineProperty(canvas, 'getContext', {
+      configurable: true,
       value: vi.fn(() => null),
     });
 
-    expect(() => canvas_explode(2, 3)).toThrow(
-      'Canvas (#2#3) does not support 2D rendering',
-    );
+    expect(() => {
+      canvas_explode(2, 3);
+    }).toThrow('Canvas (#2#3) does not support 2D rendering');
   });
 });

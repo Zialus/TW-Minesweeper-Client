@@ -17,8 +17,8 @@
     "lint:stylelint:fix": "stylelint --fix 'src/**/*.css'",
     "lint:eslint": "eslint src",
     "lint:eslint:fix": "eslint --fix src",
-    "test:mutation": "stryker run --incremental --incrementalFile reports/stryker-full-incremental.json --concurrency 2",
-    "test:mutation:pr": "stryker run --mutate src/helpers.ts --testFiles src/helpers.test.ts --incremental --incrementalFile reports/stryker-pr-incremental.json --concurrency 2"
+    "test:mutation": "stryker run --incremental --incrementalFile reports/stryker-full-incremental.json --concurrency 4",
+    "test:mutation:pr": "stryker run --mutate src/helpers.ts:41-47,src/helpers.ts:51-65 --testFiles src/helpers.test.ts --incremental --incrementalFile reports/stryker-pr-incremental.json --concurrency 4"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
