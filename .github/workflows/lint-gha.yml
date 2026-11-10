@@ -31,7 +31,7 @@ jobs:
         uses: reviewdog/action-yamllint@8f84f0fb670d777d3e584ef50faf60eb61605b2a  # v1.25.3
 
       - name: 🛠️ Actionlint
-        uses: reviewdog/action-actionlint@48e36f54d8da326b83ab061aee2cc5e01b5ca46f  # v1.80.6
+        uses: reviewdog/action-actionlint@78b296370c5c75abca79860e9baa9846e3286a29  # v1.84.0
 
       - name: 🛡️ Zizmor
         uses: zizmorcore/zizmor-action@45d7276c9ca790aabd705e31ca99c6185c3e76dd  # v0.8.1
