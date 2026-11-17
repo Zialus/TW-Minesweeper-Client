@@ -1,4 +1,12 @@
 import {
+  checkWin,
+  decreaseSurroundingCells,
+  increaseSurroundingCells,
+  newPos,
+  newValue,
+  validPos,
+} from './board';
+import {
   addToArray,
   canvas_explode,
   getRequiredElement,
@@ -856,35 +864,35 @@ window.onload = () => {
         placedMines++;
 
         // up
-        if (validPos(r, c - 1) && matrix[r][c - 1] !== -1) {
+        if (validPos(matrix, r, c - 1) && matrix[r][c - 1] !== -1) {
           matrix[r][c - 1]++;
         }
         // down
-        if (validPos(r, c + 1) && matrix[r][c + 1] !== -1) {
+        if (validPos(matrix, r, c + 1) && matrix[r][c + 1] !== -1) {
           matrix[r][c + 1]++;
         }
         // left
-        if (validPos(r - 1, c) && matrix[r - 1][c] !== -1) {
+        if (validPos(matrix, r - 1, c) && matrix[r - 1][c] !== -1) {
           matrix[r - 1][c]++;
         }
         // right
-        if (validPos(r + 1, c) && matrix[r + 1][c] !== -1) {
+        if (validPos(matrix, r + 1, c) && matrix[r + 1][c] !== -1) {
           matrix[r + 1][c]++;
         }
         // left up
-        if (validPos(r - 1, c - 1) && matrix[r - 1][c - 1] !== -1) {
+        if (validPos(matrix, r - 1, c - 1) && matrix[r - 1][c - 1] !== -1) {
           matrix[r - 1][c - 1]++;
         }
         // right up
-        if (validPos(r + 1, c - 1) && matrix[r + 1][c - 1] !== -1) {
+        if (validPos(matrix, r + 1, c - 1) && matrix[r + 1][c - 1] !== -1) {
           matrix[r + 1][c - 1]++;
         }
         // left down
-        if (validPos(r - 1, c + 1) && matrix[r - 1][c + 1] !== -1) {
+        if (validPos(matrix, r - 1, c + 1) && matrix[r - 1][c + 1] !== -1) {
           matrix[r - 1][c + 1]++;
         }
         // right down
-        if (validPos(r + 1, c + 1) && matrix[r + 1][c + 1] !== -1) {
+        if (validPos(matrix, r + 1, c + 1) && matrix[r + 1][c + 1] !== -1) {
           matrix[r + 1][c + 1]++;
         }
       }
@@ -952,35 +960,35 @@ window.onload = () => {
   }
 
   function megaBurst(r: number, c: number) {
-    if (validPos(r - 1, c) && visited[r - 1][c] === false) {
+    if (validPos(matrix, r - 1, c) && visited[r - 1][c] === false) {
       leftClick(r - 1, c);
     }
 
-    if (validPos(r + 1, c) && visited[r + 1][c] === false) {
+    if (validPos(matrix, r + 1, c) && visited[r + 1][c] === false) {
       leftClick(r + 1, c);
     }
 
-    if (validPos(r, c - 1) && visited[r][c - 1] === false) {
+    if (validPos(matrix, r, c - 1) && visited[r][c - 1] === false) {
       leftClick(r, c - 1);
     }
 
-    if (validPos(r, c + 1) && visited[r][c + 1] === false) {
+    if (validPos(matrix, r, c + 1) && visited[r][c + 1] === false) {
       leftClick(r, c + 1);
     }
 
-    if (validPos(r - 1, c - 1) && visited[r - 1][c - 1] === false) {
+    if (validPos(matrix, r - 1, c - 1) && visited[r - 1][c - 1] === false) {
       leftClick(r - 1, c - 1);
     }
 
-    if (validPos(r - 1, c + 1) && visited[r - 1][c + 1] === false) {
+    if (validPos(matrix, r - 1, c + 1) && visited[r - 1][c + 1] === false) {
       leftClick(r - 1, c + 1);
     }
 
-    if (validPos(r + 1, c - 1) && visited[r + 1][c - 1] === false) {
+    if (validPos(matrix, r + 1, c - 1) && visited[r + 1][c - 1] === false) {
       leftClick(r + 1, c - 1);
     }
 
-    if (validPos(r + 1, c + 1) && visited[r + 1][c + 1] === false) {
+    if (validPos(matrix, r + 1, c + 1) && visited[r + 1][c + 1] === false) {
       leftClick(r + 1, c + 1);
     }
   }
@@ -998,35 +1006,35 @@ window.onload = () => {
       chooseAndSetPicture(r, c, 0);
       visited[r][c] = true;
 
-      if (validPos(r - 1, c) && visited[r - 1][c] === false) {
+      if (validPos(matrix, r - 1, c) && visited[r - 1][c] === false) {
         burst(r - 1, c);
       }
 
-      if (validPos(r + 1, c) && visited[r + 1][c] === false) {
+      if (validPos(matrix, r + 1, c) && visited[r + 1][c] === false) {
         burst(r + 1, c);
       }
 
-      if (validPos(r, c - 1) && visited[r][c - 1] === false) {
+      if (validPos(matrix, r, c - 1) && visited[r][c - 1] === false) {
         burst(r, c - 1);
       }
 
-      if (validPos(r, c + 1) && visited[r][c + 1] === false) {
+      if (validPos(matrix, r, c + 1) && visited[r][c + 1] === false) {
         burst(r, c + 1);
       }
 
-      if (validPos(r - 1, c - 1) && visited[r - 1][c - 1] === false) {
+      if (validPos(matrix, r - 1, c - 1) && visited[r - 1][c - 1] === false) {
         burst(r - 1, c - 1);
       }
 
-      if (validPos(r - 1, c + 1) && visited[r - 1][c + 1] === false) {
+      if (validPos(matrix, r - 1, c + 1) && visited[r - 1][c + 1] === false) {
         burst(r - 1, c + 1);
       }
 
-      if (validPos(r + 1, c - 1) && visited[r + 1][c - 1] === false) {
+      if (validPos(matrix, r + 1, c - 1) && visited[r + 1][c - 1] === false) {
         burst(r + 1, c - 1);
       }
 
-      if (validPos(r + 1, c + 1) && visited[r + 1][c + 1] === false) {
+      if (validPos(matrix, r + 1, c + 1) && visited[r + 1][c + 1] === false) {
         burst(r + 1, c + 1);
       }
     } else {
@@ -1035,7 +1043,7 @@ window.onload = () => {
       chooseAndSetPicture(r, c, m);
     }
 
-    if (checkWin()) {
+    if (checkWin(matrix, visited)) {
       victory_audio.play();
 
       alert(`YOU WON with the time of ${timeElapsed} seconds`);
@@ -1074,22 +1082,6 @@ window.onload = () => {
     mines_counter += 1;
     getRequiredElement('numero_minas', HTMLElement).textContent =
       `Minas restantes:${mines_counter}`;
-  }
-
-  function validPos(r: number, c: number) {
-    return r >= 0 && r < rows && c >= 0 && c < cols;
-  }
-
-  function checkWin() {
-    console.log('ola');
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < cols; j++) {
-        if (matrix[i][j] !== -1 && visited[i][j] === false) {
-          return false;
-        }
-      }
-    }
-    return true;
   }
 
   function rightClick(r: number, c: number) {
@@ -1152,110 +1144,13 @@ window.onload = () => {
   // -------------------------------- MENSAGENS PARA O JOGADOR E TAL --------------------------------------------------- //
 
   function dealWithFirstClick(r: number, c: number) {
-    matrix[r][c] = newValue(r, c);
-    decreaseSurroundingCells(r, c);
-    const t = newPos(r, c);
+    matrix[r][c] = newValue(matrix, r, c);
+    decreaseSurroundingCells(matrix, r, c);
+    const t = newPos(matrix, r, c);
     matrix[t.x][t.y] = -1;
-    increaseSurroundingCells(t.x, t.y);
+    increaseSurroundingCells(matrix, t.x, t.y);
     firstclick = false;
     timer = setInterval(updateTimer, 1000);
-  }
-
-  function newPos(r: number, c: number) {
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < cols; j++) {
-        if (matrix[i][j] !== -1 && i !== r && j !== c) {
-          return {
-            x: i,
-            y: j,
-          };
-        }
-      }
-    }
-    throw new Error('No available position for the relocated mine');
-  }
-
-  function newValue(x: number, y: number) {
-    let aux = 0;
-    if (validPos(x - 1, y) && matrix[x - 1][y] === -1) {
-      aux++;
-    }
-    if (validPos(x, y - 1) && matrix[x][y - 1] === -1) {
-      aux++;
-    }
-    if (validPos(x + 1, y) && matrix[x + 1][y] === -1) {
-      aux++;
-    }
-    if (validPos(x, y + 1) && matrix[x][y + 1] === -1) {
-      aux++;
-    }
-    if (validPos(x - 1, y - 1) && matrix[x - 1][y - 1] === -1) {
-      aux++;
-    }
-    if (validPos(x + 1, y - 1) && matrix[x + 1][y - 1] === -1) {
-      aux++;
-    }
-    if (validPos(x + 1, y + 1) && matrix[x + 1][y + 1] === -1) {
-      aux++;
-    }
-    if (validPos(x - 1, y + 1) && matrix[x - 1][y + 1] === -1) {
-      aux++;
-    }
-    return aux;
-  }
-
-  function decreaseSurroundingCells(x: number, y: number) {
-    if (validPos(x - 1, y) && matrix[x - 1][y] !== -1) {
-      matrix[x - 1][y]--;
-    }
-    if (validPos(x, y - 1) && matrix[x][y - 1] !== -1) {
-      matrix[x][y - 1]--;
-    }
-    if (validPos(x + 1, y) && matrix[x + 1][y] !== -1) {
-      matrix[x + 1][y]--;
-    }
-    if (validPos(x, y + 1) && matrix[x][y + 1] !== -1) {
-      matrix[x][y + 1]--;
-    }
-    if (validPos(x - 1, y - 1) && matrix[x - 1][y - 1] !== -1) {
-      matrix[x - 1][y - 1]--;
-    }
-    if (validPos(x + 1, y - 1) && matrix[x + 1][y - 1] !== -1) {
-      matrix[x + 1][y - 1]--;
-    }
-    if (validPos(x + 1, y + 1) && matrix[x + 1][y + 1] !== -1) {
-      matrix[x + 1][y + 1]--;
-    }
-    if (validPos(x - 1, y + 1) && matrix[x - 1][y + 1] !== -1) {
-      matrix[x - 1][y + 1]--;
-    }
-  }
-
-  function increaseSurroundingCells(x: number, y: number) {
-    if (validPos(x - 1, y) && matrix[x - 1][y] !== -1) {
-      matrix[x - 1][y]++;
-    }
-    if (validPos(x, y - 1) && matrix[x][y - 1] !== -1) {
-      matrix[x][y - 1]++;
-    }
-    if (validPos(x + 1, y) && matrix[x + 1][y] !== -1) {
-      matrix[x + 1][y]++;
-    }
-    if (validPos(x, y + 1) && matrix[x][y + 1] !== -1) {
-      matrix[x][y + 1]++;
-    }
-    if (validPos(x - 1, y - 1) && matrix[x - 1][y - 1] !== -1) {
-      matrix[x - 1][y - 1]++;
-    }
-    if (validPos(x + 1, y - 1) && matrix[x + 1][y - 1] !== -1) {
-      matrix[x + 1][y - 1]++;
-    }
-    if (validPos(x + 1, y + 1) && matrix[x + 1][y + 1] !== -1) {
-      matrix[x + 1][y + 1]++;
-    }
-    if (validPos(x - 1, y + 1) && matrix[x - 1][y + 1] !== -1) {
-      matrix[x - 1][y + 1]++;
-    }
   }
 
   // ----------------------------------------------------- GENERAL FUNCTIONS ----------------------------------------------- //
